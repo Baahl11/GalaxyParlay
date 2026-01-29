@@ -26,6 +26,8 @@ class Settings:
         "http://localhost:3000",
         "http://localhost:8000",
         "https://parlaygalaxy.vercel.app",
+        "https://galaxyparlay.vercel.app",
+        "https://*.vercel.app",
     ]
     
     # Supabase
