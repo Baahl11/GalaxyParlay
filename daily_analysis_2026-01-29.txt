@@ -1,0 +1,3204 @@
+{
+  "date": "2026-01-29",
+  "total_matches": 50,
+  "total_value_bets": 5,
+  "matches": [
+    {
+      "fixture_id": 1234501,
+      "home_team": "Manchester United",
+      "away_team": "Manchester City",
+      "kickoff_time": "2026-01-25T06:30:00-06:00",
+      "league_id": 39,
+      "venue": "Old Trafford",
+      "elo": {
+        "home_elo": 1667.96,
+        "away_elo": 1750.5,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.1448,
+            "draw": 0.221,
+            "away_win": 0.6341
+          },
+          "over_under_2_5": {
+            "over": 0.4841,
+            "under": 0.5159
+          },
+          "over_under_3_5": {
+            "over": 0.2662,
+            "under": 0.7338
+          },
+          "btts": {
+            "yes": 0.4482,
+            "no": 0.5518
+          },
+          "expected_goals": {
+            "home": 0.75,
+            "away": 1.86,
+            "total": 2.61
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1352
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.7546,
+            "mu_away": 1.8554
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [
+        {
+          "market": "Ganador Visitante",
+          "selection": "Manchester City",
+          "odds": 2.1,
+          "model_prob": 0.634,
+          "implied_prob": 0.476,
+          "edge": 0.158,
+          "ev": 0.332
+        }
+      ],
+      "kelly": {
+        "Ganador Visitante": {
+          "kelly_fraction": 0.2125,
+          "half_kelly": 0.1062,
+          "recommendation": "Moderate bet: 10.6% of bankroll @ 2.10 (edge: 15.8%)"
+        }
+      },
+      "ai_analysis": "Análisis del Manchester United vs Manchester City:\n\nEl modelo Dixon-Coles es contundente: Manchester City es amplio favorito con 63.4% de probabilidad de victoria. Los Elo Ratings también respaldan esta proyección, con City significativamente superior (1750.5 vs 1667.96). El encuentro sugiere un partido con alta probabilidad de goles del equipo visitante, con 1.9 goles esperados contra 0.8 del United.\n\nLa value bet más interesante es la victoria del Manchester City, con un edge del 15.8% y valor esperado (EV) de 33.2%. El modelo también indica alta probabilidad de goles (Over 2.5 al 48.4% y BTTS al 44.8%). Recomendación: Apostar a victoria del Manchester City con cuotas superiores a 1.60, considerando el valor estadístico detectado.\n\nRecomendación final: ✅ Apostar a Victoria Manchester City (Value Bet confirmada)",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        "kelly_criterion"
+      ]
+    },
+    {
+      "fixture_id": 1234509,
+      "home_team": "Bayern Munich",
+      "away_team": "Borussia Dortmund",
+      "kickoff_time": "2026-01-25T08:30:00-06:00",
+      "league_id": 78,
+      "venue": "Allianz Arena",
+      "elo": {
+        "home_elo": 1846.79,
+        "away_elo": 1681.9,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.778,
+            "draw": 0.1313,
+            "away_win": 0.0906
+          },
+          "over_under_2_5": {
+            "over": 0.7582,
+            "under": 0.2418
+          },
+          "over_under_3_5": {
+            "over": 0.5616,
+            "under": 0.4384
+          },
+          "btts": {
+            "yes": 0.5936,
+            "no": 0.4064
+          },
+          "expected_goals": {
+            "home": 3.0,
+            "away": 0.98,
+            "total": 3.98
+          },
+          "most_likely_score": {
+            "home": 2,
+            "away": 0,
+            "probability": 0.0843
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 2.9971,
+            "mu_away": 0.9785
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [
+        {
+          "market": "Ganador Local",
+          "selection": "Bayern Munich",
+          "odds": 1.7,
+          "model_prob": 0.778,
+          "implied_prob": 0.588,
+          "edge": 0.19,
+          "ev": 0.323
+        }
+      ],
+      "kelly": {
+        "Ganador Local": {
+          "kelly_fraction": 0.2125,
+          "half_kelly": 0.1062,
+          "recommendation": "Moderate bet: 10.6% of bankroll @ 1.70 (edge: 19.0%)"
+        }
+      },
+      "ai_analysis": "Análisis Bayern Munich vs Borussia Dortmund:\n\nEl partido presenta un claro dominio del Bayern Munich, respaldado por un rating Elo significativamente superior (1846 vs 1681) y probabilidades contundentes de victoria local del 77.8%. El modelo Dixon-Coles proyecta un resultado con alta probabilidad de goles (Over 2.5 al 75.8%) y posibilidades de anotar ambos equipos (BTTS 59.4%).\n\nLa value bet más destacada es la victoria del Bayern Munich, con un edge del 19% y un valor esperado del 32.3%. La proyección de goles esperados (3-1) refuerza esta tesis. La recomendación es clara: apostar a la victoria local con cuotas superiores a 1.30, aprovechando el value bet identificado. El partido parece tener un riesgo controlado para el Bayern Munich.\n\nRecomendación final: Apostar a la victoria del Bayern Munich con una stake moderada, buscando cuotas superiores a 1.30.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        "kelly_criterion"
+      ]
+    },
+    {
+      "fixture_id": 1234502,
+      "home_team": "Liverpool",
+      "away_team": "Arsenal",
+      "kickoff_time": "2026-01-25T09:00:00-06:00",
+      "league_id": 39,
+      "venue": "Anfield",
+      "elo": {
+        "home_elo": 1837.59,
+        "away_elo": 1693.22,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.7569,
+            "draw": 0.1574,
+            "away_win": 0.0857
+          },
+          "over_under_2_5": {
+            "over": 0.604,
+            "under": 0.396
+          },
+          "over_under_3_5": {
+            "over": 0.3805,
+            "under": 0.6195
+          },
+          "btts": {
+            "yes": 0.4566,
+            "no": 0.5434
+          },
+          "expected_goals": {
+            "home": 2.43,
+            "away": 0.69,
+            "total": 3.12
+          },
+          "most_likely_score": {
+            "home": 2,
+            "away": 0,
+            "probability": 0.13
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 2.4318,
+            "mu_away": 0.6924
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [
+        {
+          "market": "Ganador Local",
+          "selection": "Liverpool",
+          "odds": 1.95,
+          "model_prob": 0.757,
+          "implied_prob": 0.513,
+          "edge": 0.244,
+          "ev": 0.476
+        },
+        {
+          "market": "Over 2.5",
+          "selection": "Más de 2.5 goles",
+          "odds": 1.75,
+          "model_prob": 0.604,
+          "implied_prob": 0.571,
+          "edge": 0.033,
+          "ev": 0.057
+        }
+      ],
+      "kelly": {
+        "Ganador Local": {
+          "kelly_fraction": 0.2125,
+          "half_kelly": 0.1062,
+          "recommendation": "Moderate bet: 10.6% of bankroll @ 1.95 (edge: 24.4%)"
+        },
+        "Over 2.5": {
+          "kelly_fraction": 0.0646,
+          "half_kelly": 0.0323,
+          "recommendation": "Speculative bet: 3.2% of bankroll @ 1.75 (edge: 3.3%)"
+        }
+      },
+      "ai_analysis": "Análisis Liverpool vs Arsenal:\n\nEl partido presenta una clara dominancia local con el modelo Dixon-Coles otorgando un 75.7% de probabilidad de victoria para Liverpool. Los Elo Ratings confirman esta tendencia, con Liverpool significativamente superior (1837.59 vs 1693.22). La diferencia de calidad se refleja también en los goles esperados: 2.4 para Liverpool por solo 0.7 para Arsenal.\n\nLas value bets identificadas son sólidas: Ganador Local con un edge del 24.4% y valor esperado del 47.6%, y Over 2.5 goles con edge del 3.3%. La recomendación es apostar a victoria local y buscar líneas de goles por encima de 2.5, aprovechando el modelo predictivo que sugiere un partido con alta probabilidad de goles. La combinación de ambas apuestas podría maximizar el potencial de beneficio.\n\nRecomendación final: APUESTA RECOMENDADA - Victoria Liverpool + Over 2.5 goles. Consistente con los modelos predictivos y con valor estadístico positivo.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        "kelly_criterion"
+      ]
+    },
+    {
+      "fixture_id": 1234503,
+      "home_team": "Chelsea",
+      "away_team": "Tottenham",
+      "kickoff_time": "2026-01-25T09:00:00-06:00",
+      "league_id": 39,
+      "venue": "Stamford Bridge",
+      "elo": {
+        "home_elo": 1784.22,
+        "away_elo": 1573.29,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.8459,
+            "draw": 0.1328,
+            "away_win": 0.0213
+          },
+          "over_under_2_5": {
+            "over": 0.4268,
+            "under": 0.5732
+          },
+          "over_under_3_5": {
+            "over": 0.2185,
+            "under": 0.7815
+          },
+          "btts": {
+            "yes": 0.1462,
+            "no": 0.8538
+          },
+          "expected_goals": {
+            "home": 2.21,
+            "away": 0.18,
+            "total": 2.39
+          },
+          "most_likely_score": {
+            "home": 2,
+            "away": 0,
+            "probability": 0.2241
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 2.2079,
+            "mu_away": 0.1789
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Chelsea vs Tottenham:\n\nEl modelo Dixon-Coles proyecta una victoria contundente del Chelsea con un 84.6% de probabilidades. Los ratings Elo confirman esta tendencia, mostrando una diferencia significativa de más de 200 puntos a favor del Chelsea. Las expectativas de gol son muy asimétricas (2.2 para Chelsea vs 0.2 para Tottenham), lo que sugiere un dominio local prácticamente absoluto.\n\nLas mejores oportunidades de apuesta son: Victoria del Chelsea con handicap (-1.5) y Bajo 2.5 goles. El modelo predice solo 2.2 goles totales, con una probabilidad muy baja de que el Tottenham anote. La cuota de BTTS (14.6%) indica que es poco probable que ambos equipos marquen. Como recomendación final: Apuesta a Victoria del Chelsea con handicap (-1) y Bajo 2.5 goles, siempre que las cuotas ofrezcan un margen de valor superior al 5%.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1234504,
+      "home_team": "Newcastle",
+      "away_team": "Aston Villa",
+      "kickoff_time": "2026-01-25T11:30:00-06:00",
+      "league_id": 39,
+      "venue": "St James Park",
+      "elo": {
+        "home_elo": 1456.44,
+        "away_elo": 1650.54,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2984,
+            "draw": 0.2672,
+            "away_win": 0.4344
+          },
+          "over_under_2_5": {
+            "over": 0.4659,
+            "under": 0.5341
+          },
+          "over_under_3_5": {
+            "over": 0.2506,
+            "under": 0.7494
+          },
+          "btts": {
+            "yes": 0.5124,
+            "no": 0.4876
+          },
+          "expected_goals": {
+            "home": 1.12,
+            "away": 1.41,
+            "total": 2.54
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1271
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.1249,
+            "mu_away": 1.4131
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Newcastle vs Aston Villa:\n\nEl modelo Dixon-Coles revela claramente el favoritismo del Aston Villa, con un 43.4% de probabilidad de victoria visitante versus solo 29.8% para Newcastle. Los ratings Elo confirman esta tendencia, con Villa significativamente superior (1650.54 vs 1456.44). La predicción de goles esperados (1.1 - 1.4) sugiere un partido contenido, pero con alta probabilidad de gol en ambas porterías (BTTS 51.2%).\n\nLas mejores oportunidades de valor son: Aston Villa DNB (doble oportunidad) y Over 2.5 goles. La probabilidad de BTTS (ambos equipos marcando) es prácticamente 50/50, lo que representa una apuesta atractiva. La recomendación final es: Apostar a Victoria de Aston Villa o BTTS, siempre que las cuotas ofrezcan un margen de valor superior al 5% respecto a la probabilidad predicha.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1234510,
+      "home_team": "RB Leipzig",
+      "away_team": "Bayer Leverkusen",
+      "kickoff_time": "2026-01-25T11:30:00-06:00",
+      "league_id": 78,
+      "venue": "Red Bull Arena",
+      "elo": {
+        "home_elo": 1578.09,
+        "away_elo": 1625.39,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.447,
+            "draw": 0.2235,
+            "away_win": 0.3295
+          },
+          "over_under_2_5": {
+            "over": 0.6751,
+            "under": 0.3249
+          },
+          "over_under_3_5": {
+            "over": 0.4587,
+            "under": 0.5413
+          },
+          "btts": {
+            "yes": 0.677,
+            "no": 0.323
+          },
+          "expected_goals": {
+            "home": 1.88,
+            "away": 1.6,
+            "total": 3.48
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.0938
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.8825,
+            "mu_away": 1.5958
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido RB Leipzig vs Bayer Leverkusen:\n\nEl modelo Dixon-Coles presenta un partido muy equilibrado con ligera ventaja para Bayer Leverkusen, reflejado en sus ratings Elo (1625 vs 1578). La predicción muestra un 44.7% de probabilidad de triunfo local, 33% para visitante y 22.4% de empate. Los datos sugieren un encuentro con alta probabilidad de goles, con un 67.5% de opciones de Over 2.5 y un 67.7% de ambos equipos marcando (BTTS).\n\nLas mejores oportunidades de valor se encuentran en: 1) Apuesta a BTTS (Sí), con alta probabilidad estadística del 67.7%, 2) Over 2.5 goles, con 67.5% de probabilidad, y 3) Victoria de Bayer Leverkusen con cuota atractiva, considerando su ligera superioridad en ratings. La recomendación principal es BTTS + Over 2.5, que ofrece un potencial retorno interesante basado en las proyecciones predictivas.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1234507,
+      "home_team": "Barcelona",
+      "away_team": "Real Madrid",
+      "kickoff_time": "2026-01-25T14:00:00-06:00",
+      "league_id": 140,
+      "venue": "Camp Nou",
+      "elo": {
+        "home_elo": 1620.79,
+        "away_elo": 1695.3,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2703,
+            "draw": 0.3155,
+            "away_win": 0.4142
+          },
+          "over_under_2_5": {
+            "over": 0.3008,
+            "under": 0.6992
+          },
+          "over_under_3_5": {
+            "over": 0.1282,
+            "under": 0.8718
+          },
+          "btts": {
+            "yes": 0.3745,
+            "no": 0.6255
+          },
+          "expected_goals": {
+            "home": 0.82,
+            "away": 1.09,
+            "total": 1.92
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1594
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.8229,
+            "mu_away": 1.0938
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [
+        {
+          "market": "Ganador Visitante",
+          "selection": "Real Madrid",
+          "odds": 2.9,
+          "model_prob": 0.414,
+          "implied_prob": 0.345,
+          "edge": 0.069,
+          "ev": 0.201
+        }
+      ],
+      "kelly": {
+        "Ganador Visitante": {
+          "kelly_fraction": 0.0897,
+          "half_kelly": 0.0449,
+          "recommendation": "Moderate bet: 4.5% of bankroll @ 2.90 (edge: 6.9%)"
+        }
+      },
+      "ai_analysis": "Análisis del Clásico Barcelona vs Real Madrid:\n\nEl modelo Dixon-Coles sugiere un partido equilibrado con ligera ventaja para el Real Madrid, respaldado por su superior rating Elo (1695.3 vs 1620.79). Las probabilidades marcan un 41.4% de victoria visitante frente a un 27% local, con un empate del 31.6%. Los goles esperados (0.8-1.1) apuntan a un encuentro táctico y contenido.\n\nLa value bet más clara es la victoria del Real Madrid, con un edge del 6.9% y un expected value del 20.1%. Esto representa una oportunidad significativa de valor, especialmente considerando las probabilidades ajustadas. Complementariamente, el BTTS (Ambos Equipos Marcan) con 37.5% también ofrece un escenario interesante para apostar.\n\nRecomendación: APUESTA RECOMENDADA - Victoria del Real Madrid. El modelo muestra un claro valor en esta opción, con probabilidades que sugieren rentabilidad a largo plazo.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        "kelly_criterion"
+      ]
+    },
+    {
+      "fixture_id": 1234505,
+      "home_team": "Wolverhampton",
+      "away_team": "Everton",
+      "kickoff_time": "2026-01-26T08:00:00-06:00",
+      "league_id": 39,
+      "venue": "Molineux",
+      "elo": {
+        "home_elo": 1597.59,
+        "away_elo": 1558.73,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.4233,
+            "draw": 0.3101,
+            "away_win": 0.2666
+          },
+          "over_under_2_5": {
+            "over": 0.3135,
+            "under": 0.6865
+          },
+          "over_under_3_5": {
+            "over": 0.1364,
+            "under": 0.8636
+          },
+          "btts": {
+            "yes": 0.3843,
+            "no": 0.6157
+          },
+          "expected_goals": {
+            "home": 1.13,
+            "away": 0.83,
+            "total": 1.96
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1572
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.1311,
+            "mu_away": 0.8328
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Wolverhampton vs Everton:\n\nEl modelo Dixon-Coles sugiere un ligero favoritismo local con un 42.3% de probabilidad de victoria para los Wolves. La diferencia en los Elo Ratings (1597 vs 1558) también respalda un dominio local moderado. La baja esperanza de goles (1.1 - 0.8) indica un partido táctico y cerrado, con probabilidad de bajo marcador.\n\nLas mejores oportunidades de valor se encuentran en: 1) Victoria local con handicap -0.5 (cuota superior a 1.90), 2) Bajo 2.5 goles (probabilidad del 68.6%), y 3) Apuesta combinada de victoria local + bajo 2.5 goles. El modelo BTTS (Ambos Equipos Marcan) tiene una probabilidad del 38.4%, lo que podría ser interesante con una cuota atractiva.\n\nRecomendación final: Apuesta RECOMENDADA en Victoria local con handicap -0.5, complementada con Bajo 2.5 goles. Stake sugerido: 1-1.5 unidades, considerando el valor predictivo de los modelos estadísticos.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1234506,
+      "home_team": "Brighton",
+      "away_team": "West Ham",
+      "kickoff_time": "2026-01-26T10:30:00-06:00",
+      "league_id": 39,
+      "venue": "Amex Stadium",
+      "elo": {
+        "home_elo": 1619.83,
+        "away_elo": 1603.59,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.4498,
+            "draw": 0.345,
+            "away_win": 0.2053
+          },
+          "over_under_2_5": {
+            "over": 0.2138,
+            "under": 0.7862
+          },
+          "over_under_3_5": {
+            "over": 0.0773,
+            "under": 0.9227
+          },
+          "btts": {
+            "yes": 0.2809,
+            "no": 0.7191
+          },
+          "expected_goals": {
+            "home": 1.01,
+            "away": 0.58,
+            "total": 1.59
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 0,
+            "probability": 0.2055
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.0097,
+            "mu_away": 0.5793
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Brighton vs West Ham:\n\nEl modelo Dixon-Coles proyecta un partido con clara ventaja para Brighton, con un 45% de probabilidad de victoria local. Los locales muestran un ligero dominio en el rating Elo (1619.83 vs 1603.59), respaldando la proyección de un triunfo. Los goles esperados (1.0 - 0.6) sugieren un encuentro contenido tácticamente, con Brighton más incisivo en ataque.\n\nLas mejores oportunidades se encuentran en: Victoria Brighton (cuota superior a 2.00), Under 2.5 goles (probabilidad del 78.6%), y No BTTS (71.9%). La recomendación es apostar a Victoria Brighton con handicap (-0.5) o Under 2.5 goles, ya que ambas presentan valor estadístico significativo. La proyección indica un partido controlado por Brighton, con baja producción ofensiva total.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1234508,
+      "home_team": "Atletico Madrid",
+      "away_team": "Sevilla",
+      "kickoff_time": "2026-01-26T12:00:00-06:00",
+      "league_id": 140,
+      "venue": "Wanda Metropolitano",
+      "elo": {
+        "home_elo": 1568.5,
+        "away_elo": 1607.26,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2659,
+            "draw": 0.2516,
+            "away_win": 0.4824
+          },
+          "over_under_2_5": {
+            "over": 0.5108,
+            "under": 0.4892
+          },
+          "over_under_3_5": {
+            "over": 0.2899,
+            "under": 0.7101
+          },
+          "btts": {
+            "yes": 0.539,
+            "no": 0.461
+          },
+          "expected_goals": {
+            "home": 1.12,
+            "away": 1.6,
+            "total": 2.72
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1195
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.1212,
+            "mu_away": 1.5968
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Atletico Madrid vs Sevilla:\n\nEl modelo Dixon-Coles sugiere un ligero favoritismo del Sevilla, con un 48.2% de probabilidad de victoria visitante frente al 26.6% local. Los ratings Elo también respaldan esta tendencia, con Sevilla ligeramente superior (1607.26 vs 1568.5). La predicción de goles esperados (1.1 - 1.6) indica un partido contenido, pero con potencial de anotación.\n\nLas mejores oportunidades se encuentran en: BTTS (Ambos Equipan Marcan) con 53.9% de probabilidad, que parece especialmente atractiva; y Over 2.5 con 51.1%, sugiriendo un encuentro con cierta actividad ofensiva. La cuota de victoria visitante (48.2%) también presenta potencial de valor si las odds son favorables.\n\nRecomendación: Hay valor en BTTS y considerar una apuesta parcial en victoria de Sevilla. Sin embargo, la recomendación principal es BTTS, que ofrece un equilibrio entre probabilidad y potencial retorno.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451287,
+      "home_team": "Sturm Graz",
+      "away_team": "Brann",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Merkur-Arena",
+      "elo": null,
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.1953,
+            "draw": 0.4539,
+            "away_win": 0.3508
+          },
+          "over_under_2_5": {
+            "over": 0.2493,
+            "under": 0.7507
+          },
+          "over_under_3_5": {
+            "over": 0.0969,
+            "under": 0.9031
+          },
+          "btts": {
+            "yes": 0.3242,
+            "no": 0.6758
+          },
+          "expected_goals": {
+            "home": 0.7,
+            "away": 1.02,
+            "total": 1.72
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1812
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 0.6999,
+            "mu_away": 1.0246
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Sturm Graz vs Brann:\n\nEl modelo Dixon-Coles sugiere un encuentro equilibrado con ligera ventaja para el Brann. Las probabilidades indican alta probabilidad de empate (45.4%), lo que refleja un partido muy parejo. Los goles esperados (0.7 - 1.0) apuntan a un marcador bajo y defensivo.\n\nLas mejores oportunidades de valor son: empate (cotización superior a 3.0) y bajo goles (Under 2.5). El modelo predice baja anotación (24.9% probabilidad de Over 2.5) y solo 32.4% de posibilidad de ambos equipos marcando. La recomendación es apostar a empate y Under 2.5 goles, buscando cuotas que ofrezcan al menos 2.5x el stake.\n\nConclusión: Value bet en empate y Under 2.5, siempre que las cuotas superen 3.0 para el empate y 1.80 para Under.",
+      "models_used": [
+        null,
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451302,
+      "home_team": "Celtic",
+      "away_team": "Utrecht",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Celtic Park",
+      "elo": {
+        "home_elo": 1610.12,
+        "away_elo": 1513.83,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.103,
+            "draw": 0.352,
+            "away_win": 0.545
+          },
+          "over_under_2_5": {
+            "over": 0.454,
+            "under": 0.546
+          },
+          "over_under_3_5": {
+            "over": 0.2406,
+            "under": 0.7594
+          },
+          "btts": {
+            "yes": 0.4319,
+            "no": 0.5681
+          },
+          "expected_goals": {
+            "home": 0.74,
+            "away": 1.76,
+            "total": 2.49
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1442
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 0.7351,
+            "mu_away": 1.7564
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Celtic vs Utrecht:\n\nEl modelo Dixon-Coles sugiere una clara ventaja para Utrecht, con probabilidad de victoria del 54.5% frente al 10.3% del Celtic. Las diferencias en los Elo Ratings (1610 vs 1513) también respaldan un resultado favorable al equipo visitante. Los datos indican un partido con probabilidades importantes de gol, con un 45.4% de posibilidades de Over 2.5 y un 43.2% de ambos equipos anotando.\n\nLas mejores opciones de apuesta son: Victoria de Utrecht (cuota cercana a 1.83), Over 2.5 goles, y Ambos Equipos Marcan. La estimación de goles esperados (0.7 - 1.8) sugiere un partido dinámico. Como recomendación final, hay valor en la apuesta a la victoria visitante, especialmente si la cuota supera 1.90. La combinación de Utrecht Win + Over 2.5 podría ofrecer un riesgo/beneficio equilibrado.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451300,
+      "home_team": "Ludogorets",
+      "away_team": "Nice",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Huvepharma Arena",
+      "elo": {
+        "home_elo": 1637.67,
+        "away_elo": 1585.94,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.0329,
+            "draw": 0.4184,
+            "away_win": 0.5488
+          },
+          "over_under_2_5": {
+            "over": 0.2019,
+            "under": 0.7981
+          },
+          "over_under_3_5": {
+            "over": 0.0711,
+            "under": 0.9289
+          },
+          "btts": {
+            "yes": 0.1764,
+            "no": 0.8236
+          },
+          "expected_goals": {
+            "home": 0.28,
+            "away": 1.26,
+            "total": 1.54
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.2689
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 0.2808,
+            "mu_away": 1.2616
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Ludogorets vs Nice:\n\nEl modelo Dixon-Coles sugiere un escenario favorable para el Nice, con una probabilidad de victoria del 54.9% y un alto porcentaje de empate (41.8%). Los ratings Elo también respaldan esta tendencia, con una ligera ventaja para Ludogorets (1637.67 vs 1585.94). Los goles esperados son bajos (0.3 - 1.3), lo que indica un probable partido defensivo y cerrado.\n\nLas mejores oportunidades de apuesta son: 1) Empate (alta probabilidad del 41.8%), 2) Victoria visitante del Nice, y 3) Under 2.5 goles. La baja probabilidad de goles (20.2% over, 17.6% BTTS) sugiere una apuesta de valor en Under 2.5. Recomendación: Apuesta a empate o Victoria visitante con cuota favorable, priorizando Under 2.5 goles como principal value bet.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451290,
+      "home_team": "Panathinaikos",
+      "away_team": "AS Roma",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Olympiako Stadio Spyros Louis",
+      "elo": {
+        "home_elo": 1573.57,
+        "away_elo": 1592.23,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.1236,
+            "draw": 0.4049,
+            "away_win": 0.4715
+          },
+          "over_under_2_5": {
+            "over": 0.319,
+            "under": 0.681
+          },
+          "over_under_3_5": {
+            "over": 0.14,
+            "under": 0.86
+          },
+          "btts": {
+            "yes": 0.3478,
+            "no": 0.6522
+          },
+          "expected_goals": {
+            "home": 0.63,
+            "away": 1.36,
+            "total": 1.98
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.185
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 0.6289,
+            "mu_away": 1.3551
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del Panathinaikos vs AS Roma:\n\nEl modelo Dixon-Coles muestra a AS Roma como favorito ligero, con un 47.1% de probabilidad de victoria, pero destaca un alto porcentaje de empate (40.5%) que sugiere un partido muy equilibrado. Los ratings Elo cercanos (1573 vs 1592) refuerzan esta percepción de paridad, con Roma con una mínima ventaja técnica.\n\nLas mejores oportunidades se concentran en: 1) Empate a cuota superior a 3.00, con un 40.5% de probabilidad según el modelo, 2) Under 2.5 goles, ya que la predicción de goles esperados es baja (0.6-1.4), y 3) Apuesta sin goles (BTTS: No) con un 65.2% de probabilidad de que no anoten ambos equipos. La recomendación es buscar valor en la línea de empate o bajo goles, evitando apuestas a victoria directa por su limitado margen.\n\nRecomendación final: Empate o Under 2.5 goles, siempre que las cuotas ofrezcan un valor superior al 10% del modelo predictivo.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451292,
+      "home_team": "Real Betis",
+      "away_team": "Feyenoord",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Estadio La Cartuja de Sevilla",
+      "elo": {
+        "home_elo": 1692.5,
+        "away_elo": 1534.71,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2977,
+            "draw": 0.3574,
+            "away_win": 0.3449
+          },
+          "over_under_2_5": {
+            "over": 0.6124,
+            "under": 0.3876
+          },
+          "over_under_3_5": {
+            "over": 0.3893,
+            "under": 0.6107
+          },
+          "btts": {
+            "yes": 0.6308,
+            "no": 0.3692
+          },
+          "expected_goals": {
+            "home": 1.5,
+            "away": 1.66,
+            "total": 3.16
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1067
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 1.4987,
+            "mu_away": 1.6646
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Real Betis vs Feyenoord:\n\nEl encuentro se presenta como un duelo muy equilibrado según los modelos predictivos, con ligera ventaja para el Betis en casa. Los ratings Elo muestran superioridad local (1692.5 vs 1534.71), pero los porcentajes de Dixon-Coles sugieren un partido abierto con alta probabilidad de goles. El modelo predice un 61.2% de opciones de Over 2.5 y un 63.1% de probabilidad de goles en ambas porterías.\n\nLas mejores oportunidades de apuesta son: BTTS (Sí) a cuota superior a 1.80, y Over 2.5 goles. El valor estadístico apunta a una apuesta combinada de BTTS + Over 2.5, que puede ofrecer una rentabilidad interesante. La recomendación es una apuesta moderada en este mercado, considerando la imprevisibilidad del encuentro y el potencial ofensivo de ambos equipos.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451288,
+      "home_team": "GO Ahead Eagles",
+      "away_team": "SC Braga",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "De Adelaarshorst",
+      "elo": {
+        "home_elo": 1412.74,
+        "away_elo": 1559.57,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.1561,
+            "draw": 0.4087,
+            "away_win": 0.4352
+          },
+          "over_under_2_5": {
+            "over": 0.3366,
+            "under": 0.6634
+          },
+          "over_under_3_5": {
+            "over": 0.1518,
+            "under": 0.8482
+          },
+          "btts": {
+            "yes": 0.3804,
+            "no": 0.6196
+          },
+          "expected_goals": {
+            "home": 0.73,
+            "away": 1.32,
+            "total": 2.05
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1689
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 0.7272,
+            "mu_away": 1.3219
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis GO Ahead Eagles vs SC Braga:\n\nEl modelo Dixon-Coles indica un partido muy equilibrado con ligera ventaja para SC Braga, reflejado en sus ratings Elo (1412 vs 1559) y probabilidades de victoria. La predicción sugiere un encuentro competitivo con alta probabilidad de empate (40.9%), pero con los portugueses como favoritos sutiles (43.5% victoria visitante).\n\nLas mejores oportunidades de valor están en el empate (cuota superior a 2.5) y el bajo número de goles, con solo 2 goles esperados. El modelo BTTS (38%) sugiere probabilidad moderada de que ambos equipos anoten. Recomendación: Apuesta a empate con cuota atractiva o Under 2.5 goles. El valor estadístico está en estos mercados, evitando apuesta directa a resultado.\n\nConclusión: Value bet en empate o Under 2.5, con moderada confianza estadística.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451293,
+      "home_team": "FC Basel 1893",
+      "away_team": "Plzen",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "St. Jakob-Park",
+      "elo": null,
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2961,
+            "draw": 0.4243,
+            "away_win": 0.2797
+          },
+          "over_under_2_5": {
+            "over": 0.3445,
+            "under": 0.6555
+          },
+          "over_under_3_5": {
+            "over": 0.1573,
+            "under": 0.8427
+          },
+          "btts": {
+            "yes": 0.4187,
+            "no": 0.5813
+          },
+          "expected_goals": {
+            "home": 1.08,
+            "away": 1.0,
+            "total": 2.08
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1365
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 1.0784,
+            "mu_away": 1.0
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido FC Basel 1893 vs Plzen:\n\nEl modelo Dixon-Coles sugiere un encuentro muy equilibrado con ligera tendencia al empate (42.4%), lo que indica un partido muy parejo. La diferencia de goles esperados es mínima (1.1 - 1.0), reforzando la idea de un duelo disputado con pocas probabilidades de goleada.\n\nLas mejores oportunidades de valor son: Empate (cuota superior al 42%), Under 2.5 goles (probabilidad de partido conservador) y Ambos Equipos No Marcan (BTTS No, dado el bajo esperado de goles). La recomendación principal es una apuesta moderada al empate, especialmente si la cuota supera 2.50, y considerar una pequeña inversión al Under 2.5 goles.\n\nRecomendación final: Value bet moderado en Empate y Under 2.5 goles, con una stake reducida por la incertidumbre del encuentro.",
+      "models_used": [
+        null,
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451295,
+      "home_team": "Maccabi Tel Aviv",
+      "away_team": "Bologna",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "TSC Arena",
+      "elo": {
+        "home_elo": 1601.24,
+        "away_elo": 1495.36,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.311,
+            "draw": 0.3955,
+            "away_win": 0.2935
+          },
+          "over_under_2_5": {
+            "over": 0.445,
+            "under": 0.555
+          },
+          "over_under_3_5": {
+            "over": 0.2331,
+            "under": 0.7669
+          },
+          "btts": {
+            "yes": 0.5011,
+            "no": 0.4989
+          },
+          "expected_goals": {
+            "home": 1.27,
+            "away": 1.19,
+            "total": 2.46
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1307
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 1.2714,
+            "mu_away": 1.185
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Maccabi Tel Aviv vs Bologna:\n\nEl partido se presenta muy equilibrado según los modelos predictivos, con ligera ventaja local. El Dixon-Coles sugiere un escenario de alta incertidumbre, con probabilidades casi parejas para cada resultado (31.1% victoria local, 29.3% visitante). Los ratings Elo también confirman este balance, con solo 106 puntos de diferencia.\n\nLa mejor oportunidad de valor está en el mercado de empate (39.6%) y Ambos Equipan Marcan (BTTS) a cuota cercana al 50%. Los goles esperados (1.3-1.2) apuntan a un partido contenido pero con opciones de gol para ambos. La recomendación es BTTS Sí a una cuota superior a 1.80, representando una clara value bet con probabilidad estadística favorable.\n\nRecomendación final: Apuesta a BTTS Sí (Si la cuota supera 1.80)",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451297,
+      "home_team": "Aston Villa",
+      "away_team": "Red Bull Salzburg",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Villa Park",
+      "elo": {
+        "home_elo": 1558.55,
+        "away_elo": 1714.35,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.1928,
+            "draw": 0.3459,
+            "away_win": 0.4614
+          },
+          "over_under_2_5": {
+            "over": 0.6015,
+            "under": 0.3985
+          },
+          "over_under_3_5": {
+            "over": 0.3779,
+            "under": 0.6221
+          },
+          "btts": {
+            "yes": 0.5986,
+            "no": 0.4014
+          },
+          "expected_goals": {
+            "home": 1.21,
+            "away": 1.9,
+            "total": 3.11
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1037
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 1.2119,
+            "mu_away": 1.9005
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Aston Villa vs Red Bull Salzburg:\n\nEl modelo Dixon-Coles muestra un claro favoritismo del Red Bull Salzburg, con un 46.1% de probabilidad de victoria visitante frente al 19.3% local. La diferencia en los ratings Elo (1558 vs 1714) confirma la superioridad del equipo austríaco, sugiriendo un partido donde el Salzburg tiene ventaja significativa.\n\nLas estadísticas indican alto potencial de goles: 60.2% de probabilidad de Over 2.5 y 59.9% de ambos equipos marcando (BTTS). La proyección de goles esperados (1.2 - 1.9) sugiere un encuentro dinámico. La mejor apuesta parece ser: 1) Apuesta a victoria visitante, 2) Over 2.5 goles, 3) Ambos equipos marcan (BTTS). El valor está claramente del lado del Red Bull Salzburg, con cuotas probablemente atractivas considerando su menor estatus.\n\nRecomendación: Value bet en victoria visitante y Over 2.5 goles. Riesgo moderado, potencial retorno interesante.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451291,
+      "home_team": "FK Crvena Zvezda",
+      "away_team": "Celta Vigo",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Stadion Rajko Mit",
+      "elo": {
+        "home_elo": 1735.18,
+        "away_elo": 1492.31,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.3943,
+            "draw": 0.4207,
+            "away_win": 0.1849
+          },
+          "over_under_2_5": {
+            "over": 0.2657,
+            "under": 0.7343
+          },
+          "over_under_3_5": {
+            "over": 0.1065,
+            "under": 0.8935
+          },
+          "btts": {
+            "yes": 0.2938,
+            "no": 0.7062
+          },
+          "expected_goals": {
+            "home": 1.26,
+            "away": 0.52,
+            "total": 1.79
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.2102
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 1.2623,
+            "mu_away": 0.5242
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%",
+            "upset_factor: away +8.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido FK Crvena Zvezda vs Celta Vigo:\n\nEl encuentro presenta un escenario táctico interesante con el equipo serbio como claro favorito local. El modelo Dixon-Coles revela una alta probabilidad de empate (42.1%) y victoria local (39.4%), lo que sugiere un partido muy equilibrado con ventaja para Crvena Zvezda. Los ratings Elo confirman la superioridad local (1735 vs 1492), indicando una diferencia significativa en el nivel competitivo.\n\nLas mejores opciones de apuesta son: Empate con cuota superior a 3.0, apuesta combinada de \"Empate + Bajo 2.5 goles\" (dado el bajo valor esperado de goles: 1.3-0.5), y considerar una apuesta parcial a victoria local. La baja probabilidad de goles visitantes (0.5 esperados) y el contexto local hacen atractiva una apuesta conservadora. Recomendación final: Empate con valor, apostando un porcentaje reducido de la bankroll.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451298,
+      "home_team": "Genk",
+      "away_team": "Malmo FF",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Cegeka Arena",
+      "elo": {
+        "home_elo": 1560.75,
+        "away_elo": 1599.0,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.0651,
+            "draw": 0.3372,
+            "away_win": 0.5977
+          },
+          "over_under_2_5": {
+            "over": 0.4357,
+            "under": 0.5643
+          },
+          "over_under_3_5": {
+            "over": 0.2256,
+            "under": 0.7744
+          },
+          "btts": {
+            "yes": 0.3773,
+            "no": 0.6227
+          },
+          "expected_goals": {
+            "home": 0.59,
+            "away": 1.83,
+            "total": 2.42
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1611
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 0.5949,
+            "mu_away": 1.8258
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Genk vs Malmo FF:\n\nEl modelo Dixon-Coles muestra un claro favoritismo para Malmo FF, con una probabilidad de victoria del 59.8% frente al 6.5% de Genk. Los ratings Elo también respaldan esta tendencia, con Malmo ligeramente superior (1599.0 vs 1560.75). La predicción sugiere un partido con pocas probabilidades de goles locales y alta probabilidad de triunfo visitante.\n\nLas mejores oportunidades son: Victoria de Malmo (valor significativo), Bajo 2.5 goles (predicción de 2.4 goles esperados) y No BTTS (62.3% probabilidad de puerta a cero). La recomendación es apostar por victoria de Malmo, preferiblemente con handicap asiático (-0.5) para mitigar riesgos. El valor está en la baja probabilidad de gol local y el dominio visitante pronosticado.\n\nRecomendación final: Apuesta a Victoria de Malmo con handicap, cuota entre 1.80-2.00.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451294,
+      "home_team": "Lyon",
+      "away_team": "PAOK",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Parc Olympique Lyonnais",
+      "elo": {
+        "home_elo": 1621.64,
+        "away_elo": 1654.82,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.4352,
+            "draw": 0.3517,
+            "away_win": 0.2131
+          },
+          "over_under_2_5": {
+            "over": 0.5018,
+            "under": 0.4982
+          },
+          "over_under_3_5": {
+            "over": 0.2818,
+            "under": 0.7182
+          },
+          "btts": {
+            "yes": 0.4913,
+            "no": 0.5087
+          },
+          "expected_goals": {
+            "home": 1.8,
+            "away": 0.89,
+            "total": 2.68
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1217
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 1.7952,
+            "mu_away": 0.886
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%",
+            "upset_factor: away +8.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Lyon vs PAOK:\n\nEl encuentro presenta un partido muy equilibrado según los modelos predictivos. Los ratings Elo revelan una ligera ventaja técnica para PAOK (1654.82 vs 1621.64), aunque Lyon juega como local. El modelo Dixon-Coles otorga un 43.5% de probabilidad de triunfo local, con un empate como segundo resultado más probable (35.2%).\n\nLas mejores opciones de valor son: 1) Apuesta al empate (cuota superior a 3.20), dado el 35.2% de probabilidad del modelo, y 2) Apostar al Over 2.5 goles, con un 50.2% de probabilidades. Los goles esperados (1.8 - 0.9) sugieren un partido con opciones de gol. La recomendación es buscar valor en el empate o en una apuesta combinada de Over 2.5 goles.\n\nRecomendación final: Apostar al empate o Over 2.5 goles, priorizando el mercado con mejores cuotas y probabilidad superior al 50% en el modelo Dixon-Coles.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451285,
+      "home_team": "FC Porto",
+      "away_team": "Rangers",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Estádio Do Dragão",
+      "elo": {
+        "home_elo": 1620.69,
+        "away_elo": 1578.56,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.5622,
+            "draw": 0.3464,
+            "away_win": 0.0915
+          },
+          "over_under_2_5": {
+            "over": 0.2992,
+            "under": 0.7008
+          },
+          "over_under_3_5": {
+            "over": 0.1271,
+            "under": 0.8729
+          },
+          "btts": {
+            "yes": 0.1997,
+            "no": 0.8003
+          },
+          "expected_goals": {
+            "home": 1.63,
+            "away": 0.28,
+            "total": 1.91
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.2398
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 1.6262,
+            "mu_away": 0.2845
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%",
+            "upset_factor: away +8.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis FC Porto vs Rangers:\n\nEl modelo Dixon-Coles muestra una clara superioridad del FC Porto, con un 56.2% de probabilidad de victoria local y unos goles esperados significativamente superiores (1.6 vs 0.3). Los Elo Ratings confirman esta diferencia, con Porto 42 puntos por encima, lo que sugiere un dominio técnico y táctico importante.\n\nLas mejores opciones de apuesta son: victoria del FC Porto (cuota cerca del 1.80), bajo 2.5 goles (probabilidad del 70.1%), y sin goles de ambos equipos (BTTS: No, con 80% de probabilidad). La diferencia de calidad hace que la línea de -1.5 goles para Porto sea especialmente atractiva. Existe un claro value bet en la victoria local con handicap.\n\nRecomendación final: Apuesta a victoria del FC Porto con handicap -1, considerando la contundencia estadística y la diferencia de nivel entre ambos equipos.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451286,
+      "home_team": "VfB Stuttgart",
+      "away_team": "BSC Young Boys",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "MHPArena",
+      "elo": {
+        "home_elo": 1533.87,
+        "away_elo": 1676.71,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.3493,
+            "draw": 0.3775,
+            "away_win": 0.2732
+          },
+          "over_under_2_5": {
+            "over": 0.4687,
+            "under": 0.5313
+          },
+          "over_under_3_5": {
+            "over": 0.2529,
+            "under": 0.7471
+          },
+          "btts": {
+            "yes": 0.4985,
+            "no": 0.5015
+          },
+          "expected_goals": {
+            "home": 1.55,
+            "away": 1.0,
+            "total": 2.55
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1223
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 1.5533,
+            "mu_away": 0.9956
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%",
+            "upset_factor: away +8.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido VfB Stuttgart vs BSC Young Boys:\n\nEl modelo Dixon-Coles presenta un escenario equilibrado con ligera ventaja para Young Boys. El rating Elo superior de los visitantes (1676.71 vs 1533.87) respalda su potencial competitivo. La predicción sugiere probabilidades cercanas para todas las opciones de resultado, con un empate como resultado más probable (37.8%), seguido por victoria local (34.9%).\n\nLas mejores oportunidades se encuentran en las siguientes opciones: BTTS (Ambos Equipos Marcan) con 49.9% de probabilidad, y Over 2.5 goles con 46.9%. Los goles esperados (1.6 - 1.0) indican un partido con potencial ofensivo moderado. La recomendación es considerar una apuesta en BTTS o un empate, siempre evaluando las cuotas del mercado para confirmar el valor real de la apuesta.\n\nRecomendación final: Buscar valor en BTTS o empate, con preferencia por BTTS si las cuotas lo permiten. No hay una value bet definitiva, pero hay opciones interesantes con márgenes ajustados.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451299,
+      "home_team": "Nottingham Forest",
+      "away_team": "Ferencvarosi TC",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "City Ground",
+      "elo": {
+        "home_elo": 1680.76,
+        "away_elo": 1581.91,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.3321,
+            "draw": 0.3936,
+            "away_win": 0.2743
+          },
+          "over_under_2_5": {
+            "over": 0.4114,
+            "under": 0.5886
+          },
+          "over_under_3_5": {
+            "over": 0.2064,
+            "under": 0.7936
+          },
+          "btts": {
+            "yes": 0.4551,
+            "no": 0.5449
+          },
+          "expected_goals": {
+            "home": 1.41,
+            "away": 0.92,
+            "total": 2.33
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1363
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 1.4128,
+            "mu_away": 0.9153
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%",
+            "upset_factor: away +8.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Nottingham Forest vs Ferencvarosi TC:\n\nEl encuentro presenta un escenario equilibrado con ligera ventaja para Nottingham Forest. Los modelos predictivos Dixon-Coles sugieren un partido muy parejo, con un empate (39.4%) como resultado más probable, seguido de una victoria local (33.2%). La diferencia de Elo Ratings (98.85 puntos a favor de Forest) respalda la tendencia local, pero sin ser una ventaja aplastante.\n\nLas mejores oportunidades de apuesta se concentran en: Empate (cuota atractiva), Under 2.5 goles (esperados 2.3 goles totales) y Ambos Equipos Marcan (45.5% de probabilidad). La apuesta de valor más clara es el empate, especialmente si la cuota supera 3.00. No se detecta una value bet definitiva, pero el mercado de empate y bajo goles ofrecen opciones interesantes con riesgo controlado.\n\nRecomendación: Empate o Under 2.5 goles, con apuesta conservadora y stake reducido.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451289,
+      "home_team": "Lille",
+      "away_team": "SC Freiburg",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Decathlon Arena - Stade Pierre-Mauroy",
+      "elo": {
+        "home_elo": 1488.16,
+        "away_elo": 1664.65,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.1208,
+            "draw": 0.4997,
+            "away_win": 0.3795
+          },
+          "over_under_2_5": {
+            "over": 0.1499,
+            "under": 0.8501
+          },
+          "over_under_3_5": {
+            "over": 0.0462,
+            "under": 0.9538
+          },
+          "btts": {
+            "yes": 0.209,
+            "no": 0.791
+          },
+          "expected_goals": {
+            "home": 0.43,
+            "away": 0.9,
+            "total": 1.33
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 0,
+            "probability": 0.2656
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 0.4315,
+            "mu_away": 0.8989
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Lille vs SC Freiburg:\n\nEl encuentro presenta un claro dominio del Freiburg según los modelos predictivos, con una probabilidad de victoria visitante del 38% frente al 12.1% local. Los ratings Elo confirman la superioridad del equipo alemán (1664.65 vs 1488.16), sugiriendo un potencial resultado favorable a los visitantes. La predicción de Dixon-Coles indica un alto porcentaje de empate (50%), lo que añade complejidad al análisis.\n\nLas mejores oportunidades de valor se concentran en: 1) Apuesta a victoria del Freiburg, considerando su clara ventaja estadística, 2) Resultado de empate, con una probabilidad muy significativa del 50%, y 3) Bajo número de goles, dado que los goles esperados son muy reducidos (0.4 - 0.9). La recomendación es apostar al empate o a victoria visitante con cuotas superiores a 1.80, evitando el over 2.5 goles por su baja probabilidad (15%).",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451301,
+      "home_team": "FC Midtjylland",
+      "away_team": "Dinamo Zagreb",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "MCH Arena",
+      "elo": {
+        "home_elo": 1562.6,
+        "away_elo": 1674.27,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2493,
+            "draw": 0.499,
+            "away_win": 0.2518
+          },
+          "over_under_2_5": {
+            "over": 0.1768,
+            "under": 0.8232
+          },
+          "over_under_3_5": {
+            "over": 0.0586,
+            "under": 0.9414
+          },
+          "btts": {
+            "yes": 0.2652,
+            "no": 0.7348
+          },
+          "expected_goals": {
+            "home": 0.7,
+            "away": 0.74,
+            "total": 1.44
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 0,
+            "probability": 0.2378
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 0.6989,
+            "mu_away": 0.7434
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido FC Midtjylland vs Dinamo Zagreb:\n\nEl modelo Dixon-Coles revela un partido extremadamente equilibrado, con probabilidades casi idénticas para victoria local (24.9%) y visitante (25.2%), y un alto porcentaje de empate (49.9%). Los ratings Elo confirman este escenario, con Dinamo Zagreb ligeramente superior (1674 vs 1562). Los goles esperados son bajos y simétricos (0.7 para cada equipo), lo que sugiere un encuentro táctico y defensivo.\n\nLas mejores oportunidades de valor son: 1) Apuesta a empate (cuota superior a 3.0), 2) Under 2.5 goles, y 3) Sin goles en el primer tiempo. La probabilidad de BTTS es baja (26.5%), lo que refuerza la expectativa de un partido cerrado. No hay una clara value bet, pero el empate parece la opción más probable con mayor potencial de rentabilidad.\n\nRecomendación: Empate con cuota superior a 3.0, apostando un porcentaje conservador del bankroll (1-2%). Si no encuentras valor en el empate, es mejor abstenerse.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1451296,
+      "home_team": "FCSB",
+      "away_team": "Fenerbahçe",
+      "kickoff_time": "2026-01-29T14:00:00-06:00",
+      "league_id": 3,
+      "venue": "Arena Nationala",
+      "elo": {
+        "home_elo": 1698.03,
+        "away_elo": 1440.27,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2444,
+            "draw": 0.4281,
+            "away_win": 0.3275
+          },
+          "over_under_2_5": {
+            "over": 0.327,
+            "under": 0.673
+          },
+          "over_under_3_5": {
+            "over": 0.1453,
+            "under": 0.8547
+          },
+          "btts": {
+            "yes": 0.4004,
+            "no": 0.5996
+          },
+          "expected_goals": {
+            "home": 0.9,
+            "away": 1.11,
+            "total": 2.01
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1466
+          },
+          "model_params": {
+            "home_advantage": 0.0755,
+            "rho": -0.0116,
+            "lambda_home": 0.904,
+            "mu_away": 1.1095
+          },
+          "competition_adjustments": [
+            "draw_boost: +12.0%"
+          ],
+          "is_cup_competition": true
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis FCSB vs Fenerbahçe:\n\nEl partido presenta un escenario equilibrado según el modelo Dixon-Coles, con ligera ventaja para el local FCSB. Los ratings Elo confirman la superioridad del equipo rumano (1698 vs 1440), lo que sugiere una dinámica favorable para FCSB. Las probabilidades indican un encuentro trabado, con alta probabilidad de empate (42.8%) y bajo potencial de goles (esperados 2 goles en total).\n\nLas mejores opciones de apuesta son: Empate a cuota superior a 3.0, Bajo 2.5 goles, y Resultado sin goles. La probabilidad de BTTS (40%) sugiere que ambos equipos tienen opciones de anotar. La recomendación es una apuesta conservadora en \"Empate\" o \"Bajo 2.5 goles\", con value bet clara en estas opciones por su atractiva relación riesgo-beneficio.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1394605,
+      "home_team": "Antalyaspor",
+      "away_team": "Trabzonspor",
+      "kickoff_time": "2026-01-30T11:00:00-06:00",
+      "league_id": 203,
+      "venue": "Corendon Airlines Park",
+      "elo": {
+        "home_elo": 1321.76,
+        "away_elo": 1571.6,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.1212,
+            "draw": 0.2356,
+            "away_win": 0.6432
+          },
+          "over_under_2_5": {
+            "over": 0.3916,
+            "under": 0.6084
+          },
+          "over_under_3_5": {
+            "over": 0.1913,
+            "under": 0.8087
+          },
+          "btts": {
+            "yes": 0.356,
+            "no": 0.644
+          },
+          "expected_goals": {
+            "home": 0.57,
+            "away": 1.68,
+            "total": 2.25
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1753
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.5728,
+            "mu_away": 1.6809
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Antalyaspor vs Trabzonspor:\n\nEl modelo Dixon-Coles muestra una clara superioridad del Trabzonspor, reflejada en un 64.3% de probabilidad de victoria visitante. Los ratings Elo también confirman esta diferencia: Trabzonspor con 1571.6 puntos versus 1321.76 de Antalyaspor. La predicción de goles esperados (0.6 - 1.7) sugiere un partido con ventaja ofensiva para el equipo visitante.\n\nLas mejores oportunidades de apuesta son: victoria visitante (64.3%), considerando el amplio margen predictivo, y la línea de goles Over 2.5 con un 39.2% de probabilidad. Como recomendación principal, la apuesta en Trabzonspor parece tener valor, especialmente si las cuotas ofrecen un margen superior al 55-60% implícito en la predicción. Sugiero una apuesta en victoria visitante o handicap -0.5 para Trabzonspor.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1394611,
+      "home_team": "Kasımpaşa",
+      "away_team": "Samsunspor",
+      "kickoff_time": "2026-01-30T11:00:00-06:00",
+      "league_id": 203,
+      "venue": "Recep Tayyip Erdoğan Stadyumu",
+      "elo": {
+        "home_elo": 1316.42,
+        "away_elo": 1524.34,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.3535,
+            "draw": 0.3149,
+            "away_win": 0.3316
+          },
+          "over_under_2_5": {
+            "over": 0.3137,
+            "under": 0.6863
+          },
+          "over_under_3_5": {
+            "over": 0.1365,
+            "under": 0.8635
+          },
+          "btts": {
+            "yes": 0.3927,
+            "no": 0.6073
+          },
+          "expected_goals": {
+            "home": 1.0,
+            "away": 0.96,
+            "total": 1.96
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 0,
+            "probability": 0.1418
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.003,
+            "mu_away": 0.9615
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Kasımpaşa vs Samsunspor:\n\nEl encuentro presenta un panorama bastante equilibrado según los modelos predictivos, con una ligera ventaja para Samsunspor avalada por su superior rating Elo (1524.34 vs 1316.42). La predicción Dixon-Coles sugiere un partido muy parejo, con probabilidades muy cercanas para cada resultado: 35.4% victoria local, 31.5% empate y 33.2% victoria visitante.\n\nLos mejores valores de apuesta se encuentran en:\n- Empate con cuota superior a 3.0\n- Apuesta BTTS (Ambos Equipos Marcan) con 39.3% de probabilidad\n- Under 2.5 goles, dado que los goles esperados son 1.0 - 1.0\n\nRecomendación: Existe valor en la apuesta de empate, especialmente si la cuota supera 3.10. La baja esperanza de goles y el equilibrio estadístico hacen atractiva esta opción. Stake recomendado: 1-1.5 unidades.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1381052,
+      "home_team": "NAC Breda",
+      "away_team": "Twente",
+      "kickoff_time": "2026-01-30T13:00:00-06:00",
+      "league_id": 88,
+      "venue": "Rat Verlegh Stadion",
+      "elo": {
+        "home_elo": 1431.57,
+        "away_elo": 1426.34,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2677,
+            "draw": 0.2682,
+            "away_win": 0.4641
+          },
+          "over_under_2_5": {
+            "over": 0.4467,
+            "under": 0.5533
+          },
+          "over_under_3_5": {
+            "over": 0.2346,
+            "under": 0.7654
+          },
+          "btts": {
+            "yes": 0.4905,
+            "no": 0.5095
+          },
+          "expected_goals": {
+            "home": 1.03,
+            "away": 1.44,
+            "total": 2.46
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.127
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.0253,
+            "mu_away": 1.4379
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis de NAC Breda vs Twente:\n\nEl partido se presenta muy equilibrado según los ratings Elo, con una ligera ventaja para Twente. El modelo Dixon-Coles sugiere un encuentro competitivo, con probabilidades muy repartidas: 26.8% para victoria local, 26.8% para empate y 46.4% para triunfo visitante. La esperanza de goles se sitúa en un rango bajo (1.0 - 1.4), lo que indica un posible partido trabado.\n\nLas mejores oportunidades de valor están en Gol/No Gol (BTTS) con un 49% de probabilidad, y Over 2.5 goles con un 44.7%. La apuesta más interesante es doble resultado: 1X (empate o victoria local) combinada con BTTS, que ofrece un potencial margen de beneficio significativo. Sin embargo, dado el ajustado diferencial de los ratings y las probabilidades, no hay una clara value bet que recomiende una inversión agresiva.\n\nRecomendación: Precaución. Si apuestas, considera una combinación de BTTS + Under 3.5 con stake reducido.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1388482,
+      "home_team": "1. FC Köln",
+      "away_team": "VfL Wolfsburg",
+      "kickoff_time": "2026-01-30T13:30:00-06:00",
+      "league_id": 78,
+      "venue": "RheinEnergieStadion",
+      "elo": {
+        "home_elo": 1531.27,
+        "away_elo": 1524.26,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.3811,
+            "draw": 0.346,
+            "away_win": 0.2729
+          },
+          "over_under_2_5": {
+            "over": 0.2324,
+            "under": 0.7676
+          },
+          "over_under_3_5": {
+            "over": 0.0874,
+            "under": 0.9126
+          },
+          "btts": {
+            "yes": 0.3157,
+            "no": 0.6843
+          },
+          "expected_goals": {
+            "home": 0.93,
+            "away": 0.73,
+            "total": 1.66
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 0,
+            "probability": 0.1915
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.9264,
+            "mu_away": 0.7343
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido 1. FC Köln vs VfL Wolfsburg:\n\nLos ratings Elo prácticamente idénticos (1531 vs 1524) sugieren un encuentro muy equilibrado, con ligera ventaja para el Köln como local. El modelo Dixon-Coles confirma esta paridad, dando 38.1% de probabilidad de triunfo local, 34.6% de empate y 27.3% de victoria visitante. Los goles esperados (0.9-0.7) apuntan a un partido defensivo y contenido.\n\nLas mejores opciones de valor son: \"Empate\" (cuota superior a 3.0 sería interesante) y \"Bajo 2.5 goles\" (probabilidad del 76.8%). Recomendación principal: Apuesta a \"No Gol\" o \"Bajo 2.5\" con cuotas atractivas. El modelo Dixon-Coles identifica un 31.6% de probabilidad de que ambos equipos anoten, lo que lo hace un escenario secundario pero menos recomendable. En resumen: partido trabado con pocas opciones de muchos goles.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1387870,
+      "home_team": "Lens",
+      "away_team": "Le Havre",
+      "kickoff_time": "2026-01-30T13:45:00-06:00",
+      "league_id": 61,
+      "venue": "Stade Bollaert-Delelis",
+      "elo": {
+        "home_elo": 1579.81,
+        "away_elo": 1377.38,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.6129,
+            "draw": 0.2412,
+            "away_win": 0.1459
+          },
+          "over_under_2_5": {
+            "over": 0.4144,
+            "under": 0.5856
+          },
+          "over_under_3_5": {
+            "over": 0.2087,
+            "under": 0.7913
+          },
+          "btts": {
+            "yes": 0.3982,
+            "no": 0.6018
+          },
+          "expected_goals": {
+            "home": 1.67,
+            "away": 0.67,
+            "total": 2.34
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1595
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.6674,
+            "mu_away": 0.6719
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Lens vs Le Havre:\n\nEl Lens parte como claro favorito según los modelos predictivos, con un 61.3% de probabilidad de victoria local respaldado por un rating Elo significativamente superior (1579 vs 1377). La diferencia de calidad se refleja en unos goles esperados de 1.7 para Lens por solo 0.7 para Le Havre, lo que sugiere un dominio local bastante marcado.\n\nLas mejores opciones de apuesta son: Victoria del Lens (cuota inferior a 1.70), Bajo 2.5 goles (probabilidad del 58.6%), y Lens por 1-2 goles de diferencia. El modelo Dixon-Coles muestra potencial en mercados como \"Lens gana y menos de 3 goles\" o \"Resultado correcto entre 2-0 y 3-0\". La probabilidad de BTTS es del 39.8%, lo que no representa un valor especialmente atractivo.\n\nRecomendación final: Apuesta RECOMENDADA en Victoria del Lens con hándicap -1 gol, con un valor esperado positivo según los modelos predictivos.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1378088,
+      "home_team": "Lazio",
+      "away_team": "Genoa",
+      "kickoff_time": "2026-01-30T13:45:00-06:00",
+      "league_id": 135,
+      "venue": "Stadio Olimpico",
+      "elo": {
+        "home_elo": 1570.96,
+        "away_elo": 1425.9,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.5915,
+            "draw": 0.2184,
+            "away_win": 0.1901
+          },
+          "over_under_2_5": {
+            "over": 0.5712,
+            "under": 0.4288
+          },
+          "over_under_3_5": {
+            "over": 0.3471,
+            "under": 0.6529
+          },
+          "btts": {
+            "yes": 0.5494,
+            "no": 0.4506
+          },
+          "expected_goals": {
+            "home": 1.96,
+            "away": 1.02,
+            "total": 2.97
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1028
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.958,
+            "mu_away": 1.0169
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Lazio vs Genoa:\n\nLazio muestra una clara superioridad en este encuentro, respaldada por ratings Elo significativamente superiores (1570.96 vs 1425.9) y un modelo Dixon-Coles que proyecta un 59.2% de probabilidad de victoria local. La diferencia de calidad entre ambos equipos es evidente, con Lazio generando 2 goles esperados contra 1 del Genoa.\n\nLas mejores opciones de valor son: victoria de Lazio (cuota inferior a 1.70), apuesta a Over 2.5 goles (57.1% de probabilidad) y ambos equipos marcando (BTTS sí, con 54.9%). La recomendación principal es apostar a victoria local con handicap -1, dado el potencial de victoria cómoda y la diferencia técnica entre equipos.\n\nConclusión: Value bet confirmado en victoria de Lazio y Over 2.5, con confianza media-alta en el pronóstico.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1391032,
+      "home_team": "Espanyol",
+      "away_team": "Alaves",
+      "kickoff_time": "2026-01-30T14:00:00-06:00",
+      "league_id": 140,
+      "venue": "RCDE Stadium",
+      "elo": {
+        "home_elo": 1590.23,
+        "away_elo": 1508.3,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.472,
+            "draw": 0.3994,
+            "away_win": 0.1286
+          },
+          "over_under_2_5": {
+            "over": 0.1159,
+            "under": 0.8841
+          },
+          "over_under_3_5": {
+            "over": 0.0319,
+            "under": 0.9681
+          },
+          "btts": {
+            "yes": 0.1574,
+            "no": 0.8426
+          },
+          "expected_goals": {
+            "home": 0.86,
+            "away": 0.32,
+            "total": 1.18
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 0,
+            "probability": 0.3087
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.8629,
+            "mu_away": 0.3156
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Espanyol vs Alaves:\n\nEl modelo Dixon-Coles sugiere un claro dominio local con probabilidad de victoria del 47.2%. Espanyol presenta una ventaja significativa en el rating Elo (1590 vs 1508), respaldando un resultado favorable para el equipo local. La baja esperanza de goles (0.9-0.3) indica un probable partido cerrado y táctico.\n\nLas mejores opciones de apuesta son: 1) Victoria Espanyol con cuota superior a 1.90, 2) Bajo 2.5 goles (probabilidad del 88.4%), 3) Resultado 1-0 o 2-0. La probabilidad de empate es considerable (39.9%), lo que añade complejidad al pronóstico. La recomendación es apostar a victoria local con handicap de -0.5 o bajo 2.5 goles, siempre que las cuotas ofrezcan valor (margen superior al 5% respecto a la probabilidad implícita).",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1396416,
+      "home_team": "Guimaraes",
+      "away_team": "Moreirense",
+      "kickoff_time": "2026-01-30T14:45:00-06:00",
+      "league_id": 94,
+      "venue": "Estádio Dom Afonso Henriques",
+      "elo": {
+        "home_elo": 1471.33,
+        "away_elo": 1378.33,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.6014,
+            "draw": 0.242,
+            "away_win": 0.1566
+          },
+          "over_under_2_5": {
+            "over": 0.4278,
+            "under": 0.5722
+          },
+          "over_under_3_5": {
+            "over": 0.2193,
+            "under": 0.7807
+          },
+          "btts": {
+            "yes": 0.4175,
+            "no": 0.5825
+          },
+          "expected_goals": {
+            "home": 1.67,
+            "away": 0.72,
+            "total": 2.39
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1518
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.6718,
+            "mu_away": 0.7186
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Guimaraes vs Moreirense:\n\nEl Guimaraes parte como claro favorito, con un 60.1% de probabilidades de victoria según el modelo Dixon-Coles. La diferencia de ratings (1471 vs 1378) confirma su supremacía, sugiriendo un dominio local sólido. Las estadísticas predicen un encuentro con aproximadamente 2.4 goles totales, con una tendencia clara hacia el equipo local.\n\nLas mejores oportunidades de valor son: 1) Victoria del Guimaraes (cuota inferior a 1.70), 2) Apuesta Over 1.5 goles (probabilidad del 42.8%), y 3) Ambos equipos marcando (BTTS) con un 41.8% de probabilidad. La recomendación es apostar en victoria local y buscar mercados de goles, especialmente si las cuotas ofrecen margen de beneficio superior al 5% respecto a las probabilidades calculadas.\n\nConclusión: Value bet en victoria local y mercados de goles, con una confianza moderada-alta en el pronóstico.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1394604,
+      "home_team": "Alanyaspor",
+      "away_team": "Eyüpspor",
+      "kickoff_time": "2026-01-31T05:30:00-06:00",
+      "league_id": 203,
+      "venue": "GAİN Park Stadyumu",
+      "elo": {
+        "home_elo": 1506.36,
+        "away_elo": 1457.32,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.5842,
+            "draw": 0.2333,
+            "away_win": 0.1826
+          },
+          "over_under_2_5": {
+            "over": 0.4977,
+            "under": 0.5023
+          },
+          "over_under_3_5": {
+            "over": 0.2782,
+            "under": 0.7218
+          },
+          "btts": {
+            "yes": 0.4894,
+            "no": 0.5106
+          },
+          "expected_goals": {
+            "home": 1.78,
+            "away": 0.88,
+            "total": 2.66
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1227
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.7803,
+            "mu_away": 0.8845
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Alanyaspor vs Eyüpspor:\n\nEl modelo Dixon-Coles sugiere un claro dominio local con un 58.4% de probabilidad de victoria para Alanyaspor. Los ratings Elo confirman la diferencia de nivel, con una ventaja significativa de 49 puntos para el equipo local. Las expectativas de gol son favorables, con 1.8 goles esperados para Alanyaspor y 0.9 para Eyüpspor, lo que indica un potencial ataque local sólido.\n\nLas mejores oportunidades de apuesta se encuentran en: victoria local (cuota cercana a 1.70), under 2.5 goles (el modelo predice un partido controlado), y apuesta al handicap local (-0.5 o -1). La probabilidad de BTTS (48.9%) y Over 2.5 (49.8%) están muy equilibradas, sugiriendo precaución. La recomendación es apostar a victoria local con handicap, donde encuentro valor real por la diferencia estadística entre ambos equipos.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1391038,
+      "home_team": "Oviedo",
+      "away_team": "Girona",
+      "kickoff_time": "2026-01-31T07:00:00-06:00",
+      "league_id": 140,
+      "venue": "Estadio Nuevo Carlos Tartiere",
+      "elo": null,
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.3814,
+            "draw": 0.3,
+            "away_win": 0.3186
+          },
+          "over_under_2_5": {
+            "over": 0.3566,
+            "under": 0.6434
+          },
+          "over_under_3_5": {
+            "over": 0.1657,
+            "under": 0.8343
+          },
+          "btts": {
+            "yes": 0.4281,
+            "no": 0.5719
+          },
+          "expected_goals": {
+            "home": 1.12,
+            "away": 1.0,
+            "total": 2.12
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.136
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.1231,
+            "mu_away": 1.0
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Oviedo vs Girona:\n\nEl modelo Dixon-Coles muestra un partido muy equilibrado con ligera ventaja local. Las probabilidades sugieren un encuentro ajustado, con Oviedo como favorito marginal (38.1% de victoria) pero con Girona muy cerca (31.9%). Los goles esperados son bajos (2.1 en total), lo que indica un partido táctico y controlado.\n\nLas mejores oportunidades de valor están en el Under 2.5 (64.3% probabilidad) y el empate (30% probabilidad). El BTTS (Ambos Equipan Marcan) tiene un 42.8% de probabilidad, lo que lo hace interesante. La recomendación es apostar al Under 2.5 goles o al empate, siempre que las cuotas ofrezcan un margen de beneficio superior al 10% respecto a la probabilidad calculada.\n\nRecomendación final: Bajo 2.5 goles o Empate, buscando cuotas superiores a 1.70 para considerar una apuesta con value.",
+      "models_used": [
+        null,
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1378091,
+      "home_team": "Pisa",
+      "away_team": "Sassuolo",
+      "kickoff_time": "2026-01-31T08:00:00-06:00",
+      "league_id": 135,
+      "venue": "Arena Garibaldi - Stadio Romeo Anconetani",
+      "elo": null,
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2718,
+            "draw": 0.3126,
+            "away_win": 0.4156
+          },
+          "over_under_2_5": {
+            "over": 0.3089,
+            "under": 0.6911
+          },
+          "over_under_3_5": {
+            "over": 0.1334,
+            "under": 0.8666
+          },
+          "btts": {
+            "yes": 0.3817,
+            "no": 0.6183
+          },
+          "expected_goals": {
+            "home": 0.84,
+            "away": 1.11,
+            "total": 1.95
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1568
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.8372,
+            "mu_away": 1.1096
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Pisa vs Sassuolo:\n\nEl modelo Dixon-Coles sugiere un partido equilibrado con ligera ventaja para el Sassuolo (41.6% probabilidad de victoria visitante). Los datos indican un encuentro con potencial de goles bajos (esperados 1.9 goles totales), pero con opciones interesantes de BTTS (38.2%) y probabilidad de marcador ajustado.\n\nLas mejores opciones de apuesta serían: 1) Apuesta a victoria visitante con cuota superior a 2.30, 2) Opción de BTTS con cuota por encima de 1.80, y 3) Under 2.5 goles. La recomendación principal es apostar a victoria del Sassuolo con cuota de valor, ya que el modelo le da más probabilidades que un escenario de empate. La cuota debería superar 2.20 para considerarse value bet.",
+      "models_used": [
+        null,
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1394606,
+      "home_team": "Başakşehir",
+      "away_team": "Rizespor",
+      "kickoff_time": "2026-01-31T08:00:00-06:00",
+      "league_id": 203,
+      "venue": "Basaksehir Fatih Terim Stadium",
+      "elo": {
+        "home_elo": 1393.69,
+        "away_elo": 1238.8,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.612,
+            "draw": 0.2457,
+            "away_win": 0.1423
+          },
+          "over_under_2_5": {
+            "over": 0.3944,
+            "under": 0.6056
+          },
+          "over_under_3_5": {
+            "over": 0.1934,
+            "under": 0.8066
+          },
+          "btts": {
+            "yes": 0.3802,
+            "no": 0.6198
+          },
+          "expected_goals": {
+            "home": 1.63,
+            "away": 0.64,
+            "total": 2.26
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1677
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.6258,
+            "mu_away": 0.6383
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Başakşehir vs Rizespor:\n\nEl encuentro presenta un claro dominio local según los modelos predictivos. El Başakşehir muestra una superioridad significativa tanto en el rating Elo (1393.69 vs 1238.8) como en las probabilidades de victoria (61.2%). El modelo Dixon-Coles proyecta un partido con baja puntuación total (2.2 goles esperados), donde el equipo local tiene altas probabilidades de imponerse.\n\nLas mejores opciones de apuesta son: Victoria local (cuota inferior a 1.70), Bajo 2.5 goles (probabilidad del 60.6%) y Başakşehir con handicap -0.5 en primera parte. La proyección de goles esperados (1.6 - 0.6) sugiere un partido controlado por el local, con pocas opciones de sorpresa. Recomendación final: Apuesta a victoria local con handicap asiático, buscando cuotas superiores a 1.60.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1388481,
+      "home_team": "Eintracht Frankfurt",
+      "away_team": "Bayer Leverkusen",
+      "kickoff_time": "2026-01-31T08:30:00-06:00",
+      "league_id": 78,
+      "venue": "Deutsche Bank Park",
+      "elo": {
+        "home_elo": 1556.3,
+        "away_elo": 1625.39,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2104,
+            "draw": 0.2641,
+            "away_win": 0.5255
+          },
+          "over_under_2_5": {
+            "over": 0.4174,
+            "under": 0.5826
+          },
+          "over_under_3_5": {
+            "over": 0.2111,
+            "under": 0.7889
+          },
+          "btts": {
+            "yes": 0.4458,
+            "no": 0.5542
+          },
+          "expected_goals": {
+            "home": 0.85,
+            "away": 1.5,
+            "total": 2.35
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1419
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.8472,
+            "mu_away": 1.5035
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Eintracht Frankfurt vs Bayer Leverkusen:\n\nEl modelo Dixon-Coles muestra claramente la superioridad del Bayer Leverkusen, con un 52.5% de probabilidad de victoria visitante y unos goles esperados que sitúan al equipo visitante como claro favorito. El diferencial de Elo Ratings (1625 vs 1556) confirma la ventaja del Leverkusen, sugiriendo un equipo más sólido y consistente.\n\nLas mejores oportunidades de valor están en: Victoria visitante (52.5%), apuesta BTTS (44.6% probabilidad de gol en ambas porterías) y Over 2.5 goles (41.7%). La combinación de estos datos indica un partido con potencial de goles y victoria clara del Leverkusen. Recomendación: Apuesta a victoria visitante con probabilidad de goles en ambas porterías (BTTS), lo cual ofrece un interesante ratio de riesgo-beneficio.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1388485,
+      "home_team": "RB Leipzig",
+      "away_team": "FSV Mainz 05",
+      "kickoff_time": "2026-01-31T08:30:00-06:00",
+      "league_id": 78,
+      "venue": "Red Bull Arena",
+      "elo": {
+        "home_elo": 1578.09,
+        "away_elo": 1572.37,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.4678,
+            "draw": 0.2711,
+            "away_win": 0.2611
+          },
+          "over_under_2_5": {
+            "over": 0.4323,
+            "under": 0.5677
+          },
+          "over_under_3_5": {
+            "over": 0.2229,
+            "under": 0.7771
+          },
+          "btts": {
+            "yes": 0.4775,
+            "no": 0.5225
+          },
+          "expected_goals": {
+            "home": 1.42,
+            "away": 0.99,
+            "total": 2.41
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1278
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.4189,
+            "mu_away": 0.9888
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido RB Leipzig vs FSV Mainz 05:\n\nEl modelo Dixon-Coles sugiere un ligero dominio local, con el RB Leipzig como favorito con un 46.8% de probabilidad de victoria. Los ratings Elo muy similares (1578 vs 1572) indican un encuentro muy equilibrado. La predicción de goles esperados (1.4 - 1.0) apunta a un partido de marcador ajustado.\n\nLas mejores oportunidades de valor son: BTTS (Ambos Equipos Marcan) con 47.8% de probabilidad, que ofrece un interesante potencial de apuesta, y Over 2.5 goles con 43.2%. La cuota de victoria local parece correctamente tasada. Como recomendación, veo valor en apostar a BTTS o a un resultado de marcador entre 2-1 o 1-2, aprovechando el equilibrio entre ambos equipos.\n\nRecomendación final: Apostar a BTTS (Ambos Equipan Marcan) como principal opción, con una cuota estimada de valor.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1388484,
+      "home_team": "1899 Hoffenheim",
+      "away_team": "Union Berlin",
+      "kickoff_time": "2026-01-31T08:30:00-06:00",
+      "league_id": 78,
+      "venue": "PreZero Arena",
+      "elo": {
+        "home_elo": 1583.01,
+        "away_elo": 1592.68,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.4492,
+            "draw": 0.273,
+            "away_win": 0.2777
+          },
+          "over_under_2_5": {
+            "over": 0.4345,
+            "under": 0.5655
+          },
+          "over_under_3_5": {
+            "over": 0.2247,
+            "under": 0.7753
+          },
+          "btts": {
+            "yes": 0.4837,
+            "no": 0.5163
+          },
+          "expected_goals": {
+            "home": 1.39,
+            "away": 1.03,
+            "total": 2.42
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 1,
+            "probability": 0.1289
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.3864,
+            "mu_away": 1.0299
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Hoffenheim vs Union Berlin:\n\nEl modelo Dixon-Coles muestra un partido muy equilibrado, con ligera ventaja para Union Berlin en el rating Elo (1592.68 vs 1583.01). La predicción sugiere una probabilidad muy similar de victoria local (44.9%) o visitante (27.8%), con un empate también plausible (27.3%). Los goles esperados (1.4 - 1.0) indican un encuentro con probabilidad moderada de goles.\n\nLas mejores oportunidades de valor son: BTTS (Gol en Ambas Porterías) con 48.4% de probabilidad, y Over 1.5 goles. La probabilidad de empate a cuota interesante podría ser otra opción estratégica. La recomendación es una apuesta combinada de BTTS + Over 1.5 goles, que ofrece un potencial valor considerando las estadísticas predictivas del modelo.\n\nRecomendación final: Apuesta combinada BTTS + Over 1.5 goles, buscando una cuota superior a 1.80 para generar valor real.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1388479,
+      "home_team": "FC Augsburg",
+      "away_team": "FC St. Pauli",
+      "kickoff_time": "2026-01-31T08:30:00-06:00",
+      "league_id": 78,
+      "venue": "WWK Arena",
+      "elo": {
+        "home_elo": 1439.5,
+        "away_elo": 1493.92,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2165,
+            "draw": 0.3293,
+            "away_win": 0.4542
+          },
+          "over_under_2_5": {
+            "over": 0.2482,
+            "under": 0.7518
+          },
+          "over_under_3_5": {
+            "over": 0.0963,
+            "under": 0.9037
+          },
+          "btts": {
+            "yes": 0.3145,
+            "no": 0.6855
+          },
+          "expected_goals": {
+            "home": 0.64,
+            "away": 1.08,
+            "total": 1.72
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1911
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.6445,
+            "mu_away": 1.0759
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido FC Augsburg vs FC St. Pauli:\n\nEl modelo Dixon-Coles sugiere una ligera ventaja para St. Pauli, con un 45.4% de probabilidad de victoria visitante frente al 21.6% local. Los ratings Elo también respaldan esta tendencia, con St. Pauli (1493.92) por encima de Augsburg (1439.5). La probabilidad de empate es considerable (32.9%), lo que indica un partido potencialmente equilibrado.\n\nLas mejores oportunidades de apuesta son: 1) Apuesta a victoria de St. Pauli, con un valor predictivo superior; 2) Apuesta a empate, dado el alto porcentaje de probabilidad; y 3) Bajo número de goles (Under 2.5), considerando los goles esperados de 0.6-1.1. La recomendación es buscar cuotas superiores a 2.10 para la victoria de St. Pauli, lo que representaría una clara value bet según los modelos predictivos.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1388487,
+      "home_team": "Werder Bremen",
+      "away_team": "Borussia Mönchengladbach",
+      "kickoff_time": "2026-01-31T08:30:00-06:00",
+      "league_id": 78,
+      "venue": "Weserstadion",
+      "elo": {
+        "home_elo": 1573.69,
+        "away_elo": 1543.34,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2763,
+            "draw": 0.3466,
+            "away_win": 0.3771
+          },
+          "over_under_2_5": {
+            "over": 0.2318,
+            "under": 0.7682
+          },
+          "over_under_3_5": {
+            "over": 0.087,
+            "under": 0.913
+          },
+          "btts": {
+            "yes": 0.3156,
+            "no": 0.6844
+          },
+          "expected_goals": {
+            "home": 0.74,
+            "away": 0.92,
+            "total": 1.66
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 0,
+            "probability": 0.192
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.7396,
+            "mu_away": 0.9186
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis del partido Werder Bremen vs Borussia Mönchengladbach:\n\nEl encuentro se presenta muy equilibrado según los modelos predictivos, con ligera ventaja para Borussia Mönchengladbach. Los ratings Elo y el modelo Dixon-Coles sugieren un partido disputado, con probabilidades prácticamente parejas: 37.7% victoria visitante, 34.7% empate y 27.6% triunfo local. Los goles esperados son bajos (1.6 en total), lo que indica un posible partido táctico y cerrado.\n\nLas mejores oportunidades de apuesta son: \n- Empate (cuota superior a 3.0)\n- Under 2.5 goles \n- Apuesta doble resultado (X2)\n\nRecomendación: APUESTA MODERADA en empate o resultado X2, buscando una cuota superior a 3.0. El partido parece muy igualado, con mínima ventaja para el Borussia, pero con alta probabilidad de no haber más de 2 goles. El valor está en las opciones de menor riesgo.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1379200,
+      "home_team": "Brighton",
+      "away_team": "Everton",
+      "kickoff_time": "2026-01-31T09:00:00-06:00",
+      "league_id": 39,
+      "venue": "Amex Stadium",
+      "elo": {
+        "home_elo": 1619.83,
+        "away_elo": 1558.73,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.4973,
+            "draw": 0.2967,
+            "away_win": 0.206
+          },
+          "over_under_2_5": {
+            "over": 0.3169,
+            "under": 0.6831
+          },
+          "over_under_3_5": {
+            "over": 0.1386,
+            "under": 0.8614
+          },
+          "btts": {
+            "yes": 0.3659,
+            "no": 0.6341
+          },
+          "expected_goals": {
+            "home": 1.27,
+            "away": 0.71,
+            "total": 1.98
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1744
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.2691,
+            "mu_away": 0.7071
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Brighton vs Everton:\n\nEl modelo Dixon-Coles muestra un claro dominio local de Brighton, con casi un 50% de probabilidades de victoria. La diferencia en ratings Elo (61 puntos a favor de Brighton) respalda esta proyección. El equipo local presenta mayor consistencia y un rendimiento superior esta temporada, lo que se refleja en las probabilidades predictivas.\n\nLas mejores opciones de apuesta son: Victoria de Brighton (cuota cercana a 1.90-2.00), apuesta a Under 2.5 goles (probabilidad del 68.3%) y No BTTS (probabilidad de 63.4%). La proyección de goles esperados (1.3 - 0.7) sugiere un partido contenido tácticamente. La recomendación final es apostar a Victoria de Brighton con una stake del 2-3% de tu bankroll, considerando el valor predictivo y la diferencia de rendimiento entre ambos equipos.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1379202,
+      "home_team": "Leeds",
+      "away_team": "Arsenal",
+      "kickoff_time": "2026-01-31T09:00:00-06:00",
+      "league_id": 39,
+      "venue": "Elland Road",
+      "elo": {
+        "home_elo": 1515.45,
+        "away_elo": 1693.22,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.1628,
+            "draw": 0.3184,
+            "away_win": 0.5188
+          },
+          "over_under_2_5": {
+            "over": 0.2385,
+            "under": 0.7615
+          },
+          "over_under_3_5": {
+            "over": 0.0908,
+            "under": 0.9092
+          },
+          "btts": {
+            "yes": 0.2795,
+            "no": 0.7205
+          },
+          "expected_goals": {
+            "home": 0.52,
+            "away": 1.17,
+            "total": 1.68
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.2152
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.5176,
+            "mu_away": 1.1662
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Leeds vs Arsenal:\n\nEl modelo Dixon-Coles es contundente: Arsenal tiene amplias probabilidades de victoria (51.9%), con un marcador esperado de 0.5-1.2 goles a favor de los visitantes. La diferencia en los Elo Ratings (1693 vs 1515) confirma la superioridad del Arsenal, sugiriendo un partido con clara ventaja para los londinenses.\n\nLas mejores oportunidades de apuesta son: Victoria del Arsenal (cuota debe estar cercana a 1.90), Bajo 2.5 goles (con probabilidad de 76.2%) y No Ambos Equipos Marcan (72% de probabilidad). La recomendación es apostar a Victoria del Arsenal con hándicap -1 gol, ya que el modelo predice una diferencia clara de calidad entre ambos equipos.\n\nRecomendación final: Arsenal Victoria con Handicap -1 (línea de valor). La estadística sugiere un partido controlado por el Arsenal con probabilidad alta de victoria por 2-0 o 2-1.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1379208,
+      "home_team": "Wolves",
+      "away_team": "Bournemouth",
+      "kickoff_time": "2026-01-31T09:00:00-06:00",
+      "league_id": 39,
+      "venue": "Molineux Stadium",
+      "elo": {
+        "home_elo": 1597.59,
+        "away_elo": 1650.54,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.3847,
+            "draw": 0.3554,
+            "away_win": 0.2599
+          },
+          "over_under_2_5": {
+            "over": 0.212,
+            "under": 0.788
+          },
+          "over_under_3_5": {
+            "over": 0.0764,
+            "under": 0.9236
+          },
+          "btts": {
+            "yes": 0.2949,
+            "no": 0.7051
+          },
+          "expected_goals": {
+            "home": 0.9,
+            "away": 0.68,
+            "total": 1.58
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 0,
+            "probability": 0.207
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.8999,
+            "mu_away": 0.6822
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Wolves vs Bournemouth:\n\nEl modelo Dixon-Coles sugiere un partido equilibrado con ligera ventaja para Bournemouth, respaldado por su rating Elo superior (1650 vs 1597). Los locales Wolves tienen 38.5% de probabilidad de victoria, mientras que Bournemouth cuenta con un 26% de triunfo directo. La probabilidad de empate es significativa (35.5%), lo que indica un encuentro muy disputado.\n\nLos datos revelan un partido de bajo perfil goleador, con esperanza de gol reducida (0.9 - 0.7) y solo 21.2% de probabilidad de superar 2.5 goles. La opción más interesante parece ser el empate o Bournemouth con hándicap (+0.5), considerando su mejor situación en los ratings. La probabilidad de BTTS (29.5%) sugiere posibles goles de ambos equipos, aunque con moderación.\n\nRecomendación: Empate o Bournemouth con hándicap (+0.5). No hay una value bet clara, pero las cuotas cerca de 2.50-2.70 para el empate podrían ofrecer valor marginal.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1391036,
+      "home_team": "Osasuna",
+      "away_team": "Villarreal",
+      "kickoff_time": "2026-01-31T09:15:00-06:00",
+      "league_id": 140,
+      "venue": "Estadio El Sadar",
+      "elo": {
+        "home_elo": 1597.25,
+        "away_elo": 1607.26,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.2868,
+            "draw": 0.3196,
+            "away_win": 0.3936
+          },
+          "over_under_2_5": {
+            "over": 0.295,
+            "under": 0.705
+          },
+          "over_under_3_5": {
+            "over": 0.1245,
+            "under": 0.8755
+          },
+          "btts": {
+            "yes": 0.3726,
+            "no": 0.6274
+          },
+          "expected_goals": {
+            "home": 0.85,
+            "away": 1.05,
+            "total": 1.9
+          },
+          "most_likely_score": {
+            "home": 0,
+            "away": 1,
+            "probability": 0.1559
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 0.8476,
+            "mu_away": 1.0475
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis Osasuna vs Villarreal:\n\nEl modelo Dixon-Coles sugiere un partido muy ajustado con ligera ventaja para Villarreal, con probabilidades de victoria visitante del 39.4% frente al 28.7% local. Los goles esperados son bajos (0.8-1.1), lo que indica un encuentro táctico y defensivo. Los ratings Elo muy similares (1597 vs 1607) refuerzan la idea de un partido equilibrado.\n\nLas mejores oportunidades de valor se encuentran en: 1) Apuesta a resultado \"X\" (empate) a cuotas superiores a 3.20, con probabilidad del 32% según el modelo, y 2) Bajo número de goles (Under 2.5) considerando la baja expectativa de tantos. La probabilidad de BTTS (ambos equipos marcando) es del 37.3%, lo que también representa una opción interesante si las cuotas son atractivas.\n\nRecomendación: Apostar con precaución. Buscar valor en empate o Under 2.5 goles, pero solo si las cuotas ofrecen margen suficiente sobre las probabilidades del modelo (al menos 20-25% de diferencia).",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    },
+    {
+      "fixture_id": 1381047,
+      "home_team": "AZ Alkmaar",
+      "away_team": "NEC Nijmegen",
+      "kickoff_time": "2026-01-31T09:30:00-06:00",
+      "league_id": 88,
+      "venue": "AFAS Stadion",
+      "elo": {
+        "home_elo": 1468.68,
+        "away_elo": 1413.79,
+        "home_form": "N/A",
+        "away_form": "N/A"
+      },
+      "dixon_coles": {
+        "prediction": {
+          "match_winner": {
+            "home_win": 0.5136,
+            "draw": 0.2564,
+            "away_win": 0.23
+          },
+          "over_under_2_5": {
+            "over": 0.4632,
+            "under": 0.5368
+          },
+          "over_under_3_5": {
+            "over": 0.2483,
+            "under": 0.7517
+          },
+          "btts": {
+            "yes": 0.4898,
+            "no": 0.5102
+          },
+          "expected_goals": {
+            "home": 1.57,
+            "away": 0.96,
+            "total": 2.53
+          },
+          "most_likely_score": {
+            "home": 1,
+            "away": 0,
+            "probability": 0.1238
+          },
+          "model_params": {
+            "home_advantage": 0.1161,
+            "rho": -0.0116,
+            "lambda_home": 1.5674,
+            "mu_away": 0.96
+          },
+          "competition_adjustments": null,
+          "is_cup_competition": false
+        }
+      },
+      "value_bets": [],
+      "kelly": {},
+      "ai_analysis": "Análisis AZ Alkmaar vs NEC Nijmegen:\n\nEl encuentro muestra un claro favoritismo del AZ Alkmaar, confirmado por el rating Elo superior y una probabilidad de victoria del 51.4%. El modelo Dixon-Coles anticipa un partido dinámico, con un esperado total de 2.6 goles y alta probabilidad de goles en ambos arcos (49%). La diferencia de nivel entre ambos equipos sugiere un escenario favorable para el local.\n\nLas mejores oportunidades se presentan en: Over 2.5 goles (cuota atractiva por el 46.3% de probabilidad), victoria del AZ Alkmaar con handicap -0.5 y la opción de BTTS (Ambos Marcan). La recomendación principal es apostar en Over 2.5 goles, con un valor estimado del 10-15% sobre la cuota de mercado. El resultado más probable es una victoria local por 2-1 o 3-1.\n\nRecomendación: Apuesta en Over 2.5 goles (valor identificado) y victoria de AZ Alkmaar con handicap.",
+      "models_used": [
+        "elo_v1",
+        "dixon_coles_v1",
+        null
+      ]
+    }
+  ],
+  "daily_summary": "No puedo generar un análisis de apuestas con datos \"None\". Para proporcionar un resumen ejecutivo de oportunidades de apuestas necesito:\n\n1. Nombres de los equipos/competiciones\n2. Cuotas específicas \n3. Detalles de los eventos\n\nSin información concreta, no es posible realizar un análisis de valor ni identificar apuestas recomendadas.\n\nLe sugiero proporcionarme:\n- Equipos que juegan\n- Deporte \n- Competición\n- Cuotas disponibles\n- Cualquier dato relevante para el análisis\n\nEstaré encantado de ayudarle a identificar value bets una vez tenga información precisa.",
+  "top_picks": [
+    {
+      "market": "Ganador Local",
+      "selection": "Liverpool",
+      "odds": 1.95,
+      "model_prob": 0.757,
+      "implied_prob": 0.513,
+      "edge": 0.244,
+      "ev": 0.476
+    },
+    {
+      "market": "Ganador Local",
+      "selection": "Bayern Munich",
+      "odds": 1.7,
+      "model_prob": 0.778,
+      "implied_prob": 0.588,
+      "edge": 0.19,
+      "ev": 0.323
+    },
+    {
+      "market": "Ganador Visitante",
+      "selection": "Manchester City",
+      "odds": 2.1,
+      "model_prob": 0.634,
+      "implied_prob": 0.476,
+      "edge": 0.158,
+      "ev": 0.332
+    },
+    {
+      "market": "Ganador Visitante",
+      "selection": "Real Madrid",
+      "odds": 2.9,
+      "model_prob": 0.414,
+      "implied_prob": 0.345,
+      "edge": 0.069,
+      "ev": 0.201
+    },
+    {
+      "market": "Over 2.5",
+      "selection": "Más de 2.5 goles",
+      "odds": 1.75,
+      "model_prob": 0.604,
+      "implied_prob": 0.571,
+      "edge": 0.033,
+      "ev": 0.057
+    }
+  ]
+}
