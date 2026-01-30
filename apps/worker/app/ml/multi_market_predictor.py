@@ -10,9 +10,11 @@ Markets covered:
 5. Corners (Total, Team, First Half)
 6. Cards (Total, Team)
 7. Shots on Target
-8. Exact Score
-9. Half-Time/Full-Time
-10. First/Last Goal
+8. Shots Total
+9. Offsides (Total, Team)
+10. Exact Score
+11. Half-Time/Full-Time
+12. First/Last Goal
 
 Uses historical team statistics for predictions.
 """
@@ -111,6 +113,11 @@ class TeamStats:
         # Shots defaults
         self.shots_avg = 12.5
         self.shots_on_target_avg = 4.5
+        
+        # Offsides defaults
+        self.offsides_avg = 2.3
+        self.offsides_home_avg = 2.5
+        self.offsides_away_avg = 2.1
 
 
 class MultiMarketPredictor:
@@ -130,11 +137,13 @@ class MultiMarketPredictor:
         self.league_avg_cards = 3.5
         self.league_avg_shots = 25.0
         self.league_avg_shots_on_target = 9.0
+        self.league_avg_offsides = 4.5
         
         # Home advantage factors
         self.home_advantage_goals = 1.15
         self.home_advantage_corners = 1.10
         self.home_advantage_shots = 1.12
+        self.home_advantage_offsides = 1.08
     
     def set_team_stats(self, team_id: int, stats: TeamStats):
         """Cache team statistics"""
@@ -197,6 +206,9 @@ class MultiMarketPredictor:
             
             # Shots
             'shots': self._predict_shots(home_stats, away_stats),
+            
+            # Offsides
+            'offsides': self._predict_offsides(home_stats, away_stats),
             
             # Exact Scores (top 10 most likely)
             'exact_scores': self._predict_exact_scores(home_xg, away_xg),
@@ -461,6 +473,55 @@ class MultiMarketPredictor:
             'draw': round(ht_draw, 4),
             'away': round(ht_away, 4)
         }
+    
+    def _predict_offsides(
+        self,
+        home_stats: TeamStats,
+        away_stats: TeamStats
+    ) -> Dict[str, Any]:
+        """
+        Predict offsides markets
+        
+        Offsides correlate with attacking play and possession.
+        Teams that attack more and play high lines tend to get more offsides.
+        """
+        # Expected offsides (league average ~2.3 per team)
+        home_offsides = getattr(home_stats, 'offsides_home_avg', 2.5) * self.home_advantage_offsides
+        away_offsides = getattr(away_stats, 'offsides_away_avg', 2.1)
+        total_offsides = home_offsides + away_offsides
+        
+        results = {
+            'expected': {
+                'home': round(home_offsides, 1),
+                'away': round(away_offsides, 1),
+                'total': round(total_offsides, 1)
+            }
+        }
+        
+        # Total offsides over/under (common lines: 3.5, 4.5, 5.5)
+        for line in [3.5, 4.5, 5.5, 6.5]:
+            under_prob = sum(poisson.pmf(o, total_offsides) for o in range(int(line) + 1))
+            over_prob = 1 - under_prob
+            
+            key = f"total_over_{str(line).replace('.', '_')}"
+            results[key] = {
+                'over': round(over_prob, 4),
+                'under': round(under_prob, 4),
+                'line': line
+            }
+        
+        # Team offsides over/under
+        for team, xo in [('home', home_offsides), ('away', away_offsides)]:
+            for line in [1.5, 2.5, 3.5]:
+                under_prob = sum(poisson.pmf(o, xo) for o in range(int(line) + 1))
+                results[f"{team}_over_{str(line).replace('.', '_')}"] = {
+                    'over': round(1 - under_prob, 4),
+                    'under': round(under_prob, 4),
+                    'team': team,
+                    'line': line
+                }
+        
+        return results
 
 
 # Global instance

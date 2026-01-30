@@ -10,11 +10,13 @@ import structlog
 from .elo import elo_system, EloRatingSystem
 from .features import feature_engineer, FeatureEngineer
 from .team_stats import team_stats_calculator, TeamStatsCalculator
+from .multi_market_predictor import multi_market_predictor, MultiMarketPredictor
 
 logger = structlog.get_logger()
 
-# Market type configurations
+# Market type configurations - EXPANDED for multi-market predictions
 MARKETS = {
+    # Core markets (already implemented)
     'match_winner': {
         'outcomes': ['home_win', 'draw', 'away_win'],
         'description': '1X2 Match Result'
@@ -26,6 +28,64 @@ MARKETS = {
     'both_teams_score': {
         'outcomes': ['yes', 'no'],
         'description': 'Both Teams to Score'
+    },
+    
+    # Additional goal lines
+    'over_under_1.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'Total Goals Over/Under 1.5'
+    },
+    'over_under_3.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'Total Goals Over/Under 3.5'
+    },
+    
+    # Corners
+    'corners_over_under_9.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'Total Corners Over/Under 9.5'
+    },
+    'corners_over_under_10.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'Total Corners Over/Under 10.5'
+    },
+    
+    # Cards
+    'cards_over_under_3.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'Total Cards Over/Under 3.5'
+    },
+    'cards_over_under_4.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'Total Cards Over/Under 4.5'
+    },
+    
+    # Shots on Target
+    'shots_on_target_over_under_8.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'Total Shots on Target Over/Under 8.5'
+    },
+    
+    # Offsides
+    'offsides_over_under_4.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'Total Offsides Over/Under 4.5'
+    },
+    
+    # Team-specific markets
+    'home_team_over_under_1.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'Home Team Goals Over/Under 1.5'
+    },
+    'away_team_over_under_0.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'Away Team Goals Over/Under 0.5'
+    },
+    
+    # Half-time markets
+    'first_half_over_under_0.5': {
+        'outcomes': ['over', 'under'],
+        'description': 'First Half Goals Over/Under 0.5'
     }
 }
 
@@ -145,6 +205,10 @@ class MatchPredictor:
         # Get Elo-based prediction
         elo_pred = self.elo.predict_match(home_id, away_id, league_id)
         
+        # Calculate Expected Goals from Elo
+        home_xg = elo_pred.get('home_expected_goals', 1.5)
+        away_xg = elo_pred.get('away_expected_goals', 1.2)
+        
         # Match Winner prediction
         match_winner_pred = self._predict_match_winner(elo_pred, fixture)
         predictions.append(self._format_prediction(
@@ -156,25 +220,161 @@ class MatchPredictor:
         ))
         
         if include_all_markets:
-            # Over/Under 2.5 prediction
-            over_under_pred = self._predict_over_under(elo_pred, fixture)
-            predictions.append(self._format_prediction(
-                fixture_id=fixture_id,
-                market_key='over_under_2.5',
-                prediction=over_under_pred['probabilities'],
-                confidence=over_under_pred['confidence'],
-                features_used=over_under_pred.get('features')
-            ))
+            # Get multi-market predictions (corners, cards, shots, offsides, etc.)
+            multi_markets = multi_market_predictor.predict_all_markets(
+                home_team_id=home_id,
+                away_team_id=away_id,
+                home_xg=home_xg,
+                away_xg=away_xg
+            )
             
-            # Both Teams Score prediction
-            btts_pred = self._predict_btts(elo_pred, fixture)
-            predictions.append(self._format_prediction(
-                fixture_id=fixture_id,
-                market_key='both_teams_score',
-                prediction=btts_pred['probabilities'],
-                confidence=btts_pred['confidence'],
-                features_used=btts_pred.get('features')
-            ))
+            # Extract and format multi-market predictions
+            
+            # Over/Under Goals (multiple lines)
+            over_under = multi_markets.get('over_under', {})
+            for line_key, data in over_under.items():
+                if isinstance(data, dict) and 'over' in data and 'under' in data:
+                    line = data.get('line', 2.5)
+                    market_key = f"over_under_{str(line).replace('.', '_')}"
+                    
+                    # Calculate confidence based on probability spread
+                    max_prob = max(data['over'], data['under'])
+                    confidence = self._calculate_market_confidence(max_prob)
+                    
+                    predictions.append(self._format_prediction(
+                        fixture_id=fixture_id,
+                        market_key=market_key,
+                        prediction={'over': data['over'], 'under': data['under']},
+                        confidence=confidence,
+                        features_used={'expected_goals': home_xg + away_xg}
+                    ))
+            
+            # BTTS
+            btts = multi_markets.get('btts', {})
+            if btts:
+                btts_pred = self._predict_btts(elo_pred, fixture)
+                predictions.append(self._format_prediction(
+                    fixture_id=fixture_id,
+                    market_key='both_teams_score',
+                    prediction=btts_pred['probabilities'],
+                    confidence=btts_pred['confidence'],
+                    features_used=btts_pred.get('features')
+                ))
+            
+            # Corners
+            corners = multi_markets.get('corners', {})
+            for corner_key, data in corners.items():
+                if isinstance(data, dict) and 'over' in data and 'under' in data:
+                    if 'total_over' in corner_key:
+                        # Extract line number from key like "total_over_9_5"
+                        line_str = corner_key.replace('total_over_', '').replace('_', '.')
+                        market_key = f"corners_over_under_{corner_key.replace('total_over_', '')}"
+                        
+                        max_prob = max(data['over'], data['under'])
+                        confidence = self._calculate_market_confidence(max_prob)
+                        
+                        predictions.append(self._format_prediction(
+                            fixture_id=fixture_id,
+                            market_key=market_key,
+                            prediction={'over': data['over'], 'under': data['under']},
+                            confidence=confidence,
+                            features_used={'expected_corners': corners.get('expected', {}).get('total', 10.5)}
+                        ))
+            
+            # Cards
+            cards = multi_markets.get('cards', {})
+            for card_key, data in cards.items():
+                if isinstance(data, dict) and 'over' in data and 'under' in data:
+                    if 'total_over' in card_key:
+                        market_key = f"cards_over_under_{card_key.replace('total_over_', '')}"
+                        
+                        max_prob = max(data['over'], data['under'])
+                        confidence = self._calculate_market_confidence(max_prob)
+                        
+                        predictions.append(self._format_prediction(
+                            fixture_id=fixture_id,
+                            market_key=market_key,
+                            prediction={'over': data['over'], 'under': data['under']},
+                            confidence=confidence,
+                            features_used={'expected_cards': cards.get('expected', {}).get('total_yellow', 3.5)}
+                        ))
+            
+            # Shots on Target
+            shots = multi_markets.get('shots', {})
+            for shot_key, data in shots.items():
+                if isinstance(data, dict) and 'over' in data and 'under' in data:
+                    if 'sot_over' in shot_key:
+                        market_key = f"shots_on_target_over_under_{shot_key.replace('sot_over_', '')}"
+                        
+                        max_prob = max(data['over'], data['under'])
+                        confidence = self._calculate_market_confidence(max_prob)
+                        
+                        predictions.append(self._format_prediction(
+                            fixture_id=fixture_id,
+                            market_key=market_key,
+                            prediction={'over': data['over'], 'under': data['under']},
+                            confidence=confidence,
+                            features_used={'expected_sot': shots.get('expected', {}).get('total_shots_on_target', 9.0)}
+                        ))
+            
+            # Offsides
+            offsides = multi_markets.get('offsides', {})
+            for offside_key, data in offsides.items():
+                if isinstance(data, dict) and 'over' in data and 'under' in data:
+                    if 'total_over' in offside_key:
+                        market_key = f"offsides_over_under_{offside_key.replace('total_over_', '')}"
+                        
+                        max_prob = max(data['over'], data['under'])
+                        confidence = self._calculate_market_confidence(max_prob)
+                        
+                        predictions.append(self._format_prediction(
+                            fixture_id=fixture_id,
+                            market_key=market_key,
+                            prediction={'over': data['over'], 'under': data['under']},
+                            confidence=confidence,
+                            features_used={'expected_offsides': offsides.get('expected', {}).get('total', 4.5)}
+                        ))
+            
+            # Team-specific goals
+            team_goals = multi_markets.get('team_goals', {})
+            for team_key, data in team_goals.items():
+                if isinstance(data, dict) and 'over' in data and 'under' in data:
+                    team = data.get('team', 'home' if 'home' in team_key else 'away')
+                    line = data.get('line', 1.5)
+                    market_key = f"{team}_team_over_under_{str(line).replace('.', '_')}"
+                    
+                    max_prob = max(data['over'], data['under'])
+                    confidence = self._calculate_market_confidence(max_prob)
+                    
+                    predictions.append(self._format_prediction(
+                        fixture_id=fixture_id,
+                        market_key=market_key,
+                        prediction={'over': data['over'], 'under': data['under']},
+                        confidence=confidence,
+                        features_used={'expected_goals': home_xg if team == 'home' else away_xg}
+                    ))
+            
+            # First Half Goals
+            half_time = multi_markets.get('half_time', {})
+            if half_time:
+                # Convert half-time result to first half O/U 0.5
+                ht_home = half_time.get('home', 0.3)
+                ht_draw = half_time.get('draw', 0.4)
+                ht_away = half_time.get('away', 0.3)
+                
+                # Probability of at least 1 goal in first half
+                first_half_over = 1 - (ht_draw * 0.6)  # Rough approximation
+                first_half_under = 1 - first_half_over
+                
+                confidence = self._calculate_market_confidence(max(first_half_over, first_half_under))
+                
+                predictions.append(self._format_prediction(
+                    fixture_id=fixture_id,
+                    market_key='first_half_over_under_0_5',
+                    prediction={'over': round(first_half_over, 4), 'under': round(first_half_under, 4)},
+                    confidence=confidence,
+                    features_used={'expected_ht_goals': (home_xg + away_xg) * 0.45}
+                ))
         
         return predictions
     
@@ -406,6 +606,31 @@ class MatchPredictor:
         
         # Apply floor and ceiling
         confidence = max(0.45, min(0.92, confidence))
+        
+        return round(confidence, 2)
+    
+    def _calculate_market_confidence(self, max_probability: float) -> float:
+        """
+        Calculate confidence for binary markets based on probability spread
+        
+        Args:
+            max_probability: The highest probability in the market
+            
+        Returns:
+            Confidence score between 0.45 and 0.90
+        """
+        # Distance from 50/50 (more spread = higher confidence)
+        spread = abs(max_probability - 0.5)
+        
+        # Map spread to confidence
+        # 0.50 prob (no edge) -> 0.50 confidence
+        # 0.60 prob (20% edge) -> 0.65 confidence
+        # 0.70 prob (40% edge) -> 0.75 confidence
+        # 0.80 prob (60% edge) -> 0.85 confidence
+        confidence = 0.50 + (spread * 0.8)
+        
+        # Apply floor and ceiling
+        confidence = max(0.45, min(0.90, confidence))
         
         return round(confidence, 2)
     

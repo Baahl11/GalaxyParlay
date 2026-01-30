@@ -336,53 +336,94 @@ export function GalaxyCanvas({ fixtures, onFixtureClick, onFixtureHover }: Galax
             </div>
           </div>
 
-          {/* All Market Predictions */}
+          {/* All Market Predictions - ORGANIZED BY CATEGORY */}
           {hoveredFixture.predictions && hoveredFixture.predictions.length > 0 ? (
-            <div className="space-y-2">
-              <div className="text-xs font-semibold text-purple-300 mb-2">AI PREDICTIONS</div>
-              {hoveredFixture.predictions.slice(0, 6).map((pred, idx) => {
-                const quality = hoveredFixture.quality_scores?.find(q => q.market_key === pred.market_key);
-                return (
-                  <div key={idx} className="bg-gray-800/50 rounded-lg p-2">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-medium text-gray-300 uppercase">
-                        {pred.market_key.replace(/_/g, ' ')}
-                      </span>
-                      {quality && (
-                        <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${
-                          quality.final_grade === 'A' ? 'bg-green-500/20 text-green-400' :
-                          quality.final_grade === 'B' ? 'bg-amber-500/20 text-amber-400' :
-                          'bg-gray-500/20 text-gray-400'
-                        }`}>
-                          {quality.final_grade}
-                        </span>
-                      )}
+            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+              <div className="text-xs font-bold text-purple-300 mb-2 flex items-center gap-2">
+                <span>🎯</span> AI PREDICTIONS ({hoveredFixture.predictions.length} markets)
+              </div>
+              
+              {(() => {
+                // Organize predictions by category
+                const categories = {
+                  '⚽ GOALS': hoveredFixture.predictions.filter(p => 
+                    (p.market_key.includes('over_under') && !p.market_key.includes('corners') && !p.market_key.includes('cards') && !p.market_key.includes('shots') && !p.market_key.includes('offsides') && !p.market_key.includes('first_half')) ||
+                    p.market_key.includes('team_over') ||
+                    p.market_key === 'match_winner' ||
+                    p.market_key === 'both_teams_score'
+                  ),
+                  '🚩 CORNERS': hoveredFixture.predictions.filter(p => p.market_key.includes('corners')),
+                  '🟨 CARDS': hoveredFixture.predictions.filter(p => p.market_key.includes('cards')),
+                  '🎯 SHOTS': hoveredFixture.predictions.filter(p => p.market_key.includes('shots')),
+                  '⚡ OFFSIDES': hoveredFixture.predictions.filter(p => p.market_key.includes('offsides')),
+                  '⏱️ FIRST HALF': hoveredFixture.predictions.filter(p => p.market_key.includes('first_half')),
+                };
+
+                return Object.entries(categories).map(([categoryName, predictions]) => {
+                  if (predictions.length === 0) return null;
+                  
+                  // Show only Grade A/B by default, or top 3 per category
+                  const topPredictions = predictions
+                    .map(p => ({
+                      ...p,
+                      grade: hoveredFixture.quality_scores?.find(q => q.market_key === p.market_key)?.final_grade || 'D'
+                    }))
+                    .filter(p => ['A', 'B'].includes(p.grade))
+                    .slice(0, 3);
+
+                  if (topPredictions.length === 0) return null;
+
+                  return (
+                    <div key={categoryName} className="border-l-2 border-purple-500/30 pl-2">
+                      <div className="text-[10px] font-bold text-purple-400 mb-1.5">{categoryName}</div>
+                      <div className="space-y-1.5">
+                        {topPredictions.map((pred, idx) => {
+                          const quality = hoveredFixture.quality_scores?.find(q => q.market_key === pred.market_key);
+                          return (
+                            <div key={idx} className="bg-gray-800/30 rounded-md p-1.5 hover:bg-gray-800/50 transition-colors">
+                              <div className="flex items-center justify-between mb-0.5">
+                                <span className="text-[10px] font-medium text-gray-300">
+                                  {pred.market_key.replace(/_/g, ' ').replace('over under', 'O/U').toUpperCase()}
+                                </span>
+                                {quality && (
+                                  <span className={`text-[9px] font-bold px-1 py-0.5 rounded ${
+                                    quality.final_grade === 'A' ? 'bg-green-500/30 text-green-300' :
+                                    quality.final_grade === 'B' ? 'bg-amber-500/30 text-amber-300' :
+                                    'bg-gray-500/20 text-gray-400'
+                                  }`}>
+                                    {quality.final_grade} {(quality.model_confidence * 100).toFixed(0)}%
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-[11px] text-purple-300 font-semibold">
+                                {(() => {
+                                  if (typeof pred.prediction === 'object') {
+                                    const p = pred.prediction as any;
+                                    if (pred.market_key === 'match_winner') {
+                                      return `H ${(p.home_win * 100).toFixed(0)}% | D ${(p.draw * 100).toFixed(0)}% | A ${(p.away_win * 100).toFixed(0)}%`;
+                                    } else if (pred.market_key === 'both_teams_score') {
+                                      return `YES ${(p.yes * 100).toFixed(0)}% | NO ${(p.no * 100).toFixed(0)}%`;
+                                    } else if (p.over && p.under) {
+                                      const overProb = p.over * 100;
+                                      const underProb = p.under * 100;
+                                      return `O ${overProb.toFixed(0)}% | U ${underProb.toFixed(0)}%`;
+                                    }
+                                  }
+                                  return 'N/A';
+                                })()}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                    <div className="text-xs text-purple-400 font-semibold">
-                      {(() => {
-                        if (typeof pred.prediction === 'object') {
-                          const p = pred.prediction as any;
-                          if (pred.market_key === 'match_winner') {
-                            return `${(p.home_win * 100).toFixed(0)}% / ${(p.draw * 100).toFixed(0)}% / ${(p.away_win * 100).toFixed(0)}%`;
-                          } else if (pred.market_key === 'both_teams_score') {
-                            return `YES ${(p.yes * 100).toFixed(0)}% | NO ${(p.no * 100).toFixed(0)}%`;
-                          } else if (pred.market_key.includes('over_under')) {
-                            return `O ${(p.over * 100).toFixed(0)}% | U ${(p.under * 100).toFixed(0)}%`;
-                          } else if (pred.market_key.includes('corners')) {
-                            return `O ${(p.over * 100).toFixed(0)}% | U ${(p.under * 100).toFixed(0)}%`;
-                          }
-                        }
-                        return JSON.stringify(pred.prediction);
-                      })()}
-                    </div>
-                  </div>
-                );
-              })}
-              {hoveredFixture.predictions.length > 6 && (
-                <div className="text-xs text-gray-500 text-center pt-1">
-                  +{hoveredFixture.predictions.length - 6} more markets • Click to see all
-                </div>
-              )}
+                  );
+                });
+              })()}
+              
+              <div className="text-[10px] text-gray-500 text-center pt-2 border-t border-gray-800">
+                💡 Showing Grade A/B picks only • Click fixture for all {hoveredFixture.predictions.length} markets
+              </div>
             </div>
           ) : (
             <div className="text-xs text-gray-500 text-center py-2">No predictions available</div>
