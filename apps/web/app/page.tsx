@@ -2,6 +2,7 @@
 
 import {
     FixtureList,
+    GalaxyCanvas,
     MatchDrawer,
     PlayerPropsSection,
     StatsCard,
@@ -11,10 +12,10 @@ import { getFixtures, getStats } from '@/lib/api';
 import type { Fixture, StatsResponse } from '@/lib/types';
 import { useEffect, useState } from 'react';
 
-type TabKey = 'fixtures' | 'valuebets' | 'players';
+type TabKey = 'galaxy' | 'fixtures' | 'valuebets' | 'players';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<TabKey>('fixtures');
+  const [activeTab, setActiveTab] = useState<TabKey>('galaxy');
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -33,7 +34,7 @@ export default function Home() {
     setError(null);
     try {
       const [fixturesData, statsData] = await Promise.all([
-        getFixtures({ limit: 30 }),
+        getFixtures({ limit: 100 }),
         getStats()
       ]);
       setFixtures(fixturesData);
@@ -51,7 +52,8 @@ export default function Home() {
   };
 
   const tabs: { key: TabKey; label: string; icon: string }[] = [
-    { key: 'fixtures', label: 'Fixtures', icon: '📅' },
+    { key: 'galaxy', label: 'Galaxy View', icon: '🌌' },
+    { key: 'fixtures', label: 'List View', icon: '📅' },
     { key: 'valuebets', label: 'Value Bets', icon: '💎' },
     { key: 'players', label: 'Player Props', icon: '⚽' },
   ];
@@ -135,6 +137,33 @@ export default function Home() {
               Retry
             </button>
           </div>
+        )}
+
+        {activeTab === 'galaxy' && (
+          <>
+            {loading ? (
+              <div className="flex items-center justify-center h-96 bg-gray-800/50 rounded-2xl">
+                <div className="text-center">
+                  <div className="text-6xl mb-4 animate-pulse">🌌</div>
+                  <p className="text-gray-400">Loading Galaxy...</p>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                  <span>🌌</span>
+                  <span>Galaxy View</span>
+                  <span className="text-sm font-normal text-gray-500 ml-2">
+                    Hover over stars to see fixtures • Click to view details
+                  </span>
+                </h2>
+                <GalaxyCanvas 
+                  fixtures={fixtures}
+                  onFixtureClick={handleFixtureClick}
+                />
+              </div>
+            )}
+          </>
         )}
 
         {activeTab === 'fixtures' && (

@@ -2,6 +2,7 @@
 
 export { FixtureCard } from './FixtureCard';
 export { FixtureList } from './FixtureList';
+export { GalaxyCanvas } from './GalaxyCanvas';
 export { LeagueFilter } from './LeagueFilter';
 export { MatchDrawer } from './MatchDrawer';
 export { MultiMarketCard } from './MultiMarketCard';
