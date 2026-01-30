@@ -364,7 +364,7 @@ export function GalaxyCanvas({ fixtures, onFixtureClick, onFixtureHover }: Galax
                           const p = pred.prediction as any;
                           if (pred.market_key === 'match_winner') {
                             return `${(p.home_win * 100).toFixed(0)}% / ${(p.draw * 100).toFixed(0)}% / ${(p.away_win * 100).toFixed(0)}%`;
-                          } else if (pred.market_key === 'btts') {
+                          } else if (pred.market_key === 'both_teams_score') {
                             return `YES ${(p.yes * 100).toFixed(0)}% | NO ${(p.no * 100).toFixed(0)}%`;
                           } else if (pred.market_key.includes('over_under')) {
                             return `O ${(p.over * 100).toFixed(0)}% | U ${(p.under * 100).toFixed(0)}%`;
