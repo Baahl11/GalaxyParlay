@@ -150,13 +150,23 @@ export default function Home() {
               </div>
             ) : (
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                  <span>🌌</span>
-                  <span>Galaxy View</span>
-                  <span className="text-sm font-normal text-gray-500 ml-2">
-                    Hover over stars to see fixtures • Click to view details
-                  </span>
-                </h2>
+                <div className="mb-6 text-center">
+                  <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 mb-2 flex items-center justify-center gap-3">
+                    <span className="text-4xl">🌌</span>
+                    <span>GALAXY VIEW</span>
+                    <span className="text-4xl">✨</span>
+                  </h2>
+                  <p className="text-sm text-gray-400 max-w-2xl mx-auto">
+                    <span className="text-purple-400 font-semibold">Interactive fixture visualization</span> • 
+                    Fixtures clustered by AI quality grade • 
+                    <span className="text-green-400">Green = Best picks</span>, 
+                    <span className="text-amber-400"> Amber = Good picks</span>, 
+                    <span className="text-gray-400"> Gray = Lower confidence</span>
+                  </p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    💡 Hover over stars to see all predictions (Match Winner, Over/Under, BTTS, Corners) • Click to open detailed view
+                  </p>
+                </div>
                 <GalaxyCanvas 
                   fixtures={fixtures}
                   onFixtureClick={handleFixtureClick}
