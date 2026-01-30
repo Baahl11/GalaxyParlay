@@ -2,9 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   
-  // Output for Vercel deployment
-  output: 'standalone',
-  
   // Performance optimizations
   experimental: {
     optimizePackageImports: ['date-fns'],
