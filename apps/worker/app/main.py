@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.routes import galaxy_api, jobs
-from app.scheduler import (
+from app.scheduler_simple import (
     job_generate_predictions,
     job_load_fixtures,
     start_scheduler,
