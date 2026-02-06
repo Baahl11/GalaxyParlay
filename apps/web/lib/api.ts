@@ -37,7 +37,7 @@ export async function getFixtures(params?: {
   }
   
   const data: FixturesResponse = await response.json();
-  return data.data;
+  return data.fixtures || data.data || [];
 }
 
 /**
