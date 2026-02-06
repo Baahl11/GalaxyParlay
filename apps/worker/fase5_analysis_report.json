@@ -1,0 +1,151 @@
+{
+  "market_performance": {
+    "match_winner_draw": {
+      "old_accuracy": 0.723,
+      "new_accuracy": 0.723,
+      "improvement": 0.0,
+      "sample_size": 917,
+      "old_brier": 0,
+      "new_brier": 0
+    },
+    "over_under_3_5_under": {
+      "old_accuracy": 0.714,
+      "new_accuracy": 0.714,
+      "improvement": 0.0,
+      "sample_size": 917,
+      "old_brier": 0,
+      "new_brier": 0
+    },
+    "match_winner_home_win": {
+      "old_accuracy": 0.614,
+      "new_accuracy": 0.617,
+      "improvement": 0.003,
+      "sample_size": 917,
+      "old_brier": 0,
+      "new_brier": 0
+    },
+    "match_winner_away_win": {
+      "old_accuracy": 0.711,
+      "new_accuracy": 0.7,
+      "improvement": -0.011,
+      "sample_size": 917,
+      "old_brier": 0,
+      "new_brier": 0
+    },
+    "over_under_1_5_under": {
+      "old_accuracy": 0.799,
+      "new_accuracy": 0.799,
+      "improvement": 0.0,
+      "sample_size": 917,
+      "old_brier": 0,
+      "new_brier": 0
+    },
+    "over_under_1_5_over": {
+      "old_accuracy": 0.799,
+      "new_accuracy": 0.799,
+      "improvement": 0.0,
+      "sample_size": 917,
+      "old_brier": 0,
+      "new_brier": 0
+    },
+    "over_under_2_5_over": {
+      "old_accuracy": 0.714,
+      "new_accuracy": 0.714,
+      "improvement": 0.0,
+      "sample_size": 917,
+      "old_brier": 0,
+      "new_brier": 0
+    },
+    "over_under_3_5_over": {
+      "old_accuracy": 0.714,
+      "new_accuracy": 0.714,
+      "improvement": 0.0,
+      "sample_size": 917,
+      "old_brier": 0,
+      "new_brier": 0
+    },
+    "over_under_2_5_under": {
+      "old_accuracy": 0.714,
+      "new_accuracy": 0.714,
+      "improvement": 0.0,
+      "sample_size": 917,
+      "old_brier": 0,
+      "new_brier": 0
+    }
+  },
+  "league_metrics": {
+    "39": {
+      "accuracy": 0.7188983855650523,
+      "brier_score": 0.18623327263057954,
+      "total_predictions": 1053,
+      "correct_predictions": 757,
+      "fixtures": 117
+    },
+    "140": {
+      "accuracy": 0.7481481481481481,
+      "brier_score": 0.17333970838888907,
+      "total_predictions": 1080,
+      "correct_predictions": 808,
+      "fixtures": 120
+    },
+    "203": {
+      "accuracy": 0.7012750455373407,
+      "brier_score": 0.1931074585063749,
+      "total_predictions": 549,
+      "correct_predictions": 385,
+      "fixtures": 61
+    },
+    "94": {
+      "accuracy": 0.7337164750957854,
+      "brier_score": 0.1813631723946359,
+      "total_predictions": 1044,
+      "correct_predictions": 766,
+      "fixtures": 116
+    },
+    "135": {
+      "accuracy": 0.7390180878552972,
+      "brier_score": 0.17936873228251493,
+      "total_predictions": 1161,
+      "correct_predictions": 858,
+      "fixtures": 129
+    },
+    "88": {
+      "accuracy": 0.7344632768361582,
+      "brier_score": 0.1839633591713748,
+      "total_predictions": 1062,
+      "correct_predictions": 780,
+      "fixtures": 118
+    },
+    "78": {
+      "accuracy": 0.6850152905198776,
+      "brier_score": 0.20289465510703347,
+      "total_predictions": 981,
+      "correct_predictions": 672,
+      "fixtures": 109
+    },
+    "61": {
+      "accuracy": 0.7194163860830527,
+      "brier_score": 0.18601407746352405,
+      "total_predictions": 891,
+      "correct_predictions": 641,
+      "fixtures": 99
+    },
+    "2": {
+      "accuracy": 0.6388888888888888,
+      "brier_score": 0.2185071326388889,
+      "total_predictions": 144,
+      "correct_predictions": 92,
+      "fixtures": 16
+    },
+    "3": {
+      "accuracy": 0.6875,
+      "brier_score": 0.20068586118055565,
+      "total_predictions": 288,
+      "correct_predictions": 198,
+      "fixtures": 32
+    }
+  },
+  "correlations": {},
+  "grade_analysis": {},
+  "recommendations": []
+}

@@ -1,0 +1,1672 @@
+
+============================================================
+GALAXY PARLAY - DATABASE POPULATION
+============================================================
+
+[1/3] Fetching historical fixtures (2023-2025)...
+This will take 5-10 minutes...
+2026-01-30 15:26:09 [info     ] Starting historical data population
+2026-01-30 15:26:09 [info     ] Fetching fixtures              league=Premier League season=2025 status=FT
+2026-01-30 15:26:10 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 39, 'season': 2025, 'status': 'FT'} results=230
+2026-01-30 15:26:11 [info     ] fixtures_upserted              count=230
+2026-01-30 15:26:11 [info     ] Fixtures stored                count=230 league=Premier League season=2025
+2026-01-30 15:26:11 [info     ] Fetching team stats            league=Premier League season=2025
+2026-01-30 15:26:11 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 39, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:26:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 33, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 34, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 35, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 36, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 39, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 40, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 42, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 44, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:14 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 45, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 47, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 48, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 49, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 50, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 51, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 52, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 55, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 63, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 65, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 66, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 746, 'league': 39, 'season': 2025} results=11
+2026-01-30 15:26:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:18 [info     ] Team stats stored              count=20 league=Premier League season=2025
+2026-01-30 15:26:18 [info     ] Fetching fixtures              league=La Liga season=2025 status=FT
+2026-01-30 15:26:19 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 140, 'season': 2025, 'status': 'FT'} results=209
+2026-01-30 15:26:19 [info     ] fixtures_upserted              count=209
+2026-01-30 15:26:19 [info     ] Fixtures stored                count=209 league=La Liga season=2025
+2026-01-30 15:26:19 [info     ] Fetching team stats            league=La Liga season=2025
+2026-01-30 15:26:19 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 140, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:26:19 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 529, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 530, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 531, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 532, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 533, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 536, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 538, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 539, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 540, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 541, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 542, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 797, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 798, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 543, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 546, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 547, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 548, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 718, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 727, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 728, 'league': 140, 'season': 2025} results=11
+2026-01-30 15:26:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:26 [info     ] Team stats stored              count=20 league=La Liga season=2025
+2026-01-30 15:26:26 [info     ] Fetching fixtures              league=Bundesliga season=2025 status=FT
+2026-01-30 15:26:26 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 78, 'season': 2025, 'status': 'FT'} results=170
+2026-01-30 15:26:26 [info     ] fixtures_upserted              count=170
+2026-01-30 15:26:26 [info     ] Fixtures stored                count=170 league=Bundesliga season=2025
+2026-01-30 15:26:26 [info     ] Fetching team stats            league=Bundesliga season=2025
+2026-01-30 15:26:26 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 78, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:26:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 160, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 161, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 162, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 192, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 164, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 165, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 163, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 167, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 168, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 169, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 170, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 172, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 173, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 175, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 180, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 182, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 186, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 157, 'league': 78, 'season': 2025} results=11
+2026-01-30 15:26:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:33 [info     ] Team stats stored              count=18 league=Bundesliga season=2025
+2026-01-30 15:26:33 [info     ] Fetching fixtures              league=Serie A season=2025 status=FT
+2026-01-30 15:26:33 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 135, 'season': 2025, 'status': 'FT'} results=220
+2026-01-30 15:26:34 [info     ] fixtures_upserted              count=220
+2026-01-30 15:26:34 [info     ] Fixtures stored                count=220 league=Serie A season=2025
+2026-01-30 15:26:34 [info     ] Fetching team stats            league=Serie A season=2025
+2026-01-30 15:26:34 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 135, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:26:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 520, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 523, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 801, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 867, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 487, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 488, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 489, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 490, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 492, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 494, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 495, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 496, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 497, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 499, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 500, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 502, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 503, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 504, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 505, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 895, 'league': 135, 'season': 2025} results=11
+2026-01-30 15:26:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:42 [info     ] Team stats stored              count=20 league=Serie A season=2025
+2026-01-30 15:26:42 [info     ] Fetching fixtures              league=Ligue 1 season=2025 status=FT
+2026-01-30 15:26:43 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 61, 'season': 2025, 'status': 'FT'} results=171
+2026-01-30 15:26:43 [info     ] fixtures_upserted              count=171
+2026-01-30 15:26:43 [info     ] Fixtures stored                count=171 league=Ligue 1 season=2025
+2026-01-30 15:26:43 [info     ] Fetching team stats            league=Ligue 1 season=2025
+2026-01-30 15:26:43 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 61, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:26:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 96, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 97, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 106, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 108, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 77, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 111, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 80, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 81, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 79, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 114, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 116, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 84, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 112, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 83, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 85, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 91, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 94, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 95, 'league': 61, 'season': 2025} results=11
+2026-01-30 15:26:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:50 [info     ] Team stats stored              count=18 league=Ligue 1 season=2025
+2026-01-30 15:26:50 [info     ] Fetching fixtures              league=Primeira Liga season=2025 status=FT
+2026-01-30 15:26:51 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 94, 'season': 2025, 'status': 'FT'} results=171
+2026-01-30 15:26:51 [info     ] fixtures_upserted              count=171
+2026-01-30 15:26:51 [info     ] Fixtures stored                count=171 league=Primeira Liga season=2025
+2026-01-30 15:26:51 [info     ] Fetching team stats            league=Primeira Liga season=2025
+2026-01-30 15:26:51 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 94, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:26:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 224, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 225, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 226, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 227, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 228, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 230, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 218, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4716, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 240, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 242, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 211, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4724, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 212, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 15130, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 215, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 217, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:57 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 762, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:57 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:57 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 21595, 'league': 94, 'season': 2025} results=11
+2026-01-30 15:26:57 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:57 [info     ] Team stats stored              count=18 league=Primeira Liga season=2025
+2026-01-30 15:26:57 [info     ] Fetching fixtures              league=Eredivisie season=2025 status=FT
+2026-01-30 15:26:58 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 88, 'season': 2025, 'status': 'FT'} results=179
+2026-01-30 15:26:58 [info     ] fixtures_upserted              count=179
+2026-01-30 15:26:58 [info     ] Fixtures stored                count=179 league=Eredivisie season=2025
+2026-01-30 15:26:58 [info     ] Fetching team stats            league=Eredivisie season=2025
+2026-01-30 15:26:58 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 88, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:26:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 416, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:26:58 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 193, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:26:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 194, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:26:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 196, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:26:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:26:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 197, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:00 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 201, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:00 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 426, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:00 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 203, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:01 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 427, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:01 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:01 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 205, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:01 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:01 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 202, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:01 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 207, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:02 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 206, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:02 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 209, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:02 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:03 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 210, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:03 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:03 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 410, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:03 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:03 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 413, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:03 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:04 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 415, 'league': 88, 'season': 2025} results=11
+2026-01-30 15:27:04 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:04 [info     ] Team stats stored              count=18 league=Eredivisie season=2025
+2026-01-30 15:27:04 [info     ] Fetching fixtures              league=Super Lig season=2025 status=FT
+2026-01-30 15:27:04 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 203, 'season': 2025, 'status': 'FT'} results=173
+2026-01-30 15:27:05 [info     ] fixtures_upserted              count=173
+2026-01-30 15:27:05 [info     ] Fixtures stored                count=173 league=Super Lig season=2025
+2026-01-30 15:27:05 [info     ] Fetching team stats            league=Super Lig season=2025
+2026-01-30 15:27:05 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 203, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:27:05 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 994, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:05 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:05 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 611, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:05 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:06 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3588, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:06 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:06 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 997, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:06 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:06 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 645, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:07 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:07 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 998, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:07 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:08 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3589, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:09 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 996, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:09 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 549, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1001, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:10 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1004, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:10 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1005, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:10 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1007, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3603, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 7411, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3573, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 564, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 607, 'league': 203, 'season': 2025} results=11
+2026-01-30 15:27:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:12 [info     ] Team stats stored              count=18 league=Super Lig season=2025
+2026-01-30 15:27:12 [info     ] Fetching fixtures              league=Belgian Pro League season=2025 status=FT
+2026-01-30 15:27:13 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 144, 'season': 2025, 'status': 'FT'} results=176
+2026-01-30 15:27:13 [info     ] fixtures_upserted              count=176
+2026-01-30 15:27:13 [info     ] Fixtures stored                count=176 league=Belgian Pro League season=2025
+2026-01-30 15:27:13 [info     ] Fetching team stats            league=Belgian Pro League season=2025
+2026-01-30 15:27:13 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 144, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:27:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 736, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 740, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:14 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 741, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:14 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 261, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 6215, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 260, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 742, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 266, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 554, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 5902, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1393, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 631, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 600, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 569, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 733, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 735, 'league': 144, 'season': 2025} results=11
+2026-01-30 15:27:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:18 [info     ] Team stats stored              count=16 league=Belgian Pro League season=2025
+2026-01-30 15:27:18 [info     ] Fetching fixtures              league=Liga MX season=2025 status=FT
+2026-01-30 15:27:19 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 262, 'season': 2025, 'status': 'FT'} results=196
+2026-01-30 15:27:19 [info     ] fixtures_upserted              count=196
+2026-01-30 15:27:19 [info     ] Fixtures stored                count=196 league=Liga MX season=2025
+2026-01-30 15:27:19 [info     ] Fetching team stats            league=Liga MX season=2025
+2026-01-30 15:27:19 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 262, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:27:19 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2278, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2279, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2280, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2281, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2282, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2283, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2314, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2285, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2286, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2287, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2288, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2289, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2290, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2291, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 14002, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2292, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2295, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2298, 'league': 262, 'season': 2025} results=11
+2026-01-30 15:27:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:26 [info     ] Team stats stored              count=18 league=Liga MX season=2025
+2026-01-30 15:27:26 [info     ] Fetching fixtures              league=Liga Profesional season=2025 status=FT
+2026-01-30 15:27:27 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 128, 'season': 2025, 'status': 'FT'} results=503
+2026-01-30 15:27:27 [info     ] fixtures_upserted              count=503
+2026-01-30 15:27:27 [info     ] Fixtures stored                count=503 league=Liga Profesional season=2025
+2026-01-30 15:27:27 [info     ] Fetching team stats            league=Liga Profesional season=2025
+2026-01-30 15:27:27 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 128, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:27:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2432, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1064, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1065, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 434, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 435, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 436, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 437, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 438, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 439, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 440, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 441, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 442, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 445, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 446, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:33 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 449, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:33 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 450, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:33 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 451, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 452, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 453, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 455, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 456, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 457, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 458, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 460, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 461, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 463, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 473, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 474, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 476, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 478, 'league': 128, 'season': 2025} results=11
+2026-01-30 15:27:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:38 [info     ] Team stats stored              count=30 league=Liga Profesional season=2025
+2026-01-30 15:27:38 [info     ] Fetching fixtures              league=BrasileirÒo Serie A season=2025 status=FT
+2026-01-30 15:27:38 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 71, 'season': 2025, 'status': 'FT'} results=380
+2026-01-30 15:27:38 [info     ] fixtures_upserted              count=380
+2026-01-30 15:27:38 [info     ] Fixtures stored                count=380 league=BrasileirÒo Serie A season=2025
+2026-01-30 15:27:38 [info     ] Fetching team stats            league=BrasileirÒo Serie A season=2025
+2026-01-30 15:27:38 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 71, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:27:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 128, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 129, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 130, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 131, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 133, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 135, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 136, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 152, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 794, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 154, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1062, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 7848, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 118, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 119, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 120, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 121, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 123, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 124, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:45 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 126, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:45 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 127, 'league': 71, 'season': 2025} results=11
+2026-01-30 15:27:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:45 [info     ] Team stats stored              count=20 league=BrasileirÒo Serie A season=2025
+2026-01-30 15:27:45 [info     ] Fetching fixtures              league=Primera Divisi¾n season=2025 status=FT
+2026-01-30 15:27:46 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 281, 'season': 2025, 'status': 'FT'} results=331
+2026-01-30 15:27:46 [info     ] fixtures_upserted              count=331
+2026-01-30 15:27:46 [info     ] Fixtures stored                count=331 league=Primera Divisi¾n season=2025
+2026-01-30 15:27:46 [info     ] Fetching team stats            league=Primera Divisi¾n season=2025
+2026-01-30 15:27:46 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 281, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:27:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2560, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2562, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2564, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2572, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 10013, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 22479, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 20960, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2539, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2540, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2542, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2544, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2546, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2548, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2550, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2553, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2554, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2555, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 10492, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2558, 'league': 281, 'season': 2025} results=11
+2026-01-30 15:27:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:52 [info     ] Team stats stored              count=19 league=Primera Divisi¾n season=2025
+2026-01-30 15:27:52 [info     ] Fetching fixtures              league=Primera A season=2025 status=FT
+2026-01-30 15:27:53 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 239, 'season': 2025, 'status': 'FT'} results=450
+2026-01-30 15:27:53 [info     ] fixtures_upserted              count=450
+2026-01-30 15:27:53 [info     ] Fixtures stored                count=450 league=Primera A season=2025
+2026-01-30 15:27:53 [info     ] Fetching team stats            league=Primera A season=2025
+2026-01-30 15:27:53 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 239, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:27:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1462, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1464, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1465, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1125, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1126, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1127, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1128, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1129, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1131, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1132, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:57 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:57 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1134, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:57 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:57 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1135, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:57 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1136, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:58 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1137, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:58 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1138, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:58 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1139, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1141, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:27:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:27:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1142, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:28:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:00 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1144, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:28:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:00 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1147, 'league': 239, 'season': 2025} results=11
+2026-01-30 15:28:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:00 [info     ] Team stats stored              count=20 league=Primera A season=2025
+2026-01-30 15:28:00 [info     ] Fetching fixtures              league=Copa Libertadores season=2025 status=FT
+2026-01-30 15:28:00 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 13, 'season': 2025, 'status': 'FT'} results=148
+2026-01-30 15:28:01 [info     ] fixtures_upserted              count=148
+2026-01-30 15:28:01 [info     ] Fixtures stored                count=148 league=Copa Libertadores season=2025
+2026-01-30 15:28:01 [info     ] Fetching team stats            league=Copa Libertadores season=2025
+2026-01-30 15:28:01 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 13, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:28:01 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1152, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:01 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:01 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1153, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:02 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 131, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:02 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1158, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:02 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2315, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:03 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:03 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2319, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:03 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:04 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2323, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:04 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:04 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1175, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:04 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:04 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2840, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:05 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:05 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1176, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:05 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:05 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 154, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:06 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:06 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1179, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:06 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:06 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1182, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:07 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:07 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2337, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:07 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:07 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1065, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:07 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:08 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2807, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:08 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:08 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2348, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:08 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:09 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2350, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:09 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 435, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:09 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 436, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2356, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:10 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 438, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:10 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2361, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:10 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2810, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 450, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 451, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 456, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 119, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 120, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 17760, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 121, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:14 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 126, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:14 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1131, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2540, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1137, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2546, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1139, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3701, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 118, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1142, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3702, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2553, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2554, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2811, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 127, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:19 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1150, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:19 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3711, 'league': 13, 'season': 2025} results=11
+2026-01-30 15:28:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:19 [info     ] Team stats stored              count=47 league=Copa Libertadores season=2025
+2026-01-30 15:28:19 [info     ] Fetching fixtures              league=CONMEBOL Sudamericana season=2025 status=FT
+2026-01-30 15:28:20 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 11, 'season': 2025, 'status': 'FT'} results=144
+2026-01-30 15:28:20 [info     ] fixtures_upserted              count=144
+2026-01-30 15:28:20 [info     ] Fixtures stored                count=144 league=CONMEBOL Sudamericana season=2025
+2026-01-30 15:28:20 [info     ] Fetching team stats            league=CONMEBOL Sudamericana season=2025
+2026-01-30 15:28:20 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 11, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:28:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1153, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2562, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 131, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 130, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 133, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1157, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 135, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 136, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2825, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1162, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2827, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2564, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2318, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2319, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2321, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2323, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1174, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1183, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1062, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1065, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2553, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2554, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3637, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2359, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 439, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 441, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2361, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 442, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 445, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 446, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2369, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 453, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1992, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3706, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2140, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 17760, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 17762, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:33 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1125, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:33 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1131, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1136, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1138, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 118, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 10487, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2808, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3702, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 22266, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 124, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2813, 'league': 11, 'season': 2025} results=11
+2026-01-30 15:28:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:36 [info     ] Team stats stored              count=48 league=CONMEBOL Sudamericana season=2025
+2026-01-30 15:28:36 [info     ] Fetching fixtures              league=MLS season=2025 status=FT
+2026-01-30 15:28:37 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 253, 'season': 2025, 'status': 'FT'} results=533
+2026-01-30 15:28:37 [info     ] fixtures_upserted              count=533
+2026-01-30 15:28:37 [info     ] Fixtures stored                count=533 league=MLS season=2025
+2026-01-30 15:28:37 [info     ] Fetching team stats            league=MLS season=2025
+2026-01-30 15:28:37 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 253, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:28:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 18310, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1605, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 25484, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 20787, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1595, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1596, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1597, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1598, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1599, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1600, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1601, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2242, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1602, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1604, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1603, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1606, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1607, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1608, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:45 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1609, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:45 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1610, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1611, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1612, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1613, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1614, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1615, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1616, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1617, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 9568, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 9569, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 16489, 'league': 253, 'season': 2025} results=11
+2026-01-30 15:28:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:49 [info     ] Team stats stored              count=30 league=MLS season=2025
+2026-01-30 15:28:49 [info     ] Fetching fixtures              league=A-League season=2025 status=FT
+2026-01-30 15:28:50 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 188, 'season': 2025, 'status': 'FT'} results=87
+2026-01-30 15:28:50 [info     ] fixtures_upserted              count=87
+2026-01-30 15:28:50 [info     ] Fixtures stored                count=87 league=A-League season=2025
+2026-01-30 15:28:50 [info     ] Fetching team stats            league=A-League season=2025
+2026-01-30 15:28:50 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 188, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:28:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 24608, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 939, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 940, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 941, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 942, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 943, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 944, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 945, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 946, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 947, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 948, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 15550, 'league': 188, 'season': 2025} results=11
+2026-01-30 15:28:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:54 [info     ] Team stats stored              count=12 league=A-League season=2025
+2026-01-30 15:28:54 [info     ] Fetching fixtures              league=Saudi Pro League season=2025 status=FT
+2026-01-30 15:28:54 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 235, 'season': 2025, 'status': 'FT'} results=144
+2026-01-30 15:28:54 [info     ] fixtures_upserted              count=144
+2026-01-30 15:28:54 [info     ] Fixtures stored                count=144 league=Saudi Pro League season=2025
+2026-01-30 15:28:54 [info     ] Fetching team stats            league=Saudi Pro League season=2025
+2026-01-30 15:28:54 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 235, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:28:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1088, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 6786, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1083, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 779, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 555, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 621, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:57 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 558, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:57 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:57 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1085, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:57 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:57 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 596, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:57 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 597, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:58 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2006, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:58 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1079, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1080, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2011, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:28:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2012, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:28:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:00 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 6813, 'league': 235, 'season': 2025} results=11
+2026-01-30 15:29:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:00 [info     ] Team stats stored              count=16 league=Saudi Pro League season=2025
+2026-01-30 15:29:00 [info     ] Fetching fixtures              league=Champions League season=2025 status=FT
+2026-01-30 15:29:00 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 2, 'season': 2025, 'status': 'FT'} results=230
+2026-01-30 15:29:00 [info     ] fixtures_upserted              count=230
+2026-01-30 15:29:00 [info     ] Fixtures stored                count=230 league=Champions League season=2025
+2026-01-30 15:29:00 [info     ] Fetching team stats            league=Champions League season=2025
+2026-01-30 15:29:00 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 2, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:29:01 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 529, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:01 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:01 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4626, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:01 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:01 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 531, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:01 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 530, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:02 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 533, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:02 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 541, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:03 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:03 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 34, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:03 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:03 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 551, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:03 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:03 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 40, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:04 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:04 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 553, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:04 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:04 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 42, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:05 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:05 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 556, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:05 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:05 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 559, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:05 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:05 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 47, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:06 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:06 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 561, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:06 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:06 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 560, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:06 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:06 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 49, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:06 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:07 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 50, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:07 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:07 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 566, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:07 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:07 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 567, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:07 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:08 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 569, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:08 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:08 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 571, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:08 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:08 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 572, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:08 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:09 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4160, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:09 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 579, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:09 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 580, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 583, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:10 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 586, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:10 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 588, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:10 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 81, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 84, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 85, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 598, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 91, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 604, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 609, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 611, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3684, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:14 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 617, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:14 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 637, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:14 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 645, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2184, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 651, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1165, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 656, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 664, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 667, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 157, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 677, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 165, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 168, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 169, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 684, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:19 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 691, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:19 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 5308, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:19 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 194, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 197, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 209, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 211, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2273, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 228, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 247, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3327, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 257, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3342, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3854, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 276, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 319, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 327, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3403, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 347, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 354, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1393, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 375, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 394, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 400, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3502, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 14281, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 492, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 496, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 499, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 505, 'league': 2, 'season': 2025} results=11
+2026-01-30 15:29:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:28 [info     ] Team stats stored              count=82 league=Champions League season=2025
+2026-01-30 15:29:28 [info     ] Fetching fixtures              league=Europa League season=2025 status=FT
+2026-01-30 15:29:29 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 3, 'season': 2025, 'status': 'FT'} results=215
+2026-01-30 15:29:29 [info     ] fixtures_upserted              count=215
+2026-01-30 15:29:29 [info     ] Fixtures stored                count=215 league=Europa League season=2025
+2026-01-30 15:29:29 [info     ] Fetching team stats            league=Europa League season=2025
+2026-01-30 15:29:29 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 3, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:29:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1025, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4626, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3603, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 538, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 543, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 549, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 550, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 551, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 554, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 559, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 561, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:33 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 563, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:33 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 565, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:33 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 566, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 567, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 568, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 571, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 572, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 573, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4160, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 65, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 66, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 588, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 79, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 80, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 84, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 598, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 604, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 606, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1120, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 609, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 611, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3684, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2149, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 614, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 617, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 619, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 620, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 637, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3713, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 646, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2184, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1163, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 651, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1165, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 656, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 13976, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 667, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:45 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 160, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:45 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 680, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:45 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 172, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2246, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2250, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 207, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 209, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 212, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 217, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 742, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 247, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 249, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 252, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 257, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4360, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3854, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 276, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 319, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 339, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2390, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 347, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 367, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 375, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 397, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 410, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 14281, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4563, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 497, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 500, 'league': 3, 'season': 2025} results=11
+2026-01-30 15:29:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:54 [info     ] Team stats stored              count=77 league=Europa League season=2025
+2026-01-30 15:29:54 [info     ] Fetching fixtures              league=Conference League season=2025 status=FT
+2026-01-30 15:29:54 [info     ] apifootball_request            cached=False endpoint=fixtures params={'league': 848, 'season': 2025, 'status': 'FT'} results=339
+2026-01-30 15:29:55 [info     ] fixtures_upserted              count=339
+2026-01-30 15:29:55 [info     ] Fixtures stored                count=339 league=Conference League season=2025
+2026-01-30 15:29:55 [info     ] Fetching team stats            league=Conference League season=2025
+2026-01-30 15:29:55 [info     ] apifootball_cache_hit          cache_age_seconds=0 endpoint=fixtures params={'league': 848, 'season': 2025, 'status': 'FT'}
+2026-01-30 15:29:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1025, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 14864, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4625, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4626, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3603, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:56 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2073, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:56 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:57 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4633, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:57 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:57 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3619, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:57 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:57 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4133, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:58 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 549, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:58 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4135, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:58 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:58 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2599, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:58 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 552, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 554, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:29:59 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 550, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:29:59 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:00 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 561, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:00 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 562, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:00 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 563, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:00 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:01 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 564, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:01 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:01 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4149, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:01 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 52, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:02 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:02 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 568, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:02 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:03 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 572, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:03 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:04 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 573, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:04 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:05 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 574, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:05 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:05 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 575, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:06 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:06 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4160, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:06 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:07 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 578, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:07 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:08 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 579, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:08 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:08 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 580, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:08 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:08 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 583, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:09 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 586, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:09 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 588, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:10 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:10 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 591, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2643, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:11 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:11 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2644, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:12 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 601, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:12 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 606, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:13 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 95, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:13 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:14 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 608, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:14 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1120, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:14 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 609, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3683, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:15 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:15 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1123, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4195, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:16 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3684, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:16 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2149, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 614, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:17 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 628, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:17 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 632, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3713, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:18 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:18 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 646, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:19 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 648, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:19 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 649, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:19 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2184, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1163, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:20 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 652, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:20 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1165, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 654, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:21 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2191, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:21 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 656, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 657, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:22 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:22 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2194, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 660, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 662, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:23 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:23 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 663, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 13976, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 667, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:24 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3745, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:24 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 673, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 164, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:25 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 677, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:25 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 679, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 680, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 682, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:26 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:26 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 684, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 685, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 687, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:27 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:27 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 689, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 691, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 692, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:28 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:28 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 698, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 5308, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 701, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:29 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 708, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:29 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 709, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2246, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:30 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2249, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:30 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 201, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2250, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2260, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:31 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:31 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 15576, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 728, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2266, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:32 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:32 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2271, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:33 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 736, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:33 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2273, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:33 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 227, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2276, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:34 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2277, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:34 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 5351, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 5354, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4331, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:35 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:35 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 759, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 249, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 252, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:36 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:36 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3326, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3327, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:37 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3843, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:37 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 16135, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4360, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3339, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:38 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:38 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 781, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3342, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3854, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:39 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:39 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 272, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3345, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:40 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 274, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:40 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3858, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 276, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:41 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3861, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:41 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 278, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4374, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:42 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3872, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:42 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3364, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 10534, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3884, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:43 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:43 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3402, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 331, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3408, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:44 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 336, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:44 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:45 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 851, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:45 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 339, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:45 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2390, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:45 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2391, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 347, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:46 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 6496, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:46 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 354, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2402, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:47 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1386, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:47 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 363, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 367, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:48 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 377, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:48 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 385, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 386, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:49 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 387, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:49 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 394, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 10124, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1430, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:50 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:50 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 407, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3491, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3499, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:51 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:51 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3502, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 12733, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3528, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:52 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:52 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 14281, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1483, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 4563, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:53 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:53 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 3554, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 11238, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2030, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:54 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 2036, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:54 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 1014, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:55 [info     ] apifootball_request            cached=False endpoint=teams/statistics params={'team': 502, 'league': 848, 'season': 2025} results=11
+2026-01-30 15:30:55 [info     ] team_statistics_upserted       count=1
+2026-01-30 15:30:55 [info     ] Team stats stored              count=164 league=Conference League season=2025
+2026-01-30 15:30:55 [info     ] Historical data population complete total_fixtures=5399 total_team_stats=749
+Traceback (most recent call last):
+  File "C:\Users\gm_me\GalaxyParlay\apps\worker\populate_database.py", line 369, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\gm_me\GalaxyParlay\apps\worker\populate_database.py", line 340, in main
+    print(f"\u2705 Stored {historical_fixtures} historical fixtures")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gm_me\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 0: character maps to <undefined>

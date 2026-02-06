@@ -3,14 +3,21 @@ ParlayGalaxy Worker - FastAPI Application
 Main entry point for the background worker and internal API.
 """
 
-from fastapi import FastAPI, HTTPException, Depends, Header
-from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-import structlog
 from typing import Optional
 
+import structlog
+from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
 from app.config import settings
-from app.routes import jobs, galaxy_api
+from app.routes import galaxy_api, jobs
+from app.scheduler import (
+    job_generate_predictions,
+    job_load_fixtures,
+    start_scheduler,
+    stop_scheduler,
+)
 
 # Configure structured logging
 structlog.configure(
@@ -36,15 +43,26 @@ logger = structlog.get_logger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifecycle manager for startup/shutdown events"""
+    # Force rebuild v2.1.0 - Automatic scheduler implementation
     logger.info("worker_starting", version=settings.APP_VERSION)
-    
-    # Startup logic (DB connections, cache, etc.)
-    # TODO: Initialize Redis, Supabase clients
-    
+
+    # Iniciar scheduler automático
+    logger.info("starting_background_scheduler")
+    start_scheduler()
+
+    # Ejecutar jobs iniciales para tener datos inmediatamente
+    logger.info("running_initial_jobs")
+    try:
+        await job_load_fixtures()
+        await job_generate_predictions()
+    except Exception as e:
+        logger.error("initial_jobs_failed", error=str(e))
+
     yield
-    
+
     # Shutdown logic
     logger.info("worker_shutting_down")
+    stop_scheduler()
 
 
 # Initialize FastAPI app
@@ -99,6 +117,7 @@ def test_db():
     """Test database connection"""
     try:
         from app.services.database import db_service
+
         leagues = db_service.get_active_leagues()
         return {"status": "ok", "leagues_count": len(leagues), "leagues": leagues}
     except Exception as e:
@@ -140,7 +159,7 @@ async def health():
 
 if __name__ == "__main__":
     import uvicorn
-    
+
     uvicorn.run(
         "app.main:app",
         host="0.0.0.0",

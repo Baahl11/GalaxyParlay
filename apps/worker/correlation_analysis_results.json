@@ -1,0 +1,130 @@
+{
+  "timestamp": "2026-01-30",
+  "markets": [
+    "match_winner_away_win",
+    "match_winner_draw",
+    "match_winner_home_win",
+    "over_under_1_5_over",
+    "over_under_1_5_under",
+    "over_under_2_5_over",
+    "over_under_2_5_under",
+    "over_under_3_5_over",
+    "over_under_3_5_under"
+  ],
+  "correlation_matrix": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "golden_parlays": [],
+  "dangerous_correlations": [],
+  "league_patterns": {
+    "Demo": {
+      "fixtures": 8253,
+      "predictions": 8253,
+      "accuracy": 0.7217981340118744
+    }
+  },
+  "summary": {
+    "total_markets": 9,
+    "total_fixtures": 8253,
+    "total_predictions": 8253,
+    "overall_accuracy": 0.7217981340118744
+  }
+}

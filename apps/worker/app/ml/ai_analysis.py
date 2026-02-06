@@ -125,7 +125,7 @@ def _build_analysis_context(
     if dixon_coles and 'prediction' in dixon_coles:
         pred = dixon_coles['prediction']
         mw = pred.get('match_winner', {})
-        lines.append(f"\n**Dixon-Coles Prediction:**")
+        lines.append("\n**Dixon-Coles Prediction:**")
         lines.append(f"- Victoria local: {mw.get('home_win', 0):.1%}")
         lines.append(f"- Empate: {mw.get('draw', 0):.1%}")
         lines.append(f"- Victoria visitante: {mw.get('away_win', 0):.1%}")
@@ -150,7 +150,7 @@ def _build_analysis_context(
     
     # Kelly sizing
     if kelly_results:
-        lines.append(f"\n**Kelly Criterion:**")
+        lines.append("\n**Kelly Criterion:**")
         for market, result in kelly_results.items():
             if hasattr(result, 'is_value_bet') and result.is_value_bet:
                 lines.append(f"- {market}: {result.recommendation}")
