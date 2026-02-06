@@ -11,7 +11,9 @@ from app.ml.multi_market_predictor import MultiMarketPredictor
 from app.services.database import db_service
 
 SUPABASE_URL = 'https://jssjwjsuqmkzidigjpwj.supabase.co'
-SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impzc2p3anN1cW1remlkaWdqcHdqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2OTQzNDQwMiwiZXhwIjoyMDg1MDEwNDAyfQ.iir_GtLYUZmAL66C_7BZJITxkq8rRQklWPqBS_Qp7io'
+SUPABASE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY')
+if not SUPABASE_KEY:
+    raise ValueError("SUPABASE_SERVICE_ROLE_KEY environment variable is required")
 
 client = create_client(SUPABASE_URL, SUPABASE_KEY)
 predictor = MultiMarketPredictor()

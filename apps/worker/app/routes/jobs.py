@@ -2281,15 +2281,19 @@ def get_top_shooters(
 @router.post("/trigger-load-fixtures")
 async def trigger_load_fixtures():
     """
-    Trigger manual load of upcoming fixtures (normalmente automático cada 12h).
+    Trigger manual load of upcoming fixtures using existing sync-fixtures endpoint.
     """
     try:
-        from app.scheduler import job_load_fixtures
-
         logger.info("manual_load_fixtures_triggered")
-        result = await job_load_fixtures()
-
-        return {"status": "success", "message": "Fixtures loaded successfully", "result": result}
+        
+        # Reusar el endpoint que ya funciona
+        response = await sync_fixtures()
+        
+        return {
+            "status": "success", 
+            "message": "Fixtures loaded successfully", 
+            "result": response
+        }
     except Exception as e:
         logger.error("manual_load_fixtures_error", error=str(e))
         raise HTTPException(status_code=500, detail=str(e))
@@ -2298,18 +2302,18 @@ async def trigger_load_fixtures():
 @router.post("/trigger-generate-predictions")
 async def trigger_generate_predictions():
     """
-    Trigger manual generation of predictions (normalmente automático cada 6h).
+    Trigger manual generation of predictions using existing run-predictions endpoint.
     """
     try:
-        from app.scheduler import job_generate_predictions
-
         logger.info("manual_generate_predictions_triggered")
-        result = await job_generate_predictions()
-
+        
+        # Reusar el endpoint que ya funciona
+        response = await run_predictions_for_upcoming_fixtures()
+        
         return {
             "status": "success",
             "message": "Predictions generated successfully",
-            "result": result,
+            "result": response,
         }
     except Exception as e:
         logger.error("manual_generate_predictions_error", error=str(e))
@@ -2322,7 +2326,7 @@ async def get_scheduler_status():
     Get status of background scheduler and next run times.
     """
     try:
-        from app.scheduler import scheduler
+        from app.scheduler_v2 import scheduler
 
         if scheduler is None:
             return {"status": "not_running", "jobs": []}
@@ -2338,6 +2342,9 @@ async def get_scheduler_status():
         ]
 
         return {"status": "running", "jobs": jobs_info}
+    except Exception as e:
+        logger.error("scheduler_status_error", error=str(e))
+        return {"status": "error", "error": str(e)}
     except Exception as e:
         logger.error("scheduler_status_error", error=str(e))
         raise HTTPException(status_code=500, detail=str(e))

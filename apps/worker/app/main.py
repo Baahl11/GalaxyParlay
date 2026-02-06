@@ -12,12 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.routes import galaxy_api, jobs
-from app.scheduler_simple import (
-    job_generate_predictions,
-    job_load_fixtures,
-    start_scheduler,
-    stop_scheduler,
-)
+from app.scheduler_v2 import start_scheduler, stop_scheduler
 
 # Configure structured logging
 structlog.configure(
@@ -50,13 +45,9 @@ async def lifespan(app: FastAPI):
     logger.info("starting_background_scheduler")
     start_scheduler()
 
-    # Ejecutar jobs iniciales para tener datos inmediatamente
-    logger.info("running_initial_jobs")
-    try:
-        await job_load_fixtures()
-        await job_generate_predictions()
-    except Exception as e:
-        logger.error("initial_jobs_failed", error=str(e))
+    # NO ejecutar jobs iniciales - causan problemas de conexión
+    # El scheduler los ejecutará automáticamente según su programación
+    logger.info("scheduler_ready")
 
     yield
 

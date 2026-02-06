@@ -20,7 +20,11 @@ Write-Host ""
 
 # Set environment variables
 $env:SUPABASE_URL = "https://jssjwjsuqmkzidigjpwj.supabase.co"
-$env:SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impzc2p3anN1cW1remlkaWdqcHdqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2OTQzNDQwMiwiZXhwIjoyMDg1MDEwNDAyfQ.iir_GtLYUZmAL66C_7BZJITxkq8rRQklWPqBS_Qp7io"
+# SUPABASE_SERVICE_ROLE_KEY must be set before running this script
+if (-not $env:SUPABASE_SERVICE_ROLE_KEY) {
+    Write-Error "SUPABASE_SERVICE_ROLE_KEY environment variable is required"
+    exit 1
+}
 
 # Change to worker directory
 Set-Location "C:\Users\gm_me\GalaxyParlay\apps\worker"
