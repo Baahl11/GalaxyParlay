@@ -208,8 +208,10 @@ export interface TopPlayersResponse {
 
 // API Response types
 export interface FixturesResponse {
-  data: Fixture[];
+  data?: Fixture[]; // Legacy format
+  fixtures?: Fixture[]; // Backend Railway format
   total?: number;
+  count?: number;
 }
 
 export interface StatsResponse {

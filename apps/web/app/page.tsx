@@ -42,7 +42,7 @@ export default function Home() {
     setError(null);
     try {
       const [fixturesData, statsData] = await Promise.all([
-        getFixtures({ limit: 100 }),
+        getFixtures({ status: "NS", limit: 100 }),
         getStats(),
       ]);
       setFixtures(fixturesData);
