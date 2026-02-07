@@ -2279,37 +2279,33 @@ def get_top_shooters(
 
 
 @router.post("/trigger-load-fixtures")
-async def trigger_load_fixtures():
+def trigger_load_fixtures():
     """
     Trigger manual load of upcoming fixtures using existing sync-fixtures endpoint.
     """
     try:
         logger.info("manual_load_fixtures_triggered")
-        
+
         # Reusar el endpoint que ya funciona
-        response = await sync_fixtures()
-        
-        return {
-            "status": "success", 
-            "message": "Fixtures loaded successfully", 
-            "result": response
-        }
+        response = sync_fixtures()
+
+        return {"status": "success", "message": "Fixtures loaded successfully", "result": response}
     except Exception as e:
         logger.error("manual_load_fixtures_error", error=str(e))
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.post("/trigger-generate-predictions")
-async def trigger_generate_predictions():
+def trigger_generate_predictions():
     """
     Trigger manual generation of predictions using existing run-predictions endpoint.
     """
     try:
         logger.info("manual_generate_predictions_triggered")
-        
+
         # Reusar el endpoint que ya funciona
-        response = await run_predictions_for_upcoming_fixtures()
-        
+        response = run_predictions_for_upcoming_fixtures()
+
         return {
             "status": "success",
             "message": "Predictions generated successfully",
