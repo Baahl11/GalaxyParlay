@@ -2304,7 +2304,7 @@ def trigger_generate_predictions():
         logger.info("manual_generate_predictions_triggered")
 
         # Reusar el endpoint que ya funciona
-        response = run_predictions_for_upcoming_fixtures()
+        response = run_predictions()
 
         return {
             "status": "success",
