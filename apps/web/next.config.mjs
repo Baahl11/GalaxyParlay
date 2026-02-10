@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   
+  // Force new build
+  generateBuildId: async () => {
+    return `build-${Date.now()}`;
+  },
+  
   // Performance optimizations
   experimental: {
     optimizePackageImports: ['date-fns'],
