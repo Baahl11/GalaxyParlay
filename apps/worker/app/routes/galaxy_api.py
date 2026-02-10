@@ -82,7 +82,8 @@ async def get_fixtures(
             )
 
         return {
-            "data": enriched_fixtures,
+            "fixtures": enriched_fixtures,
+            "total": len(enriched_fixtures),
             "count": len(enriched_fixtures),
             "filters": {"league_id": league_id, "status": status, "limit": limit},
         }
