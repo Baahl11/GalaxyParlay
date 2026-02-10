@@ -43,6 +43,11 @@ export function NetworkGraphView({
     const tomorrow: Map<number, Fixture[]> = new Map();
     const upcoming: Map<number, Fixture[]> = new Map();
 
+    // Validar que fixtures existe y es un array
+    if (!fixtures || !Array.isArray(fixtures)) {
+      return { today, tomorrow, upcoming };
+    }
+
     fixtures.forEach((fixture) => {
       const daysUntil = getDaysUntil(fixture.kickoff_time);
       let targetMap: Map<number, Fixture[]>;

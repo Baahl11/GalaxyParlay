@@ -57,6 +57,16 @@ export function LeagueClusterView({
 }: LeagueClusterViewProps) {
   const [hoveredFixture, setHoveredFixture] = useState<Fixture | null>(null);
 
+  // Validar que fixtures existe
+  if (!fixtures || !Array.isArray(fixtures) || fixtures.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <div className="text-4xl mb-4">📊</div>
+        <p className="text-gray-400">No fixtures available</p>
+      </div>
+    );
+  }
+
   // Color schemes by urgency + grade
   const getFixtureColor = (grade: string, daysUntil: number): string => {
     // HOY (0 días)

@@ -27,7 +27,7 @@ export function GalaxyCanvas({ fixtures, onFixtureClick, onFixtureHover }: Galax
   const [hoveredFixture, setHoveredFixture] = useState<Fixture | null>(null);
 
   useEffect(() => {
-    if (!containerRef.current || fixtures.length === 0) return;
+    if (!containerRef.current || !fixtures || !Array.isArray(fixtures) || fixtures.length === 0) return;
 
     // Initialize PixiJS
     const app = new PIXI.Application();
