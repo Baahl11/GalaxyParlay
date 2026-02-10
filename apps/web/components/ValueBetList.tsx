@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { ValueBetCard, ValueBetData } from './ValueBetCard';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://galaxyparlay-production.up.railway.app';
+
 interface ValueBetsResponse {
   data: ValueBetData[];
   count: number;
@@ -42,7 +44,7 @@ export function ValueBetList({ limit = 10, compact = false }: ValueBetListProps)
         limit: limit.toString(),
       });
       
-      const response = await fetch(`http://localhost:8001/api/value-bets?${params}`);
+      const response = await fetch(`${API_BASE_URL}/api/value-bets?${params}`);
       if (!response.ok) throw new Error('Failed to fetch value bets');
       
       const data: ValueBetsResponse = await response.json();
