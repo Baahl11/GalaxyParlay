@@ -45,10 +45,11 @@ export default function Home() {
         getFixtures({ status: "NS", limit: 100 }),
         getStats(),
       ]);
-      setFixtures(fixturesData);
+      setFixtures(fixturesData || []);
       setStats(statsData);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load data");
+      setFixtures([]); // Asegurar array vacío en caso de error
     } finally {
       setLoading(false);
     }

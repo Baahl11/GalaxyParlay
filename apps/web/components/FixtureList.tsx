@@ -23,7 +23,7 @@ export function FixtureList({ fixtures, title, onFixtureClick }: FixtureListProp
     }
   };
 
-  if (fixtures.length === 0) {
+  if (!fixtures || !Array.isArray(fixtures) || fixtures.length === 0) {
     return (
       <div className="text-center py-12">
         <div className="text-6xl mb-4">⚽</div>
