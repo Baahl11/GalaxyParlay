@@ -64,7 +64,12 @@ class DatabaseService:
         if status:
             query = query.eq("status", status)
 
-        query = query.order("kickoff_time").limit(limit)
+        # Only get fixtures from today onwards
+        today = datetime.utcnow().strftime("%Y-%m-%d")
+        query = query.gte("kickoff_time", today)
+
+        # Order by kickoff_time ASC to get soonest fixtures first
+        query = query.order("kickoff_time", desc=False).limit(limit)
 
         result = query.execute()
         return result.data

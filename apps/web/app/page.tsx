@@ -1,5 +1,6 @@
 "use client";
 
+// ParlayGalaxy - Main Page (v2.1)
 import {
   FixtureList,
   GalaxyCanvas,
