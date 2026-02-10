@@ -2340,7 +2340,4 @@ async def get_scheduler_status():
         return {"status": "running", "jobs": jobs_info}
     except Exception as e:
         logger.error("scheduler_status_error", error=str(e))
-        return {"status": "error", "error": str(e)}
-    except Exception as e:
-        logger.error("scheduler_status_error", error=str(e))
         raise HTTPException(status_code=500, detail=str(e))
