@@ -61,12 +61,12 @@ class RefereeProfile:
     def _parse_referee_data(self, data: Dict):
         """Parse referee statistics from API or database"""
         try:
-            self.avg_yellow_per_game = data.get("avg_yellow_cards", 3.5)
-            self.avg_red_per_game = data.get("avg_red_cards", 0.08)
-            self.total_games = data.get("total_games", 100)
-            self.strictness_score = data.get("strictness_score", 0.5)  # 0-1 scale
-            self.home_bias = data.get("home_bias", 1.0)  # cards_away / cards_home ratio
-            self.consistency_score = data.get("consistency_score", 0.8)  # variance measure
+            self.avg_yellow_per_game = float(data.get("avg_yellow_cards", 3.5) or 3.5)
+            self.avg_red_per_game = float(data.get("avg_red_cards", 0.08) or 0.08)
+            self.total_games = int(data.get("total_games", 100) or 100)
+            self.strictness_score = float(data.get("strictness_score", 0.5) or 0.5)  # 0-1 scale
+            self.home_bias = float(data.get("home_bias", 1.0) or 1.0)  # cards_away / cards_home ratio
+            self.consistency_score = float(data.get("consistency_score", 0.8) or 0.8)  # variance measure
         except Exception as e:
             logger.warning("Error parsing referee data, using defaults", error=str(e))
             self._set_defaults()
@@ -138,23 +138,23 @@ class TeamStats:
         try:
             # Goals
             goals = data.get("goals", {})
-            self.goals_scored_avg = goals.get("for", {}).get("average", {}).get("total", 1.5)
-            self.goals_conceded_avg = goals.get("against", {}).get("average", {}).get("total", 1.2)
-            self.goals_scored_home = goals.get("for", {}).get("average", {}).get("home", 1.7)
-            self.goals_scored_away = goals.get("for", {}).get("average", {}).get("away", 1.3)
-            self.goals_conceded_home = goals.get("against", {}).get("average", {}).get("home", 1.0)
-            self.goals_conceded_away = goals.get("against", {}).get("average", {}).get("away", 1.4)
+            self.goals_scored_avg = float(goals.get("for", {}).get("average", {}).get("total", 1.5) or 1.5)
+            self.goals_conceded_avg = float(goals.get("against", {}).get("average", {}).get("total", 1.2) or 1.2)
+            self.goals_scored_home = float(goals.get("for", {}).get("average", {}).get("home", 1.7) or 1.7)
+            self.goals_scored_away = float(goals.get("for", {}).get("average", {}).get("away", 1.3) or 1.3)
+            self.goals_conceded_home = float(goals.get("against", {}).get("average", {}).get("home", 1.0) or 1.0)
+            self.goals_conceded_away = float(goals.get("against", {}).get("average", {}).get("away", 1.4) or 1.4)
 
             # Clean sheets
             clean_sheets = data.get("clean_sheet", {})
-            self.clean_sheets_home = clean_sheets.get("home", 0)
-            self.clean_sheets_away = clean_sheets.get("away", 0)
-            self.clean_sheets_total = clean_sheets.get("total", 0)
+            self.clean_sheets_home = int(clean_sheets.get("home", 0) or 0)
+            self.clean_sheets_away = int(clean_sheets.get("away", 0) or 0)
+            self.clean_sheets_total = int(clean_sheets.get("total", 0) or 0)
 
             # Failed to score
             failed = data.get("failed_to_score", {})
-            self.failed_to_score_home = failed.get("home", 0)
-            self.failed_to_score_away = failed.get("away", 0)
+            self.failed_to_score_home = int(failed.get("home", 0) or 0)
+            self.failed_to_score_away = int(failed.get("away", 0) or 0)
 
             # Cards
             cards = data.get("cards", {})
@@ -162,18 +162,15 @@ class TeamStats:
             red = cards.get("red", {})
 
             # Sum cards across all time periods
-            self.yellow_cards_avg = self._sum_card_periods(yellow) / max(
-                1, data.get("fixtures", {}).get("played", {}).get("total", 1)
-            )
-            self.red_cards_avg = self._sum_card_periods(red) / max(
-                1, data.get("fixtures", {}).get("played", {}).get("total", 1)
-            )
+            fixtures_played = float(data.get("fixtures", {}).get("played", {}).get("total", 1) or 1)
+            self.yellow_cards_avg = self._sum_card_periods(yellow) / max(1, fixtures_played)
+            self.red_cards_avg = self._sum_card_periods(red) / max(1, fixtures_played)
 
             # Fixtures played
             fixtures = data.get("fixtures", {}).get("played", {})
-            self.matches_played = fixtures.get("total", 0)
-            self.matches_home = fixtures.get("home", 0)
-            self.matches_away = fixtures.get("away", 0)
+            self.matches_played = int(fixtures.get("total", 0) or 0)
+            self.matches_home = int(fixtures.get("home", 0) or 0)
+            self.matches_away = int(fixtures.get("away", 0) or 0)
 
         except Exception as e:
             logger.warning("Error parsing team stats, using defaults", error=str(e))
