@@ -41,8 +41,9 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
     setError(null);
 
     try {
-      const data = await getMultiMarketPrediction(fixture.id);
-      setPrediction(data);
+      // Temporarily disable multi-market fetch to avoid backend 500s
+      setPrediction(null);
+      setError("Multi-market predictions temporalmente deshabilitadas");
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to load predictions",
