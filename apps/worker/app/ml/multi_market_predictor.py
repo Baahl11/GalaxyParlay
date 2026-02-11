@@ -1365,7 +1365,7 @@ class MultiMarketPredictor:
                     db_service.client.table("player_statistics")
                     .select(
                         "player_name, goals, assists, total_shots, shots_on_target, "
-                        "goals_per_90, shots_per_90, goals_conceded, games_played, minutes_played"
+                        "goals_per_90, shots_per_90, games_played, minutes_played"
                     )
                     .eq("team_id", team_id)
                     .gte("goals", 0)  # Just get all players with data
