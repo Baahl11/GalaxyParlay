@@ -131,7 +131,7 @@ export async function getMultiMarketPrediction(
   fixtureId: number,
 ): Promise<MultiMarketPrediction> {
   const response = await fetch(
-    `${API_BASE_URL}/api/multi-market-prediction/${fixtureId}`,
+    `${API_BASE_URL}/jobs/multi-market-prediction/${fixtureId}`,
     {
       next: { revalidate: 120 },
     },
