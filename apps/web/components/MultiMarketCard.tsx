@@ -399,15 +399,15 @@ function ScoresTab({ exactScores, halfTime, homeTeam, awayTeam }: {
         <h4 className="text-xs font-semibold text-gray-400 mb-3">Half-Time Result</h4>
         <div className="flex justify-around">
           <div className="text-center">
-            <div className="text-xl font-bold text-purple-400">{formatProb(halfTime.home)}</div>
+            <div className="text-xl font-bold text-purple-400">{formatProb(halfTime.result_1x2?.home || 0)}</div>
             <div className="text-xs text-gray-500">{homeTeam}</div>
           </div>
           <div className="text-center">
-            <div className="text-xl font-bold text-gray-400">{formatProb(halfTime.draw)}</div>
+            <div className="text-xl font-bold text-gray-400">{formatProb(halfTime.result_1x2?.draw || 0)}</div>
             <div className="text-xs text-gray-500">Draw</div>
           </div>
           <div className="text-center">
-            <div className="text-xl font-bold text-pink-400">{formatProb(halfTime.away)}</div>
+            <div className="text-xl font-bold text-pink-400">{formatProb(halfTime.result_1x2?.away || 0)}</div>
             <div className="text-xs text-gray-500">{awayTeam}</div>
           </div>
         </div>
