@@ -36,7 +36,24 @@ const MARKET_CATEGORIES = {
     "away_over_1_5",
     "away_over_2_5",
     "first_half_over_under_0_5",
+    "half_time_result_1x2",
+    "half_time_goals_over_under_0_5",
+    "half_time_goals_over_under_1_5",
   ],
+  scores: [
+    "exact_score_0_0",
+    "exact_score_1_0",
+    "exact_score_0_1",
+    "exact_score_1_1",
+    "exact_score_2_0",
+    "exact_score_0_2",
+    "exact_score_2_1",
+    "exact_score_1_2",
+    "exact_score_2_2",
+    "exact_score_3_0",
+    "exact_score_0_3",
+  ],
+  players: [],
   corners: [
     // New backend keys (total_over_X_5)
     "corners_total_over_7_5",
@@ -52,6 +69,10 @@ const MARKET_CATEGORIES = {
     "corners_away_over_3_5",
     "corners_away_over_4_5",
     "corners_away_over_5_5",
+    // Half-Time corners
+    "half_time_corners_over_3_5",
+    "half_time_corners_over_4_5",
+    "half_time_corners_over_5_5",
     // Old format (for backwards compat)
     "corners_over_under_7_5",
     "corners_over_under_8_5",
@@ -111,8 +132,14 @@ const MARKET_CATEGORIES = {
 };
 
 const MARKET_LABELS: Record<string, string> = {
-  match_winner: "Match Winner",
+  match_winner: "Match Winner (1X2)",
   both_teams_score: "Both Teams Score",
+  half_time_result_1x2: "Half-Time Result (1X2)",
+  half_time_goals_over_under_0_5: "Half-Time O/U 0.5 Goals",
+  half_time_goals_over_under_1_5: "Half-Time O/U 1.5 Goals",
+  half_time_corners_over_3_5: "Half-Time Corners O/U 3.5",
+  half_time_corners_over_4_5: "Half-Time Corners O/U 4.5",
+  half_time_corners_over_5_5: "Half-Time Corners O/U 5.5",
   over_under_0_5: "Over/Under 0.5",
   over_under_1_5: "Over/Under 1.5",
   over_under_2_5: "Over/Under 2.5",
@@ -191,6 +218,8 @@ const MARKET_LABELS: Record<string, string> = {
 
 const CATEGORY_ICONS = {
   goals: "⚽",
+  scores: "🎯",
+  players: "👤",
   corners: "🚩",
   cards: "🟨",
   shots: "🎯",
@@ -199,6 +228,8 @@ const CATEGORY_ICONS = {
 
 const CATEGORY_COLORS = {
   goals: "green",
+  scores: "blue",
+  players: "purple",
   corners: "yellow",
   cards: "red",
   shots: "blue",
@@ -221,6 +252,11 @@ function getCategoryForMarket(marketKey: string): MarketCategory | null {
   }
 
   // Pattern matching for dynamic keys
+  if (marketKey.startsWith("exact_score_")) return "scores";
+  if (marketKey.startsWith("player_anytime_scorer_")) return "players";
+  if (marketKey.startsWith("half_time_corners_")) return "corners";
+  if (marketKey.startsWith("half_time_goals_")) return "goals";
+  if (marketKey.startsWith("half_time_result")) return "goals";
   if (marketKey.startsWith("corners_")) return "corners";
   if (marketKey.startsWith("cards_")) return "cards";
   if (marketKey.startsWith("shots_")) return "shots";
@@ -229,7 +265,8 @@ function getCategoryForMarket(marketKey: string): MarketCategory | null {
     marketKey.includes("over_under") ||
     marketKey.includes("btts") ||
     marketKey.includes("home_over") ||
-    marketKey.includes("away_over")
+    marketKey.includes("away_over") ||
+    marketKey === "match_winner"
   )
     return "goals";
 

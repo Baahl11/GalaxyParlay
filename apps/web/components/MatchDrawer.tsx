@@ -350,6 +350,143 @@ function transformPredictionsToArray(prediction: MultiMarketPrediction) {
     }
   }
 
+  // Match Winner (1X2)
+  if (preds.match_winner) {
+    const mw = preds.match_winner;
+    const outcomes = [
+      { outcome: "home_win", prob: mw.home_win },
+      { outcome: "draw", prob: mw.draw },
+      { outcome: "away_win", prob: mw.away_win },
+    ];
+    const bestOutcome = outcomes.reduce((max, curr) =>
+      curr.prob > max.prob ? curr : max
+    );
+
+    predictions.push({
+      fixture_id: prediction.fixture_id,
+      market_key: "match_winner",
+      prediction: mw,
+      confidence_score: bestOutcome.prob,
+      quality_grade: getGrade(bestOutcome.prob),
+    });
+  }
+
+  // Exact Scores (top 3 most likely)
+  if (preds.exact_scores && preds.exact_scores.length > 0) {
+    preds.exact_scores.slice(0, 3).forEach((score, idx) => {
+      predictions.push({
+        fixture_id: prediction.fixture_id,
+        market_key: `exact_score_${score.score.replace("-", "_")}`,
+        prediction: { score: score.score, probability: score.probability },
+        confidence_score: score.probability,
+        quality_grade: getGrade(score.probability),
+      });
+    });
+  }
+
+  // Half-Time Markets (EXPANDED)
+  if (preds.half_time) {
+    const ht = preds.half_time;
+
+    // Half-Time 1X2 Result
+    if (ht.result_1x2) {
+      const outcomes = [
+        { outcome: "home", prob: ht.result_1x2.home },
+        { outcome: "draw", prob: ht.result_1x2.draw },
+        { outcome: "away", prob: ht.result_1x2.away },
+      ];
+      const bestOutcome = outcomes.reduce((max, curr) =>
+        curr.prob > max.prob ? curr : max
+      );
+
+      predictions.push({
+        fixture_id: prediction.fixture_id,
+        market_key: "half_time_result_1x2",
+        prediction: ht.result_1x2,
+        confidence_score: bestOutcome.prob,
+        quality_grade: getGrade(bestOutcome.prob),
+      });
+    }
+
+    // Half-Time Goals Over/Under (0.5, 1.5)
+    if (ht.goals) {
+      for (const [key, value] of Object.entries(ht.goals)) {
+        if (typeof value === "object" && "over" in value && "under" in value) {
+          const overProb = value.over ?? 0;
+          const underProb = value.under ?? 0;
+          const confidence = Math.max(overProb, underProb);
+
+          predictions.push({
+            fixture_id: prediction.fixture_id,
+            market_key: `half_time_goals_${key}`,
+            prediction: { over: overProb, under: underProb },
+            confidence_score: confidence,
+            quality_grade: getGrade(confidence),
+          });
+        }
+      }
+    }
+
+    // Half-Time Corners Over/Under (3.5, 4.5, 5.5)
+    if (ht.corners) {
+      for (const [key, value] of Object.entries(ht.corners)) {
+        if (
+          key.includes("over_") &&
+          typeof value === "object" &&
+          "over" in value &&
+          "under" in value
+        ) {
+          const overProb = value.over ?? 0;
+          const underProb = value.under ?? 0;
+          const confidence = Math.max(overProb, underProb);
+
+          predictions.push({
+            fixture_id: prediction.fixture_id,
+            market_key: `half_time_${key}`,
+            prediction: { over: overProb, under: underProb },
+            confidence_score: confidence,
+            quality_grade: getGrade(confidence),
+          });
+        }
+      }
+    }
+  }
+
+  // Player Props - Anytime Scorers (top 3 per team)
+  if (preds.player_props) {
+    // Home team top scorers
+    preds.player_props.home_players?.slice(0, 3).forEach((player) => {
+      predictions.push({
+        fixture_id: prediction.fixture_id,
+        market_key: `player_anytime_scorer_${player.player_name.replace(/\s+/g, "_").toLowerCase()}`,
+        prediction: {
+          player_name: player.player_name,
+          anytime_scorer: player.anytime_scorer,
+          shots_on_target_1plus: player.shots_on_target_1plus,
+          team: "home",
+        },
+        confidence_score: player.anytime_scorer,
+        quality_grade: getGrade(player.anytime_scorer * player.confidence),
+      });
+    });
+
+    // Away team top scorers
+    preds.player_props.away_players?.slice(0, 3).forEach((player) => {
+      predictions.push({
+        fixture_id: prediction.fixture_id,
+        market_key: `player_anytime_scorer_${player.player_name.replace(/\s+/g, "_").toLowerCase()}`,
+        prediction: {
+          player_name: player.player_name,
+          anytime_scorer: player.anytime_scorer,
+          shots_on_target_1plus: player.shots_on_target_1plus,
+          team: "away",
+        },
+        confidence_score: player.anytime_scorer,
+        quality_grade: getGrade(player.anytime_scorer * player.confidence),
+      });
+    });
+  }
+
   // Shots
   if (preds.shots) {
     for (const [key, value] of Object.entries(preds.shots)) {

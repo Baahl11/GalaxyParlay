@@ -134,6 +134,7 @@ export interface MultiMarketPrediction {
   is_cup: boolean;
   quality_score?: number; // Optional - may not be in backend response
   predictions: {
+    match_winner?: { home_win: number; draw: number; away_win: number };
     over_under: Record<string, { over: number; under: number; line: number }>;
     team_goals: Record<
       string,
@@ -191,7 +192,45 @@ export interface MultiMarketPrediction {
       score: string;
       probability: number;
     }>;
-    half_time: { home: number; draw: number; away: number };
+    half_time: {
+      result_1x2: { home: number; draw: number; away: number };
+      goals: Record<string, { over: number; under: number; line: number }>;
+      corners: {
+        expected: { home: number; away: number; total: number };
+        [key: string]: any;
+      };
+      expected: {
+        home_goals: number;
+        away_goals: number;
+        total_goals: number;
+        total_corners: number;
+      };
+    };
+    player_props?: {
+      home_players: Array<{
+        player_name: string;
+        anytime_scorer: number;
+        shots_on_target_1plus: number;
+        goals_per_90: number;
+        player_xg: number;
+        games_played: number;
+        confidence: number;
+      }>;
+      away_players: Array<{
+        player_name: string;
+        anytime_scorer: number;
+        shots_on_target_1plus: number;
+        goals_per_90: number;
+        player_xg: number;
+        games_played: number;
+        confidence: number;
+      }>;
+      summary?: {
+        home_top_scorer: any;
+        away_top_scorer: any;
+        total_players: number;
+      };
+    };
     expected: { home_goals: number; away_goals: number; total_goals: number };
   };
 }

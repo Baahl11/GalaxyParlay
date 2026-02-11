@@ -22,11 +22,13 @@ The following files contained hardcoded credentials:
 ## Exposed Token
 
 **Supabase Service Role JWT:**
+
 ```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impzc2p3anN1cW1remlkaWdqcHdqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2OTQzNDQwMiwiZXhwIjoyMDg1MDEwNDAyfQ.iir_GtLYUZmAL66C_7BZJITxkq8rRQklWPqBS_Qp7io
 ```
 
 **Decoded Info:**
+
 - **Project:** jssjwjsuqmkzidigipwj.supabase.co
 - **Role:** service_role (full admin access)
 - **Issued:** 2026-01-26 (iat: 1769434402)
@@ -44,11 +46,13 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impzc2p3anN
 ### 1. ⚠️ Supabase Service Role Key Rotation - LIMITED
 
 **Status: CANNOT ROTATE**
+
 - Supabase does not allow rotating service role JWTs independently
 - JWT is signed with "Legacy JWT secret" which cannot be changed easily
 - Changing JWT secret would break all existing integrations
 
 **Mitigation Applied:**
+
 - ✅ Token removed from all code files
 - ✅ Railway configured with `SUPABASE_SERVICE_ROLE_KEY` environment variable
 - ✅ Vercel configured with `SUPABASE_SERVICE_ROLE_KEY` environment variable
@@ -75,11 +79,13 @@ The file `apps/worker/.env.vercel` also contains an exposed token. Delete or rot
 ### 4. ✅ COMPLETED: Update Deployment Environments
 
 **Railway:**
+
 ```bash
 ✅ CONFIGURED: SUPABASE_SERVICE_ROLE_KEY set in Railway environment
 ```
 
 **Vercel:**
+
 ```bash
 ✅ CONFIGURED: SUPABASE_SERVICE_ROLE_KEY added to Vercel production environment
 ```
@@ -129,6 +135,7 @@ git push --force
 ---
 
 **NEXT STEPS:**
+
 1. ⚠️ **ROTATE THE TOKEN NOW** - Old token is compromised
 2. Check Supabase logs for unauthorized access
 3. Update all deployment environments
