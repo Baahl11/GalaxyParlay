@@ -17,6 +17,8 @@ interface MatchDrawerProps {
 // Next.js false positive: functions are valid props in client components
 // @ts-ignore
 export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
+  console.log('[MatchDrawer] 🔄 Component rendered with props:', { fixture: fixture?.id, isOpen });
+  
   const [prediction, setPrediction] = useState<MultiMarketPrediction | null>(
     null,
   );
@@ -31,7 +33,9 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
   const [profitableOnly, setProfitableOnly] = useState(false);
 
   useEffect(() => {
+    console.log('[MatchDrawer] useEffect triggered:', { fixture: fixture?.id, isOpen });
     if (fixture && isOpen) {
+      console.log('[MatchDrawer] 🚀 Calling loadPrediction...');
       loadPrediction();
     }
   }, [fixture?.id, isOpen]);
