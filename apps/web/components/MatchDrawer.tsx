@@ -1,5 +1,8 @@
 "use client";
 
+// VERSION: 2026-02-10-BUILD-002 - DEBUGGING ENABLED
+console.log('🚀 MatchDrawer.tsx LOADED - Version BUILD-002');
+
 import { getMultiMarketPrediction } from "@/lib/api";
 import type { Fixture, MultiMarketPrediction } from "@/lib/types";
 import { LEAGUE_FLAGS, LEAGUE_NAMES } from "@/lib/types";
@@ -74,7 +77,7 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
       const errorMessage =
         err instanceof Error ? err.message : "Failed to load predictions";
       console.error("[MatchDrawer] Error message:", errorMessage);
-      setError(errorMessage);
+      setError(`[v2] ${errorMessage}`);
     } finally {
       setLoading(false);
       console.log("[MatchDrawer] Loading complete");
