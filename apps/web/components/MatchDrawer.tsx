@@ -256,7 +256,7 @@ function transformPredictionsToArray(prediction: MultiMarketPrediction) {
 
       predictions.push({
         fixture_id: prediction.fixture_id,
-        market_key: `over_under_${key.split("_").pop()}`,
+        market_key: key, // Use full key: "over_under_0_5", "over_under_1_5", etc.
         prediction: { over: overProb, under: underProb },
         confidence_score: confidence,
         quality_grade: getGrade(confidence),
