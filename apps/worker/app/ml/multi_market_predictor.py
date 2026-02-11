@@ -1338,6 +1338,13 @@ class MultiMarketPredictor:
 
         Returns top 5-6 most likely players per team.
         """
+        logger.info(
+            "=== PLAYER PROPS START ===",
+            home_team_id=home_team_id,
+            away_team_id=away_team_id,
+            db_available=DB_AVAILABLE,
+        )
+        
         if not DB_AVAILABLE:
             logger.warning("Database service not available for player props")
             return {"home_players": [], "away_players": []}
@@ -1346,7 +1353,7 @@ class MultiMarketPredictor:
             """Get player props for a specific team"""
             try:
                 logger.info(
-                    "Querying player_statistics for team",
+                    ">>> START query for team",
                     team_id=team_id,
                     team_xg=team_xg,
                     is_home=is_home,
@@ -1367,18 +1374,32 @@ class MultiMarketPredictor:
                     .execute()
                 )
 
+                players_found = len(result.data) if result.data else 0
                 logger.info(
-                    "Player query result",
+                    ">>> Query COMPLETED",
                     team_id=team_id,
-                    players_found=len(result.data) if result.data else 0,
+                    players_found=players_found,
+                    has_data=bool(result.data),
+                    data_type=type(result.data).__name__,
                 )
 
-                if not result.data:
-                    logger.warning("No player data found for team", team_id=team_id)
+                if not result.data or players_found == 0:
+                    logger.warning(
+                        ">>> NO PLAYERS FOUND",
+                        team_id=team_id,
+                        result_has_data=hasattr(result, 'data'),
+                        result_data_value=result.data if hasattr(result, 'data') else 'NO ATTR',
+                    )
                     return []
 
+                logger.info(
+                    ">>> Processing players",
+                    team_id=team_id,
+                    player_names=[p.get("player_name") for p in result.data[:3]],
+                )
+
                 players = []
-                for player in result.data:
+                for idx, player in enumerate(result.data):
                     goals_per_90 = float(player.get("goals_per_90", 0) or 0)
                     shots_per_90 = float(player.get("shots_per_90", 0) or 0)
                     games = int(player.get("games_played", 1) or 1)
@@ -1417,31 +1438,50 @@ class MultiMarketPredictor:
                     # More data = more confident
                     confidence = min(0.95, games / 15)  # Max at 15 games
 
-                    players.append(
-                        {
-                            "player_name": player["player_name"],
-                            "anytime_scorer": round(scorer_prob, 4),
-                            "shots_on_target_1plus": round(sot_prob, 4),
-                            "goals_per_90": round(goals_per_90, 2),
-                            "player_xg": round(player_xg, 2),
-                            "games_played": games,
-                            "confidence": round(confidence, 2),
-                        }
-                    )
+                    player_data = {
+                        "player_name": player["player_name"],
+                        "anytime_scorer": round(scorer_prob, 4),
+                        "shots_on_target_1plus": round(sot_prob, 4),
+                        "goals_per_90": round(goals_per_90, 2),
+                        "player_xg": round(player_xg, 2),
+                        "games_played": games,
+                        "confidence": round(confidence, 2),
+                    }
+                    players.append(player_data)
+                    
+                    if idx < 2:  # Log first 2 players
+                        logger.info(f">>> Player {idx+1}", player_data=player_data)
 
                 # Sort by anytime scorer probability and return top 6
                 players.sort(key=lambda x: x["anytime_scorer"], reverse=True)
-                return players[:6]
+                final_players = players[:6]
+                
+                logger.info(
+                    ">>> FINAL players for team",
+                    team_id=team_id,
+                    count=len(final_players),
+                    top_player=final_players[0]["player_name"] if final_players else None,
+                )
+                
+                return final_players
 
             except Exception as e:
-                logger.error("Error fetching player props", team_id=team_id, error=str(e))
+                logger.error(
+                    ">>> EXCEPTION in player props",
+                    team_id=team_id,
+                    error=str(e),
+                    error_type=type(e).__name__,
+                    traceback=True,
+                )
+                import traceback
+                logger.error(">>> Full traceback", trace=traceback.format_exc())
                 return []
 
         # Get props for both teams
         home_players = get_team_player_props(home_team_id, home_xg, is_home=True)
         away_players = get_team_player_props(away_team_id, away_xg, is_home=False)
 
-        return {
+        result = {
             "home_players": home_players,
             "away_players": away_players,
             "summary": {
@@ -1450,6 +1490,15 @@ class MultiMarketPredictor:
                 "total_players": len(home_players) + len(away_players),
             },
         }
+        
+        logger.info(
+            "=== PLAYER PROPS END ===",
+            home_count=len(home_players),
+            away_count=len(away_players),
+            total=result["summary"]["total_players"],
+        )
+        
+        return result
 
 
 # Global instance
