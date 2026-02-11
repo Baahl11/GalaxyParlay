@@ -132,7 +132,7 @@ export interface MultiMarketPrediction {
   kickoff_time: string;
   league_id: number;
   is_cup: boolean;
-  quality_score: number;
+  quality_score?: number; // Optional - may not be in backend response
   predictions: {
     over_under: Record<string, { over: number; under: number; line: number }>;
     team_goals: Record<
@@ -151,10 +151,18 @@ export interface MultiMarketPrediction {
         home_yellow: number;
         away_yellow: number;
         total_yellow: number;
+        referee?: string;
+        referee_avg?: number;
       };
       [key: string]:
         | { over?: number; under?: number }
-        | { home_yellow: number; away_yellow: number; total_yellow: number };
+        | { 
+            home_yellow: number; 
+            away_yellow: number; 
+            total_yellow: number; 
+            referee?: string; 
+            referee_avg?: number; 
+          };
     };
     shots: {
       expected: {
@@ -166,6 +174,16 @@ export interface MultiMarketPrediction {
         total_shots_on_target: number;
       };
       [key: string]: { over?: number; under?: number } | object;
+    };
+    offsides?: {
+      expected?: { home: number; away: number; total: number };
+      features?: {
+        home_tempo: number;
+        away_tempo: number;
+        home_defensive_line: number;
+        away_defensive_line: number;
+      };
+      [key: string]: any; // Flexible index for dynamic prediction keys
     };
     exact_scores: Array<{
       home: number;

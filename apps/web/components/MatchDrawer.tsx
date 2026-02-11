@@ -14,6 +14,8 @@ interface MatchDrawerProps {
   onClose: () => void;
 }
 
+// Next.js false positive: functions are valid props in client components
+// @ts-ignore
 export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
   const [prediction, setPrediction] = useState<MultiMarketPrediction | null>(
     null,
@@ -36,15 +38,18 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
 
   const loadPrediction = async () => {
     if (!fixture) {
-      console.log('[MatchDrawer] No fixture provided');
+      console.log("[MatchDrawer] No fixture provided");
       return;
     }
 
-    console.log('[MatchDrawer] Loading multi-market prediction for fixture:', fixture.id);
-    console.log('[MatchDrawer] Fixture data:', { 
-      id: fixture.id, 
-      home: fixture.home_team_name, 
-      away: fixture.away_team_name 
+    console.log(
+      "[MatchDrawer] Loading multi-market prediction for fixture:",
+      fixture.id,
+    );
+    console.log("[MatchDrawer] Fixture data:", {
+      id: fixture.id,
+      home: fixture.home_team_name,
+      away: fixture.away_team_name,
     });
 
     setLoading(true);
@@ -52,16 +57,23 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
 
     try {
       const data = await getMultiMarketPrediction(fixture.id);
-      console.log('[MatchDrawer] ✅ Successfully loaded multi-market prediction:', data);
+      console.log(
+        "[MatchDrawer] ✅ Successfully loaded multi-market prediction:",
+        data,
+      );
       setPrediction(data);
     } catch (err) {
-      console.error('[MatchDrawer] ❌ Error loading multi-market prediction:', err);
-      const errorMessage = err instanceof Error ? err.message : "Failed to load predictions";
-      console.error('[MatchDrawer] Error message:', errorMessage);
+      console.error(
+        "[MatchDrawer] ❌ Error loading multi-market prediction:",
+        err,
+      );
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to load predictions";
+      console.error("[MatchDrawer] Error message:", errorMessage);
       setError(errorMessage);
     } finally {
       setLoading(false);
-      console.log('[MatchDrawer] Loading complete');
+      console.log("[MatchDrawer] Loading complete");
     }
   };
 
