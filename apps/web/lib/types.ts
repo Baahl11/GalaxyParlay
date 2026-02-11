@@ -157,12 +157,12 @@ export interface MultiMarketPrediction {
       };
       [key: string]:
         | { over?: number; under?: number }
-        | { 
-            home_yellow: number; 
-            away_yellow: number; 
-            total_yellow: number; 
-            referee?: string; 
-            referee_avg?: number; 
+        | {
+            home_yellow: number;
+            away_yellow: number;
+            total_yellow: number;
+            referee?: string;
+            referee_avg?: number;
           };
     };
     shots: {

@@ -19,7 +19,7 @@ interface AllMarketsViewProps {
 }
 
 // Market categorization - includes both old and new key formats
-const MARKET_CATEGORIES = {
+const MARKET_CATEGORIES: Record<string, string[]> = {
   goals: [
     "match_winner",
     "both_teams_score",
@@ -53,7 +53,10 @@ const MARKET_CATEGORIES = {
     "exact_score_3_0",
     "exact_score_0_3",
   ],
-  players: [],
+  players: [
+    // Player props are dynamically generated, but we list common patterns
+    "player_anytime_scorer",
+  ],
   corners: [
     // New backend keys (total_over_X_5)
     "corners_total_over_7_5",

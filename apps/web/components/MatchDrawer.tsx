@@ -1,7 +1,7 @@
 "use client";
 
 // VERSION: 2026-02-10-BUILD-002 - DEBUGGING ENABLED
-console.log('🚀 MatchDrawer.tsx LOADED - Version BUILD-002');
+console.log("🚀 MatchDrawer.tsx LOADED - Version BUILD-002");
 
 import { getMultiMarketPrediction } from "@/lib/api";
 import type { Fixture, MultiMarketPrediction } from "@/lib/types";
@@ -20,8 +20,11 @@ interface MatchDrawerProps {
 // Next.js false positive: functions are valid props in client components
 // @ts-ignore
 export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
-  console.log('[MatchDrawer] 🔄 Component rendered with props:', { fixture: fixture?.id, isOpen });
-  
+  console.log("[MatchDrawer] 🔄 Component rendered with props:", {
+    fixture: fixture?.id,
+    isOpen,
+  });
+
   const [prediction, setPrediction] = useState<MultiMarketPrediction | null>(
     null,
   );
@@ -36,9 +39,12 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
   const [profitableOnly, setProfitableOnly] = useState(false);
 
   useEffect(() => {
-    console.log('[MatchDrawer] useEffect triggered:', { fixture: fixture?.id, isOpen });
+    console.log("[MatchDrawer] useEffect triggered:", {
+      fixture: fixture?.id,
+      isOpen,
+    });
     if (fixture && isOpen) {
-      console.log('[MatchDrawer] 🚀 Calling loadPrediction...');
+      console.log("[MatchDrawer] 🚀 Calling loadPrediction...");
       loadPrediction();
     }
   }, [fixture?.id, isOpen]);
@@ -359,7 +365,7 @@ function transformPredictionsToArray(prediction: MultiMarketPrediction) {
       { outcome: "away_win", prob: mw.away_win },
     ];
     const bestOutcome = outcomes.reduce((max, curr) =>
-      curr.prob > max.prob ? curr : max
+      curr.prob > max.prob ? curr : max,
     );
 
     predictions.push({
@@ -396,7 +402,7 @@ function transformPredictionsToArray(prediction: MultiMarketPrediction) {
         { outcome: "away", prob: ht.result_1x2.away },
       ];
       const bestOutcome = outcomes.reduce((max, curr) =>
-        curr.prob > max.prob ? curr : max
+        curr.prob > max.prob ? curr : max,
       );
 
       predictions.push({

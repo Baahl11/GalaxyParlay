@@ -1382,7 +1382,9 @@ class MultiMarketPredictor:
 
                     # P(player scores at least 1) = 1 - P(player scores 0)
                     # Using Poisson: P(player scores 0) = e^(-player_xg)
-                    player_xg = team_xg * player_contribution * 0.85  # 85% because not always playing full 90
+                    player_xg = (
+                        team_xg * player_contribution * 0.85
+                    )  # 85% because not always playing full 90
                     player_xg = max(0.05, min(2.0, player_xg))  # Clamp to reasonable range
 
                     scorer_prob = 1 - math.exp(-player_xg)

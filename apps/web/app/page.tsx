@@ -57,10 +57,14 @@ export default function Home() {
   };
 
   const handleFixtureClick = (fixture: Fixture) => {
-    console.log('[HomePage] 🎯 Fixture clicked:', { id: fixture.id, home: fixture.home_team_name, away: fixture.away_team_name });
+    console.log("[HomePage] 🎯 Fixture clicked:", {
+      id: fixture.id,
+      home: fixture.home_team_name,
+      away: fixture.away_team_name,
+    });
     setSelectedFixture(fixture);
     setDrawerOpen(true);
-    console.log('[HomePage] ✅ Drawer should open now');
+    console.log("[HomePage] ✅ Drawer should open now");
   };
 
   const tabs: { key: TabKey; label: string; icon: string }[] = [
