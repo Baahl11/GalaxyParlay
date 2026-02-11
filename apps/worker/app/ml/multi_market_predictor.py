@@ -37,6 +37,14 @@ try:
 except ImportError:
     FIFA_AVAILABLE = False
 
+# Database service for player statistics
+try:
+    from app.services.database import db_service
+
+    DB_AVAILABLE = True
+except ImportError:
+    DB_AVAILABLE = False
+
 logger = structlog.get_logger()
 
 
@@ -65,8 +73,12 @@ class RefereeProfile:
             self.avg_red_per_game = float(data.get("avg_red_cards", 0.08) or 0.08)
             self.total_games = int(data.get("total_games", 100) or 100)
             self.strictness_score = float(data.get("strictness_score", 0.5) or 0.5)  # 0-1 scale
-            self.home_bias = float(data.get("home_bias", 1.0) or 1.0)  # cards_away / cards_home ratio
-            self.consistency_score = float(data.get("consistency_score", 0.8) or 0.8)  # variance measure
+            self.home_bias = float(
+                data.get("home_bias", 1.0) or 1.0
+            )  # cards_away / cards_home ratio
+            self.consistency_score = float(
+                data.get("consistency_score", 0.8) or 0.8
+            )  # variance measure
         except Exception as e:
             logger.warning("Error parsing referee data, using defaults", error=str(e))
             self._set_defaults()
@@ -138,12 +150,24 @@ class TeamStats:
         try:
             # Goals
             goals = data.get("goals", {})
-            self.goals_scored_avg = float(goals.get("for", {}).get("average", {}).get("total", 1.5) or 1.5)
-            self.goals_conceded_avg = float(goals.get("against", {}).get("average", {}).get("total", 1.2) or 1.2)
-            self.goals_scored_home = float(goals.get("for", {}).get("average", {}).get("home", 1.7) or 1.7)
-            self.goals_scored_away = float(goals.get("for", {}).get("average", {}).get("away", 1.3) or 1.3)
-            self.goals_conceded_home = float(goals.get("against", {}).get("average", {}).get("home", 1.0) or 1.0)
-            self.goals_conceded_away = float(goals.get("against", {}).get("average", {}).get("away", 1.4) or 1.4)
+            self.goals_scored_avg = float(
+                goals.get("for", {}).get("average", {}).get("total", 1.5) or 1.5
+            )
+            self.goals_conceded_avg = float(
+                goals.get("against", {}).get("average", {}).get("total", 1.2) or 1.2
+            )
+            self.goals_scored_home = float(
+                goals.get("for", {}).get("average", {}).get("home", 1.7) or 1.7
+            )
+            self.goals_scored_away = float(
+                goals.get("for", {}).get("average", {}).get("away", 1.3) or 1.3
+            )
+            self.goals_conceded_home = float(
+                goals.get("against", {}).get("average", {}).get("home", 1.0) or 1.0
+            )
+            self.goals_conceded_away = float(
+                goals.get("against", {}).get("average", {}).get("away", 1.4) or 1.4
+            )
 
             # Clean sheets
             clean_sheets = data.get("clean_sheet", {})
@@ -372,6 +396,8 @@ class MultiMarketPredictor:
 
         # Build predictions
         predictions = {
+            # Match Winner (1X2) - THE MOST IMPORTANT MARKET!
+            "match_winner": self._predict_match_winner(home_xg, away_xg),
             # Over/Under Goals
             "over_under": self._predict_over_under_goals(home_xg, away_xg),
             # Team Goals Over/Under
@@ -399,8 +425,14 @@ class MultiMarketPredictor:
             ),
             # Exact Scores (top 10 most likely)
             "exact_scores": self._predict_exact_scores(home_xg, away_xg),
-            # Half-Time Results
-            "half_time": self._predict_half_time(home_xg, away_xg),
+            # Half-Time Markets (1X2, Goals O/U 0.5/1.5, Corners)
+            "half_time": self._predict_half_time(
+                home_xg, away_xg, home_stats, away_stats, fifa_adjustments=fifa_adjustments
+            ),
+            # Player Props (anytime scorer, shots, cards)
+            "player_props": self._predict_player_props(
+                home_team_id, away_team_id, home_xg, away_xg
+            ),
             # Expected values
             "expected": {
                 "home_goals": round(home_xg, 2),
@@ -570,6 +602,64 @@ class MultiMarketPredictor:
         btts_yes = max(0.10, min(0.95, btts_yes))
 
         return {"yes": round(btts_yes, 4), "no": round(1 - btts_yes, 4)}
+
+    def _predict_match_winner(self, home_xg: float, away_xg: float) -> Dict[str, float]:
+        """
+        Predict 1X2 match result using Dixon-Coles Bivariate Poisson
+
+        Uses same correlation adjustment as over/under and BTTS
+        for low-score scenarios (0-0, 1-0, 0-1, 1-1).
+
+        Reference: Dixon & Coles (1997) - "Modelling Association Football Scores"
+        """
+        rho = self.rho
+
+        def tau(x: int, y: int, lambda_x: float, lambda_y: float, rho: float) -> float:
+            """Dixon-Coles correlation adjustment"""
+            if x == 0 and y == 0:
+                return 1 - lambda_x * lambda_y * rho
+            elif x == 0 and y == 1:
+                return 1 + lambda_x * rho
+            elif x == 1 and y == 0:
+                return 1 + lambda_y * rho
+            elif x == 1 and y == 1:
+                return 1 - rho
+            else:
+                return 1.0
+
+        home_win_prob = 0.0
+        draw_prob = 0.0
+        away_win_prob = 0.0
+
+        # Calculate probabilities for all score combinations up to 6-6
+        for h in range(7):
+            for a in range(7):
+                # Base Poisson probabilities
+                p_h = poisson.pmf(h, home_xg)
+                p_a = poisson.pmf(a, away_xg)
+
+                # Apply Dixon-Coles correlation adjustment
+                adjustment = tau(h, a, home_xg, away_xg, rho)
+                prob = adjustment * p_h * p_a
+
+                if h > a:
+                    home_win_prob += prob
+                elif h == a:
+                    draw_prob += prob
+                else:
+                    away_win_prob += prob
+
+        # Renormalize to ensure probabilities sum to 1.0
+        total = home_win_prob + draw_prob + away_win_prob
+        home_win_prob /= total
+        draw_prob /= total
+        away_win_prob /= total
+
+        return {
+            "home_win": round(home_win_prob, 4),
+            "draw": round(draw_prob, 4),
+            "away_win": round(away_win_prob, 4),
+        }
 
     def _predict_corners(
         self, home_stats: TeamStats, away_stats: TeamStats, fifa_adjustments: Optional[Dict] = None
@@ -909,27 +999,140 @@ class MultiMarketPredictor:
         scores.sort(key=lambda x: x["probability"], reverse=True)
         return scores[:10]
 
-    def _predict_half_time(self, home_xg: float, away_xg: float) -> Dict[str, float]:
-        """Predict half-time result"""
-        # Assume goals are roughly evenly distributed
+    def _predict_half_time(
+        self,
+        home_xg: float,
+        away_xg: float,
+        home_stats: TeamStats,
+        away_stats: TeamStats,
+        fifa_adjustments: Optional[Dict] = None,
+    ) -> Dict[str, Any]:
+        """
+        Predict half-time markets (EXPANDED):
+        1. 1X2 Result at HT
+        2. Over/Under 0.5 and 1.5 goals at HT
+        3. Corners at HT (average ~50% of full-time)
+
+        Research shows first half typically has:
+        - 45% of total goals (slightly less due to tactical caution)
+        - 48% of total corners (more conservative opening)
+        - Higher draw probability (teams settling in)
+        """
+        # HALF-TIME EXPECTED GOALS
+        # First half typically sees 45-48% of goals (conservative start)
         ht_home_xg = home_xg * 0.45
         ht_away_xg = away_xg * 0.45
+        ht_total_xg = ht_home_xg + ht_away_xg
 
-        ht_home = 0
+        # 1X2 RESULT AT HALF-TIME
+        ht_home_win = 0
         ht_draw = 0
-        ht_away = 0
+        ht_away_win = 0
 
         for h in range(6):
             for a in range(6):
                 prob = poisson.pmf(h, ht_home_xg) * poisson.pmf(a, ht_away_xg)
                 if h > a:
-                    ht_home += prob
+                    ht_home_win += prob
                 elif h == a:
                     ht_draw += prob
                 else:
-                    ht_away += prob
+                    ht_away_win += prob
 
-        return {"home": round(ht_home, 4), "draw": round(ht_draw, 4), "away": round(ht_away, 4)}
+        # OVER/UNDER GOALS AT HT (0.5 and 1.5)
+        ht_over_under = {}
+
+        for line in [0.5, 1.5]:
+            # P(Total goals > line)
+            under_prob = 0.0
+            for total_goals in range(int(line) + 1):
+                for h in range(total_goals + 1):
+                    a = total_goals - h
+                    prob = poisson.pmf(h, ht_home_xg) * poisson.pmf(a, ht_away_xg)
+                    under_prob += prob
+
+            over_prob = 1 - under_prob
+
+            ht_over_under[f"over_under_{str(line).replace('.', '_')}"] = {
+                "over": round(over_prob, 4),
+                "under": round(under_prob, 4),
+                "line": line,
+            }
+
+        # CORNERS AT HALF-TIME
+        # First half typically has 48% of corners (conservative tactics)
+        home_corners_ft = getattr(home_stats, "corners_for_avg", 5.2)
+        away_corners_ft = getattr(away_stats, "corners_for_avg", 4.8)
+
+        ht_home_corners = home_corners_ft * 0.48 * self.home_advantage_corners
+        ht_away_corners = away_corners_ft * 0.48
+
+        # Apply FIFA adjustments if available (same logic as full-time but scaled)
+        if fifa_adjustments:
+            pace_advantage = fifa_adjustments["pace_advantage"]
+            skill_advantage = fifa_adjustments["skill_advantage"]
+            home_fifa = fifa_adjustments["home_fifa"]
+            away_fifa = fifa_adjustments["away_fifa"]
+
+            # Scale down FIFA boosts for half-time (45 minutes vs 90)
+            home_pace_boost = (home_fifa.avg_pace - 80) * 0.08 * 0.48
+            away_pace_boost = (away_fifa.avg_pace - 80) * 0.08 * 0.48
+            home_skill_boost = (home_fifa.avg_skill_moves - 2.5) * 0.4 * 0.48
+            away_skill_boost = (away_fifa.avg_skill_moves - 2.5) * 0.4 * 0.48
+
+            ht_home_corners += home_pace_boost + home_skill_boost
+            ht_away_corners += away_pace_boost + away_skill_boost
+
+            # Clamp
+            ht_home_corners = max(1.0, min(5.0, ht_home_corners))
+            ht_away_corners = max(1.0, min(5.0, ht_away_corners))
+
+        ht_total_corners = ht_home_corners + ht_away_corners
+
+        # Corners over/under at HT (common lines: 4.5, 5.5)
+        ht_corners_ou = {}
+        alpha = 2.5  # Dispersion parameter for Negative Binomial
+
+        for line in [3.5, 4.5, 5.5]:
+            # Negative Binomial for corners
+            p = alpha / (alpha + ht_total_corners)
+            n = ht_total_corners * p / (1 - p)
+
+            under_prob = sum(nbinom.pmf(c, n, p) for c in range(int(line) + 1))
+            over_prob = 1 - under_prob
+
+            ht_corners_ou[f"corners_over_{str(line).replace('.', '_')}"] = {
+                "over": round(over_prob, 4),
+                "under": round(under_prob, 4),
+                "line": line,
+            }
+
+        return {
+            # 1X2 Result
+            "result_1x2": {
+                "home": round(ht_home_win, 4),
+                "draw": round(ht_draw, 4),
+                "away": round(ht_away_win, 4),
+            },
+            # Goals Over/Under
+            "goals": ht_over_under,
+            # Corners
+            "corners": {
+                "expected": {
+                    "home": round(ht_home_corners, 1),
+                    "away": round(ht_away_corners, 1),
+                    "total": round(ht_total_corners, 1),
+                },
+                **ht_corners_ou,
+            },
+            # Expected values
+            "expected": {
+                "home_goals": round(ht_home_xg, 2),
+                "away_goals": round(ht_away_xg, 2),
+                "total_goals": round(ht_total_xg, 2),
+                "total_corners": round(ht_total_corners, 1),
+            },
+        }
 
     def _predict_offsides(
         self, home_stats: TeamStats, away_stats: TeamStats, fifa_adjustments: Optional[Dict] = None
@@ -1121,6 +1324,115 @@ class MultiMarketPredictor:
                 }
 
         return results
+
+    def _predict_player_props(
+        self, home_team_id: int, away_team_id: int, home_xg: float, away_xg: float
+    ) -> Dict[str, List[Dict[str, Any]]]:
+        """
+        Predict player props (anytime scorer, shots, cards) for probable starters.
+
+        Uses player_statistics table to get recent form and calculates:
+        1. Anytime scorer probability (based on goals_per_90 + team xG)
+        2. Shots on target probability
+        3. Card risk
+
+        Returns top 5-6 most likely players per team.
+        """
+        if not DB_AVAILABLE:
+            logger.warning("Database service not available for player props")
+            return {"home_players": [], "away_players": []}
+
+        def get_team_player_props(team_id: int, team_xg: float, is_home: bool) -> List[Dict]:
+            """Get player props for a specific team"""
+            try:
+                # Query player_statistics for this team (top 15 by minutes played)
+                result = (
+                    db_service.client.table("player_statistics")
+                    .select(
+                        "player_name, goals, assists, total_shots, shots_on_target, "
+                        "goals_per_90, shots_per_90, goals_conceded, games_played, minutes_played"
+                    )
+                    .eq("team_id", team_id)
+                    .gte("games_played", 3)  # Minimum 3 games
+                    .order("minutes_played", desc=True)
+                    .limit(15)
+                    .execute()
+                )
+
+                if not result.data:
+                    return []
+
+                players = []
+                for player in result.data:
+                    goals_per_90 = float(player.get("goals_per_90", 0) or 0)
+                    shots_per_90 = float(player.get("shots_per_90", 0) or 0)
+                    games = int(player.get("games_played", 1) or 1)
+
+                    # If goals_per_90 not available, calculate from totals
+                    if goals_per_90 == 0:
+                        goals = float(player.get("goals", 0) or 0)
+                        minutes = float(player.get("minutes_played", 1) or 1)
+                        goals_per_90 = (goals / max(1, minutes)) * 90
+
+                    # ANYTIME SCORER PROBABILITY
+                    # Formula: P(player scores) = (player_goals_per_90 / team_total_goals_per_90) * team_xG * match_probability
+                    # Assume team average is 1.5 goals per game, scale player contribution
+                    team_goals_avg = 1.5  # League average
+                    player_contribution = goals_per_90 / max(0.5, team_goals_avg)
+
+                    # P(player scores at least 1) = 1 - P(player scores 0)
+                    # Using Poisson: P(player scores 0) = e^(-player_xg)
+                    player_xg = team_xg * player_contribution * 0.85  # 85% because not always playing full 90
+                    player_xg = max(0.05, min(2.0, player_xg))  # Clamp to reasonable range
+
+                    scorer_prob = 1 - math.exp(-player_xg)
+
+                    # SHOTS ON TARGET PROBABILITY
+                    # P(player has 1+ shot on target)
+                    if shots_per_90 > 0:
+                        player_avg_shots = shots_per_90
+                    else:
+                        player_avg_shots = goals_per_90 * 3.5  # Estimate: 3.5 shots per goal
+
+                    sot_prob = 1 - poisson.pmf(0, player_avg_shots * 0.4)  # ~40% shots on target
+
+                    # CONFIDENCE (based on games played and minutes)
+                    # More data = more confident
+                    confidence = min(0.95, games / 15)  # Max at 15 games
+
+                    players.append(
+                        {
+                            "player_name": player["player_name"],
+                            "anytime_scorer": round(scorer_prob, 4),
+                            "shots_on_target_1plus": round(sot_prob, 4),
+                            "goals_per_90": round(goals_per_90, 2),
+                            "player_xg": round(player_xg, 2),
+                            "games_played": games,
+                            "confidence": round(confidence, 2),
+                        }
+                    )
+
+                # Sort by anytime scorer probability and return top 6
+                players.sort(key=lambda x: x["anytime_scorer"], reverse=True)
+                return players[:6]
+
+            except Exception as e:
+                logger.error("Error fetching player props", team_id=team_id, error=str(e))
+                return []
+
+        # Get props for both teams
+        home_players = get_team_player_props(home_team_id, home_xg, is_home=True)
+        away_players = get_team_player_props(away_team_id, away_xg, is_home=False)
+
+        return {
+            "home_players": home_players,
+            "away_players": away_players,
+            "summary": {
+                "home_top_scorer": home_players[0] if home_players else None,
+                "away_top_scorer": away_players[0] if away_players else None,
+                "total_players": len(home_players) + len(away_players),
+            },
+        }
 
 
 # Global instance

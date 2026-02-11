@@ -2,6 +2,8 @@
 
 export type MarketCategory =
   | "goals"
+  | "scores"
+  | "players"
   | "corners"
   | "cards"
   | "shots"
@@ -23,9 +25,21 @@ const CATEGORIES = [
   },
   {
     key: "goals" as MarketCategory,
-    label: "Goals",
+    label: "Goals & 1X2",
     icon: "⚽",
     color: "green",
+  },
+  {
+    key: "scores" as MarketCategory,
+    label: "Exact Scores",
+    icon: "🎯",
+    color: "blue",
+  },
+  {
+    key: "players" as MarketCategory,
+    label: "Player Props",
+    icon: "👤",
+    color: "purple",
   },
   {
     key: "corners" as MarketCategory,

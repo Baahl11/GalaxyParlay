@@ -131,24 +131,24 @@ export async function getMultiMarketPrediction(
   fixtureId: number,
 ): Promise<MultiMarketPrediction> {
   const url = `${API_BASE_URL}/jobs/multi-market-prediction/${fixtureId}`;
-  console.log('[API] Fetching multi-market prediction from:', url);
-  
+  console.log("[API] Fetching multi-market prediction from:", url);
+
   const response = await fetch(url, {
     next: { revalidate: 120 },
   });
 
-  console.log('[API] Response status:', response.status, response.statusText);
+  console.log("[API] Response status:", response.status, response.statusText);
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('[API] Error response body:', errorText);
+    console.error("[API] Error response body:", errorText);
     throw new Error(
       `Failed to fetch multi-market prediction: ${response.statusText} - ${errorText}`,
     );
   }
 
   const data = await response.json();
-  console.log('[API] ✅ Received multi-market data:', data);
+  console.log("[API] ✅ Received multi-market data:", data);
   return data;
 }
 
