@@ -35,21 +35,33 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
   }, [fixture?.id, isOpen]);
 
   const loadPrediction = async () => {
-    if (!fixture) return;
+    if (!fixture) {
+      console.log('[MatchDrawer] No fixture provided');
+      return;
+    }
+
+    console.log('[MatchDrawer] Loading multi-market prediction for fixture:', fixture.id);
+    console.log('[MatchDrawer] Fixture data:', { 
+      id: fixture.id, 
+      home: fixture.home_team_name, 
+      away: fixture.away_team_name 
+    });
 
     setLoading(true);
     setError(null);
 
     try {
-      // Temporarily disable multi-market fetch to avoid backend 500s
-      setPrediction(null);
-      setError("Multi-market predictions temporalmente deshabilitadas");
+      const data = await getMultiMarketPrediction(fixture.id);
+      console.log('[MatchDrawer] ✅ Successfully loaded multi-market prediction:', data);
+      setPrediction(data);
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to load predictions",
-      );
+      console.error('[MatchDrawer] ❌ Error loading multi-market prediction:', err);
+      const errorMessage = err instanceof Error ? err.message : "Failed to load predictions";
+      console.error('[MatchDrawer] Error message:', errorMessage);
+      setError(errorMessage);
     } finally {
       setLoading(false);
+      console.log('[MatchDrawer] Loading complete');
     }
   };
 

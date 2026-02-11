@@ -130,20 +130,26 @@ export function getTimeUntilKickoff(kickoffTime: string): string {
 export async function getMultiMarketPrediction(
   fixtureId: number,
 ): Promise<MultiMarketPrediction> {
-  const response = await fetch(
-    `${API_BASE_URL}/jobs/multi-market-prediction/${fixtureId}`,
-    {
-      next: { revalidate: 120 },
-    },
-  );
+  const url = `${API_BASE_URL}/jobs/multi-market-prediction/${fixtureId}`;
+  console.log('[API] Fetching multi-market prediction from:', url);
+  
+  const response = await fetch(url, {
+    next: { revalidate: 120 },
+  });
+
+  console.log('[API] Response status:', response.status, response.statusText);
 
   if (!response.ok) {
+    const errorText = await response.text();
+    console.error('[API] Error response body:', errorText);
     throw new Error(
-      `Failed to fetch multi-market prediction: ${response.statusText}`,
+      `Failed to fetch multi-market prediction: ${response.statusText} - ${errorText}`,
     );
   }
 
-  return response.json();
+  const data = await response.json();
+  console.log('[API] ✅ Received multi-market data:', data);
+  return data;
 }
 
 /**
