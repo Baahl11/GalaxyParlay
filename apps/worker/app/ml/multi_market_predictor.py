@@ -1345,7 +1345,15 @@ class MultiMarketPredictor:
         def get_team_player_props(team_id: int, team_xg: float, is_home: bool) -> List[Dict]:
             """Get player props for a specific team"""
             try:
-                # Query player_statistics for this team (top 15 by minutes played)
+                logger.info(
+                    "Querying player_statistics for team",
+                    team_id=team_id,
+                    team_xg=team_xg,
+                    is_home=is_home,
+                )
+
+                # Query player_statistics for this team (top 15 by goals)
+                # Note: Not filtering by games_played since it's often None in API data
                 result = (
                     db_service.client.table("player_statistics")
                     .select(
@@ -1353,13 +1361,20 @@ class MultiMarketPredictor:
                         "goals_per_90, shots_per_90, goals_conceded, games_played, minutes_played"
                     )
                     .eq("team_id", team_id)
-                    .gte("games_played", 3)  # Minimum 3 games
-                    .order("minutes_played", desc=True)
+                    .gte("goals", 0)  # Just get all players with data
+                    .order("goals", desc=True)
                     .limit(15)
                     .execute()
                 )
 
+                logger.info(
+                    "Player query result",
+                    team_id=team_id,
+                    players_found=len(result.data) if result.data else 0,
+                )
+
                 if not result.data:
+                    logger.warning("No player data found for team", team_id=team_id)
                     return []
 
                 players = []
