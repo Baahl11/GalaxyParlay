@@ -11,7 +11,7 @@ from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routes import galaxy_api, jobs
+from app.routes import galaxy_api, jobs, test_player_props
 from app.scheduler_v2 import start_scheduler, stop_scheduler
 
 # Configure structured logging
@@ -78,6 +78,7 @@ app.add_middleware(
 # Register routers
 app.include_router(jobs.router)
 app.include_router(galaxy_api.router)
+app.include_router(test_player_props.router)
 
 
 @app.get("/")
