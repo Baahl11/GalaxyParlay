@@ -3,7 +3,7 @@
 -- Date: 2026-01-23
 
 -- Enable necessary extensions
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- uuid-ossp not needed; using gen_random_uuid() builtin
 CREATE EXTENSION IF NOT EXISTS "pg_trgm"; -- For fuzzy text search
 
 -- ============================================================================
@@ -69,7 +69,7 @@ CREATE INDEX idx_fixtures_week ON fixtures(kickoff_time, league_id)
 
 -- Odds snapshots (historical odds data)
 CREATE TABLE odds_snapshots (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   fixture_id BIGINT NOT NULL REFERENCES fixtures(id) ON DELETE CASCADE,
   
   -- Odds data
@@ -92,7 +92,7 @@ CREATE INDEX idx_odds_snapshot_time ON odds_snapshots(snapshot_at);
 
 -- Model predictions
 CREATE TABLE model_predictions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   fixture_id BIGINT NOT NULL REFERENCES fixtures(id) ON DELETE CASCADE,
   
   -- Model info
@@ -122,7 +122,7 @@ CREATE INDEX idx_predictions_version ON model_predictions(model_version);
 
 -- Quality scores (per fixture/market)
 CREATE TABLE quality_scores (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   fixture_id BIGINT NOT NULL REFERENCES fixtures(id) ON DELETE CASCADE,
   market_key TEXT NOT NULL,
   
@@ -147,7 +147,7 @@ CREATE INDEX idx_quality_grade ON quality_scores(final_grade);
 
 -- Watchlist (user's favorite fixtures)
 CREATE TABLE watchlists (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   fixture_id BIGINT NOT NULL REFERENCES fixtures(id) ON DELETE CASCADE,
   

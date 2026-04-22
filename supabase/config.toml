@@ -1,6 +1,6 @@
 # Supabase Configuration for ParlayGalaxy
 
-project_id = "parlaygalaxy"
+project_id = "pqswprhhgpsvhvhsxscw"
 
 [api]
 enabled = true
@@ -12,7 +12,7 @@ max_rows = 1000
 [db]
 port = 54322
 shadow_port = 54320
-major_version = 15
+major_version = 17
 
 [db.pooler]
 enabled = false

@@ -1,22 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getValueBets } from "@/lib/api";
 import { ValueBetCard, ValueBetData } from "./ValueBetCard";
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://galaxyparlay-production.up.railway.app";
-
-interface ValueBetsResponse {
-  data: ValueBetData[];
-  count: number;
-  summary: {
-    fixtures_analyzed: number;
-    value_bets_found: number;
-    avg_edge: number;
-    avg_ev: number;
-  };
-}
 
 interface ValueBetListProps {
   limit?: number;
@@ -28,9 +14,11 @@ export function ValueBetList({
   compact = false,
 }: ValueBetListProps) {
   const [valueBets, setValueBets] = useState<ValueBetData[]>([]);
-  const [summary, setSummary] = useState<ValueBetsResponse["summary"] | null>(
-    null,
-  );
+  const [summary, setSummary] = useState<{
+    value_bets_found: number;
+    avg_edge: number;
+    avg_ev: number;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,23 +28,42 @@ export function ValueBetList({
 
   useEffect(() => {
     fetchValueBets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [minEdge, minEv, limit]);
 
   const fetchValueBets = async () => {
     try {
       setLoading(true);
-      const params = new URLSearchParams({
-        min_edge: minEdge.toString(),
-        min_ev: minEv.toString(),
-        limit: limit.toString(),
+      const result = await getValueBets({ min_edge: minEdge, min_ev: minEv, limit });
+      // Map ValueBet → ValueBetData shape
+      const mapped: ValueBetData[] = result.bets.map((b) => ({
+        fixture_id: b.fixture_id,
+        home_team: b.home_team,
+        away_team: b.away_team,
+        league_id: b.league_id,
+        kickoff_time: b.kickoff_time,
+        market_key: b.market,
+        selection: b.selection,
+        model_probability: b.model_prob,
+        implied_probability: b.implied_prob,
+        bookmaker_odds: b.odds,
+        bookmaker: "Model",
+        edge: b.edge,
+        edge_percent: Math.round(b.edge * 1000) / 10,
+        expected_value: b.ev,
+        ev_percent: Math.round(b.ev * 1000) / 10,
+        kelly_fraction: b.kelly_fraction,
+        kelly_percent: Math.round(b.kelly_fraction * 1000) / 10,
+        confidence_score: b.confidence,
+        quality_grade: b.grade,
+        value_score: b.confidence * b.edge * 100,
+      }));
+      setValueBets(mapped);
+      setSummary({
+        value_bets_found: result.summary.total_bets,
+        avg_edge: result.summary.avg_edge,
+        avg_ev: result.summary.avg_ev,
       });
-
-      const response = await fetch(`${API_BASE_URL}/api/value-bets?${params}`);
-      if (!response.ok) throw new Error("Failed to fetch value bets");
-
-      const data: ValueBetsResponse = await response.json();
-      setValueBets(data.data);
-      setSummary(data.summary);
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");

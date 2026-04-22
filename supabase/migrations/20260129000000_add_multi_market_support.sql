@@ -3,12 +3,12 @@
 -- Description: Expand market_key validation to include corners, cards, offsides, shots
 
 -- Drop existing constraint if it exists
-ALTER TABLE predictions 
-DROP CONSTRAINT IF EXISTS predictions_market_key_check;
+ALTER TABLE model_predictions 
+DROP CONSTRAINT IF EXISTS model_predictions_market_key_check;
 
 -- Add new constraint with ALL supported markets
-ALTER TABLE predictions
-ADD CONSTRAINT predictions_market_key_check 
+ALTER TABLE model_predictions
+ADD CONSTRAINT model_predictions_market_key_check 
 CHECK (market_key IN (
     -- Core markets
     'match_winner',
@@ -122,22 +122,23 @@ CHECK (market_key IN (
 ));
 
 -- Create index for faster market_key queries
-CREATE INDEX IF NOT EXISTS idx_predictions_market_key 
-ON predictions(market_key);
+CREATE INDEX IF NOT EXISTS idx_model_predictions_market_key 
+ON model_predictions(market_key);
 
 CREATE INDEX IF NOT EXISTS idx_quality_scores_market_key 
 ON quality_scores(market_key);
 
 -- Create composite index for fixture + market queries (common query pattern)
-CREATE INDEX IF NOT EXISTS idx_predictions_fixture_market 
-ON predictions(fixture_id, market_key);
+CREATE INDEX IF NOT EXISTS idx_model_predictions_fixture_market 
+ON model_predictions(fixture_id, market_key);
 
 CREATE INDEX IF NOT EXISTS idx_quality_scores_fixture_market 
 ON quality_scores(fixture_id, market_key);
 
 -- Comment for documentation
-COMMENT ON CONSTRAINT predictions_market_key_check ON predictions IS 
+COMMENT ON CONSTRAINT model_predictions_market_key_check ON model_predictions IS 
 'Validates betting market types. Updated 2026-01-29 to include corners, cards, offsides, shots markets.';
 
 COMMENT ON CONSTRAINT quality_scores_market_key_check ON quality_scores IS 
 'Validates betting market types for quality scores. Updated 2026-01-29 to include corners, cards, offsides, shots markets.';
+

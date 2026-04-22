@@ -8,7 +8,7 @@
 -- ============================================================================
 
 CREATE TABLE team_elo_ratings (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   team_id BIGINT NOT NULL,
   team_name TEXT NOT NULL,
   league_id BIGINT NOT NULL,
@@ -53,7 +53,7 @@ CREATE INDEX idx_elo_season ON team_elo_ratings(season);
 -- ============================================================================
 
 CREATE TABLE team_elo_history (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   team_id BIGINT NOT NULL,
   fixture_id BIGINT REFERENCES fixtures(id) ON DELETE SET NULL,
   

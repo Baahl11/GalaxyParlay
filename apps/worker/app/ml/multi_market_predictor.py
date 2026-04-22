@@ -430,7 +430,7 @@ class MultiMarketPredictor:
                 home_xg, away_xg, home_stats, away_stats, fifa_adjustments=fifa_adjustments
             ),
             # Player Props (anytime scorer, shots, cards)
-            "player_props": self._predict_player_props(
+            "player_props": self._safe_predict_player_props(
                 home_team_id, away_team_id, home_xg, away_xg
             ),
             # Expected values
@@ -1325,6 +1325,15 @@ class MultiMarketPredictor:
 
         return results
 
+    def _safe_predict_player_props(
+        self, home_team_id: int, away_team_id: int, home_xg: float, away_xg: float
+    ) -> Dict[str, List[Dict[str, Any]]]:
+        """Wrapper around _predict_player_props that returns empty dict on any failure."""
+        try:
+            return self._predict_player_props(home_team_id, away_team_id, home_xg, away_xg)
+        except Exception:
+            return {"home": [], "away": []}
+
     def _predict_player_props(
         self, home_team_id: int, away_team_id: int, home_xg: float, away_xg: float
     ) -> Dict[str, List[Dict[str, Any]]]:
@@ -1344,7 +1353,7 @@ class MultiMarketPredictor:
             away_team_id=away_team_id,
             db_available=DB_AVAILABLE,
         )
-        
+
         if not DB_AVAILABLE:
             logger.warning("Database service not available for player props")
             return {"home_players": [], "away_players": []}
@@ -1387,8 +1396,8 @@ class MultiMarketPredictor:
                     logger.warning(
                         ">>> NO PLAYERS FOUND",
                         team_id=team_id,
-                        result_has_data=hasattr(result, 'data'),
-                        result_data_value=result.data if hasattr(result, 'data') else 'NO ATTR',
+                        result_has_data=hasattr(result, "data"),
+                        result_data_value=result.data if hasattr(result, "data") else "NO ATTR",
                     )
                     return []
 
@@ -1448,21 +1457,21 @@ class MultiMarketPredictor:
                         "confidence": round(confidence, 2),
                     }
                     players.append(player_data)
-                    
+
                     if idx < 2:  # Log first 2 players
                         logger.info(f">>> Player {idx+1}", player_data=player_data)
 
                 # Sort by anytime scorer probability and return top 6
                 players.sort(key=lambda x: x["anytime_scorer"], reverse=True)
                 final_players = players[:6]
-                
+
                 logger.info(
                     ">>> FINAL players for team",
                     team_id=team_id,
                     count=len(final_players),
                     top_player=final_players[0]["player_name"] if final_players else None,
                 )
-                
+
                 return final_players
 
             except Exception as e:
@@ -1474,6 +1483,7 @@ class MultiMarketPredictor:
                     traceback=True,
                 )
                 import traceback
+
                 logger.error(">>> Full traceback", trace=traceback.format_exc())
                 return []
 
@@ -1490,14 +1500,14 @@ class MultiMarketPredictor:
                 "total_players": len(home_players) + len(away_players),
             },
         }
-        
+
         logger.info(
             "=== PLAYER PROPS END ===",
             home_count=len(home_players),
             away_count=len(away_players),
             total=result["summary"]["total_players"],
         )
-        
+
         return result
 
 
