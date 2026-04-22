@@ -12,11 +12,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install dependencies
-COPY apps/worker/requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY apps/worker/app ./app
+COPY app ./app
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
