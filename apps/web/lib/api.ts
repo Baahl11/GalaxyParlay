@@ -779,10 +779,12 @@ export async function getModelPicks(params?: {
   limit?: number;
   min_confidence?: number;
   grades?: Array<"A" | "B" | "C" | "D" | "F">;
+  status?: "NS" | "ALL";
 }): Promise<ValueBet[]> {
   const limit = params?.limit ?? 40;
   const minConfidence = params?.min_confidence ?? 0.5;
   const grades = params?.grades ?? ["A", "B", "C", "D"];
+  const status = params?.status ?? "NS";
 
   const { data: preds, error: predError } = await supabase
     .from("model_predictions")
@@ -794,18 +796,20 @@ export async function getModelPicks(params?: {
     .gte("confidence_score", minConfidence)
     .in("market_key", ["match_winner", "over_under_2_5", "both_teams_score"])
     .order("confidence_score", { ascending: false })
-    .limit(300);
+    .limit(Math.max(limit, 300));
 
   if (predError || !preds || preds.length === 0) return [];
 
-  const activePreds = preds.filter((p) => {
-    const fx = p.fixtures as unknown as { status: string };
-    return fx.status === "NS";
-  });
-  if (activePreds.length === 0) return [];
+  const scopedPreds = status === "ALL"
+    ? preds
+    : preds.filter((p) => {
+        const fx = p.fixtures as unknown as { status: string };
+        return fx.status === "NS";
+      });
+  if (scopedPreds.length === 0) return [];
 
-  const byKey: Record<string, (typeof activePreds)[number]> = {};
-  for (const row of activePreds) {
+  const byKey: Record<string, (typeof scopedPreds)[number]> = {};
+  for (const row of scopedPreds) {
     const key = `${row.fixture_id}-${row.market_key}`;
     const existing = byKey[key];
     if (

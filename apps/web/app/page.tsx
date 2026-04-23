@@ -62,7 +62,7 @@ export default function Home() {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    const fetchLimit = Math.max(showCount * 3, timeScope === "all" ? 200 : 60);
+    const fetchLimit = Math.max(showCount * 2, timeScope === "all" ? 600 : 60);
     const valueParams =
       viewMode === "quality"
         ? { limit: fetchLimit, min_edge: 0.03, min_ev: 0.02 }
@@ -77,6 +77,9 @@ export default function Home() {
           };
     if (gradeFilter === "A") {
       modelParams = { ...modelParams, min_confidence: 0, grades: ["A"] };
+    }
+    if (timeScope === "all") {
+      modelParams = { ...modelParams, status: "ALL" };
     }
 
     Promise.all([getStats(), getValueBets(valueParams)])
@@ -215,7 +218,7 @@ export default function Home() {
                     setTimeScope("all");
                     setGradeFilter("A");
                     setViewMode("quality");
-                    setShowCount(300);
+                    setShowCount(400);
                   }}
                   className="px-3 py-1 rounded-full neon-chip text-cyan-200 hover:text-white hover:border-cyan-200/60 transition-colors"
                 >
@@ -296,7 +299,7 @@ export default function Home() {
               <span className="text-cyan-300 uppercase tracking-[0.2em]">
                 Mostrar
               </span>
-              {[12, 30, 60, 120, 200, 300].map((count) => (
+              {[12, 30, 60, 120, 200, 300, 400].map((count) => (
                 <button
                   key={count}
                   onClick={() => setShowCount(count)}
