@@ -11,7 +11,12 @@ import structlog
 
 from .elo import EloRatingSystem, elo_system
 from .features import FeatureEngineer, feature_engineer
-from .multi_market_predictor import MultiMarketPredictor, multi_market_predictor
+from .multi_market_predictor import (
+    DB_AVAILABLE,
+    MultiMarketPredictor,
+    TeamStats,
+    multi_market_predictor,
+)
 from .team_stats import TeamStatsCalculator, team_stats_calculator
 
 logger = structlog.get_logger()
@@ -149,6 +154,71 @@ class MatchPredictor:
             logger.warning("historical_stats_load_failed", error=str(e))
             return 0
 
+    def _prime_multi_market_stats(
+        self,
+        team_ids: List[int],
+        league_id: Optional[int],
+        season: Optional[int],
+    ) -> None:
+        if not DB_AVAILABLE or not team_ids or not league_id or not season:
+            return
+
+        try:
+            from app.services.database import db_service
+
+            missing_ids = [
+                team_id
+                for team_id in team_ids
+                if team_id not in multi_market_predictor.team_stats_cache
+            ]
+
+            if missing_ids:
+                result = (
+                    db_service.client.table("team_statistics")
+                    .select("team_id, stats_data")
+                    .in_("team_id", missing_ids)
+                    .eq("league_id", league_id)
+                    .eq("season", season)
+                    .execute()
+                )
+
+                for row in result.data or []:
+                    stats = TeamStats(row.get("stats_data") or {})
+                    multi_market_predictor.set_team_stats(row["team_id"], stats)
+
+            corner_result = (
+                db_service.client.table("corner_statistics")
+                .select("team_id, corners_for_avg, corners_against_avg")
+                .in_("team_id", team_ids)
+                .eq("league_id", league_id)
+                .eq("season", season)
+                .execute()
+            )
+
+            for row in corner_result.data or []:
+                team_id = row.get("team_id")
+                if team_id is None:
+                    continue
+
+                stats = multi_market_predictor.get_team_stats(team_id)
+                corners_for = row.get("corners_for_avg")
+                corners_against = row.get("corners_against_avg")
+
+                if corners_for is not None:
+                    stats.corners_for_avg = float(corners_for)
+                if corners_against is not None:
+                    stats.corners_against_avg = float(corners_against)
+
+                multi_market_predictor.set_team_stats(team_id, stats)
+
+        except Exception as e:
+            logger.warning(
+                "multi_market_stats_load_failed",
+                error=str(e),
+                league_id=league_id,
+                season=season,
+            )
+
     def predict_fixture(
         self,
         fixture: Dict[str, Any],
@@ -283,11 +353,18 @@ class MatchPredictor:
         )
 
         if include_all_markets:
+            self._prime_multi_market_stats(
+                team_ids=[home_id, away_id],
+                league_id=league_id,
+                season=fixture.get("season") or 2025,
+            )
             # Fetch referee data from database if available
             referee_data = None
             if referee_name:
                 try:
                     if DB_AVAILABLE:
+                        from app.services.database import db_service
+
                         result = (
                             db_service.client.table("referee_statistics")
                             .select(

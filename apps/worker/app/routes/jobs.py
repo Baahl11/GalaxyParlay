@@ -3,7 +3,7 @@ Job endpoints for worker tasks
 """
 
 from datetime import datetime, timedelta
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import structlog
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, Request
@@ -2305,6 +2305,158 @@ def sync_referee_statistics(
 
     except Exception as e:
         logger.error("sync_referee_stats_error", error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/sync-corner-stats")
+def sync_corner_statistics(
+    limit: int = Query(120, description="Max finished fixtures to analyze"),
+    league_id: int = Query(None, description="Optional league filter"),
+    season: int = Query(2025, description="Season"),
+):
+    """
+    Build corner statistics from finished fixtures.
+
+    Aggregates per-team corner averages using API-Football fixture stats.
+    """
+    try:
+        if not settings.APIFOOTBALL_API_KEY:
+            return {
+                "status": "warning",
+                "message": "APIFOOTBALL_API_KEY not configured",
+                "teams_updated": 0,
+            }
+
+        fixtures = db_service.get_finished_fixtures(
+            league_id=league_id, season=season, limit=limit
+        )
+
+        if not fixtures:
+            return {
+                "status": "warning",
+                "message": "No finished fixtures found",
+                "teams_updated": 0,
+            }
+
+        def _parse_stat(stats: List[Dict[str, Any]], labels: List[str]) -> Optional[float]:
+            normalized = {label.replace(" ", "").lower() for label in labels}
+
+            for entry in stats:
+                stat_type = str(entry.get("type", "")).replace(" ", "").lower()
+                if stat_type not in normalized:
+                    continue
+
+                value = entry.get("value")
+                if value in (None, "", "-"):
+                    return None
+                if isinstance(value, str):
+                    value = value.replace("%", "").strip()
+                try:
+                    return float(value)
+                except (TypeError, ValueError):
+                    return None
+
+            return None
+
+        team_totals: Dict[tuple, Dict[str, float]] = {}
+        fixtures_analyzed = 0
+        fixtures_skipped = 0
+
+        for fixture in fixtures:
+            fixture_id = fixture.get("id")
+            home_id = fixture.get("home_team_id")
+            away_id = fixture.get("away_team_id")
+            fixture_league_id = fixture.get("league_id")
+            fixture_season = fixture.get("season") or season
+
+            if not fixture_id or not home_id or not away_id or not fixture_league_id:
+                fixtures_skipped += 1
+                continue
+
+            stats = api_football_client.get_fixture_statistics(fixture_id)
+
+            if not stats or len(stats) < 2:
+                fixtures_skipped += 1
+                continue
+
+            stats_by_team = {}
+            for entry in stats:
+                team = entry.get("team", {})
+                team_id = team.get("id")
+                if team_id:
+                    stats_by_team[team_id] = entry.get("statistics", [])
+
+            home_stats = stats_by_team.get(home_id, [])
+            away_stats = stats_by_team.get(away_id, [])
+
+            home_corners = _parse_stat(home_stats, ["Corner Kicks", "Corners"])
+            away_corners = _parse_stat(away_stats, ["Corner Kicks", "Corners"])
+
+            if home_corners is None or away_corners is None:
+                fixtures_skipped += 1
+                continue
+
+            fixtures_analyzed += 1
+
+            for team_id, corners_for, corners_against in [
+                (home_id, home_corners, away_corners),
+                (away_id, away_corners, home_corners),
+            ]:
+                key = (team_id, fixture_league_id, fixture_season)
+                totals = team_totals.setdefault(
+                    key, {"for": 0.0, "against": 0.0, "matches": 0}
+                )
+                totals["for"] += float(corners_for)
+                totals["against"] += float(corners_against)
+                totals["matches"] += 1
+
+        if not team_totals:
+            return {
+                "status": "warning",
+                "message": "No corner statistics found in fixture data",
+                "teams_updated": 0,
+                "fixtures_analyzed": fixtures_analyzed,
+                "fixtures_skipped": fixtures_skipped,
+            }
+
+        payloads = []
+        for (team_id, agg_league_id, agg_season), totals in team_totals.items():
+            matches = int(totals["matches"])
+            if matches <= 0:
+                continue
+
+            corners_for_avg = round(totals["for"] / matches, 2)
+            corners_against_avg = round(totals["against"] / matches, 2)
+            corners_total_avg = round((totals["for"] + totals["against"]) / matches, 2)
+
+            payloads.append(
+                {
+                    "team_id": team_id,
+                    "league_id": agg_league_id,
+                    "season": agg_season,
+                    "corners_for_avg": corners_for_avg,
+                    "corners_against_avg": corners_against_avg,
+                    "corners_total_avg": corners_total_avg,
+                    "matches_analyzed": matches,
+                    "updated_at": datetime.utcnow().isoformat(),
+                }
+            )
+
+        db_service.client.table("corner_statistics").upsert(
+            payloads, on_conflict="team_id,league_id,season"
+        ).execute()
+
+        return {
+            "status": "success",
+            "teams_updated": len(payloads),
+            "fixtures_analyzed": fixtures_analyzed,
+            "fixtures_skipped": fixtures_skipped,
+            "season": season,
+            "league_id": league_id,
+        }
+
+    except Exception as e:
+        logger.error("sync_corner_stats_error", error=str(e))
         raise HTTPException(status_code=500, detail=str(e))
 
 
