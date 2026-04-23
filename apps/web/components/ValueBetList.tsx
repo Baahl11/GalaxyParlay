@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { getValueBets } from "@/lib/api";
+import { useEffect, useState } from "react";
 import { ValueBetCard, ValueBetData } from "./ValueBetCard";
 
 interface ValueBetListProps {
@@ -34,7 +34,11 @@ export function ValueBetList({
   const fetchValueBets = async () => {
     try {
       setLoading(true);
-      const result = await getValueBets({ min_edge: minEdge, min_ev: minEv, limit });
+      const result = await getValueBets({
+        min_edge: minEdge,
+        min_ev: minEv,
+        limit,
+      });
       // Map ValueBet → ValueBetData shape
       const mapped: ValueBetData[] = result.bets.map((b) => ({
         fixture_id: b.fixture_id,

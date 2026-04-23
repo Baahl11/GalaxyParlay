@@ -7,7 +7,10 @@ Optimizes parameters for MultiMarketPredictor using historical data:
 - blend_ratio_dc/hist: Dixon-Coles vs historical blend in BTTS
 - home_advantage: Home advantage multiplier for goals
 
-Uses train/validation split to find best parameter combination.
+Uses TEMPORAL walk-forward validation to prevent data leakage:
+- Fixtures sorted by kickoff_time ASC
+- Train on oldest 75%, validate on newest 25%
+- The predictor's historical stats are computed ONLY from the training window
 """
 
 import itertools
@@ -126,10 +129,9 @@ class ParameterGridSearch:
         self, rho: float, blend_ratio_dc: float, home_advantage: float
     ) -> Tuple[float, Dict]:
         """
-        Evaluate a specific parameter combination on validation set
+        Evaluate a specific parameter combination on validation set.
 
-        Returns:
-            (accuracy, detailed_metrics)
+        Historical stats are computed from TRAIN fixtures only (no leakage).
         """
         from app.ml.multi_market_predictor import MultiMarketPredictor
 
@@ -138,8 +140,9 @@ class ParameterGridSearch:
         # Create predictor with custom parameters
         predictor = MatchPredictor(model_version="grid_search")
 
-        # Load historical data
-        predictor.load_historical_stats()
+        # Load historical stats from TRAIN SET ONLY (no data leakage)
+        predictor.stats.calculate_all_team_stats(self.train_fixtures)
+        predictor._stats_loaded = True
         predictor.load_elo_from_db()
 
         # Create custom MultiMarketPredictor with test parameters
@@ -311,25 +314,36 @@ class ParameterGridSearch:
 
 
 def main():
-    """Run grid search"""
+    """Run grid search with temporal walk-forward validation"""
     logger.info("grid_search_started", timestamp=datetime.now().isoformat())
 
     # Load fixtures from database
     logger.info("loading_fixtures")
-    all_fixtures = db_service.get_finished_fixtures(limit=200)
+    all_fixtures = db_service.get_finished_fixtures(limit=1000)
 
     if len(all_fixtures) < 100:
         logger.error("insufficient_fixtures", count=len(all_fixtures))
         return
 
-    # Split: 150 train, 50 validation
-    train_fixtures = all_fixtures[:150]
-    validation_fixtures = all_fixtures[150:200]
+    # --- TEMPORAL SPLIT: sort by kickoff_time ASC, then 75/25 ---
+    all_fixtures.sort(key=lambda f: f.get("kickoff_time", ""))
+    split_idx = int(len(all_fixtures) * 0.75)
+    train_fixtures = all_fixtures[:split_idx]
+    validation_fixtures = all_fixtures[split_idx:]
 
     logger.info(
-        "fixtures_split",
+        "fixtures_temporal_split",
+        total=len(all_fixtures),
         train=len(train_fixtures),
         validation=len(validation_fixtures),
+        train_period_start=train_fixtures[0].get("kickoff_time", "")[:10] if train_fixtures else "",
+        train_period_end=train_fixtures[-1].get("kickoff_time", "")[:10] if train_fixtures else "",
+        val_period_start=(
+            validation_fixtures[0].get("kickoff_time", "")[:10] if validation_fixtures else ""
+        ),
+        val_period_end=(
+            validation_fixtures[-1].get("kickoff_time", "")[:10] if validation_fixtures else ""
+        ),
     )
 
     # Run grid search

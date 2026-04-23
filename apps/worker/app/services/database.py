@@ -203,6 +203,55 @@ class DatabaseService:
         result = query.execute()
         return result.data
 
+    def get_predictions_bulk(self, fixture_ids: List[int]) -> Dict[int, List[Dict[str, Any]]]:
+        """Bulk-fetch predictions for multiple fixture IDs. Returns dict keyed by fixture_id."""
+        if not fixture_ids:
+            return {}
+        result = (
+            self.client.table("model_predictions")
+            .select("*")
+            .in_("fixture_id", fixture_ids)
+            .order("confidence_score", desc=True)
+            .execute()
+        )
+        grouped: Dict[int, List[Dict[str, Any]]] = {}
+        for row in result.data or []:
+            fid = row["fixture_id"]
+            grouped.setdefault(fid, []).append(row)
+        return grouped
+
+    def get_quality_scores_bulk(self, fixture_ids: List[int]) -> Dict[int, List[Dict[str, Any]]]:
+        """Bulk-fetch quality scores for multiple fixture IDs. Returns dict keyed by fixture_id."""
+        if not fixture_ids:
+            return {}
+        result = (
+            self.client.table("quality_scores").select("*").in_("fixture_id", fixture_ids).execute()
+        )
+        grouped: Dict[int, List[Dict[str, Any]]] = {}
+        for row in result.data or []:
+            fid = row["fixture_id"]
+            grouped.setdefault(fid, []).append(row)
+        return grouped
+
+    def get_odds_bulk(self, fixture_ids: List[int]) -> Dict[int, List[Dict[str, Any]]]:
+        """Bulk-fetch latest odds for multiple fixture IDs. Returns dict keyed by fixture_id."""
+        if not fixture_ids:
+            return {}
+        result = (
+            self.client.table("odds_snapshots")
+            .select("*")
+            .in_("fixture_id", fixture_ids)
+            .order("snapshot_at", desc=True)
+            .execute()
+        )
+        grouped: Dict[int, List[Dict[str, Any]]] = {}
+        for row in result.data or []:
+            fid = row["fixture_id"]
+            # Keep only the 10 most recent per fixture (already ordered desc)
+            if len(grouped.get(fid, [])) < 10:
+                grouped.setdefault(fid, []).append(row)
+        return grouped
+
     # ========================================================================
     # QUALITY SCORES
     # ========================================================================

@@ -7,12 +7,19 @@ from contextlib import asynccontextmanager
 from typing import Optional
 
 import structlog
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 
 from app.config import settings
 from app.routes import galaxy_api, jobs, test_player_props
 from app.scheduler_v2 import start_scheduler, stop_scheduler
+
+# Rate limiter — keyed by client IP
+limiter = Limiter(key_func=get_remote_address)
 
 # Configure structured logging
 structlog.configure(
@@ -38,16 +45,21 @@ logger = structlog.get_logger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifecycle manager for startup/shutdown events"""
-    # Force rebuild v2.1.0 - Automatic scheduler implementation
     logger.info("worker_starting", version=settings.APP_VERSION)
 
-    # Iniciar scheduler automático
+    # Start background scheduler (loads fixtures every 12h, predictions every 6h)
     logger.info("starting_background_scheduler")
     start_scheduler()
-
-    # NO ejecutar jobs iniciales - causan problemas de conexión
-    # El scheduler los ejecutará automáticamente según su programación
     logger.info("scheduler_ready")
+
+    # Run initial data load on startup to populate fresh fixtures
+    import asyncio
+
+    from app.scheduler_v2 import job_generate_predictions_sync, job_load_fixtures_sync
+
+    logger.info("running_startup_data_load")
+    loop = asyncio.get_event_loop()
+    loop.run_in_executor(None, job_load_fixtures_sync)
 
     yield
 
@@ -65,6 +77,10 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
 )
+
+# Attach rate limiter to app state
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS middleware
 app.add_middleware(

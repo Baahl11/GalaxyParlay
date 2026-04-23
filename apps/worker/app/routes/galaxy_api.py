@@ -6,8 +6,10 @@ from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
 import structlog
-from fastapi import APIRouter, Body, HTTPException, Query
+from fastapi import APIRouter, Body, HTTPException, Query, Request
 from pydantic import BaseModel
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 from app.ml.smart_parlay import smart_parlay_validator
 from app.ml.value_bets import ValueBet, value_detector
@@ -15,6 +17,7 @@ from app.services.database import db_service
 
 router = APIRouter(prefix="/api", tags=["galaxy-api"])
 logger = structlog.get_logger()
+limiter = Limiter(key_func=get_remote_address)
 
 
 # ============================================================
@@ -39,10 +42,12 @@ class ParlayValidationRequest(BaseModel):
 
 
 @router.get("/fixtures")
+@limiter.limit("60/minute")
 async def get_fixtures(
+    request: Request,
     league_id: Optional[int] = Query(None, description="Filter by league ID"),
     status: Optional[str] = Query("NS", description="Match status (NS, LIVE, FT)"),
-    limit: int = Query(50, le=100, description="Max results"),
+    limit: int = Query(100, le=200, description="Max results"),
 ):
     """
     Get fixtures with optional filters
@@ -52,34 +57,29 @@ async def get_fixtures(
     try:
         fixtures = db_service.get_fixtures(league_id=league_id, status=status, limit=limit)
 
-        # Enrich with predictions and quality scores
-        enriched_fixtures = []
-        for fixture in fixtures:
-            fixture_id = fixture["id"]
+        if not fixtures:
+            return {
+                "fixtures": [],
+                "total": 0,
+                "count": 0,
+                "filters": {"league_id": league_id, "status": status, "limit": limit},
+            }
 
-            # Get predictions
-            predictions = db_service.get_predictions(fixture_id=fixture_id)
+        # Bulk-fetch related data to avoid N+1 queries
+        fixture_ids = [f["id"] for f in fixtures]
+        predictions_map = db_service.get_predictions_bulk(fixture_ids)
+        quality_map = db_service.get_quality_scores_bulk(fixture_ids)
+        odds_map = db_service.get_odds_bulk(fixture_ids)
 
-            # Get quality scores
-            quality_query = (
-                db_service.client.table("quality_scores")
-                .select("*")
-                .eq("fixture_id", fixture_id)
-                .execute()
-            )
-            quality_scores = quality_query.data
-
-            # Get latest odds
-            odds = db_service.get_latest_odds(fixture_id)
-
-            enriched_fixtures.append(
-                {
-                    **fixture,
-                    "predictions": predictions,
-                    "quality_scores": quality_scores,
-                    "odds": odds,
-                }
-            )
+        enriched_fixtures = [
+            {
+                **fixture,
+                "predictions": predictions_map.get(fixture["id"], []),
+                "quality_scores": quality_map.get(fixture["id"], []),
+                "odds": odds_map.get(fixture["id"], []),
+            }
+            for fixture in fixtures
+        ]
 
         return {
             "fixtures": enriched_fixtures,
@@ -94,7 +94,8 @@ async def get_fixtures(
 
 
 @router.get("/fixtures/{fixture_id}")
-async def get_fixture_detail(fixture_id: int):
+@limiter.limit("60/minute")
+async def get_fixture_detail(request: Request, fixture_id: int):
     """
     Get detailed fixture information with all predictions and odds
     """
@@ -142,7 +143,9 @@ async def get_fixture_detail(fixture_id: int):
 
 
 @router.get("/predictions")
+@limiter.limit("60/minute")
 async def get_predictions(
+    request: Request,
     quality_grade: Optional[str] = Query(None, description="Filter by grade (A, B, C)"),
     min_confidence: Optional[float] = Query(
         None, ge=0.0, le=1.0, description="Min confidence score"

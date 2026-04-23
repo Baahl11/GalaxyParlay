@@ -32,5 +32,5 @@ if result.data:
 else:
     print("\n❌ NO DATA")
     print(f"   Result attributes: {dir(result)}")
-    if hasattr(result, 'error'):
+    if hasattr(result, "error"):
         print(f"   Error: {result.error}")
