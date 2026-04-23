@@ -711,7 +711,7 @@ export async function getModelPicks(params?: {
 }): Promise<ValueBet[]> {
   const limit = params?.limit ?? 40;
   const minConfidence = params?.min_confidence ?? 0.5;
-  const grades = params?.grades ?? ["A", "B"];
+  const grades = params?.grades ?? ["A", "B", "C", "D"];
 
   const { data: preds, error: predError } = await supabase
     .from("model_predictions")
