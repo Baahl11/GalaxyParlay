@@ -20,45 +20,85 @@ function toAmericanOdds(decimalOdds: number): string {
 }
 
 function scorePick(bet: ValueBet): number {
-  const confScore = (bet.confidence || 0) * 50;
-  const evScore = bet.odds_source === "bookmaker" ? bet.ev * 120 : 0;
-  const edgeScore = bet.odds_source === "bookmaker" ? bet.edge * 80 : 0;
+  const gradeWeight: Record<string, number> = {
+    A: 1,
+    B: 0.85,
+    C: 0.7,
+    D: 0.55,
+    F: 0.4,
+  };
+  const weight = gradeWeight[bet.grade] ?? 0.6;
+  const confScore = (bet.confidence || 0) * 60 * weight;
+  const evScore = bet.odds_source === "bookmaker" ? bet.ev * 140 * weight : 0;
+  const edgeScore =
+    bet.odds_source === "bookmaker" ? bet.edge * 100 * weight : 0;
   return confScore + evScore + edgeScore;
 }
 
 export default function Home() {
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [picks, setPicks] = useState<ValueBet[]>([]);
-  const [picksSource, setPicksSource] = useState<"value" | "model">("value");
+  const [picksSource, setPicksSource] = useState<
+    "value" | "model" | "mixed"
+  >("value");
+  const [viewMode, setViewMode] = useState<"quality" | "volume">("volume");
+  const [showCount, setShowCount] = useState<number>(30);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
     setError(null);
-    Promise.all([getStats(), getValueBets({ limit: 60 })])
+    const fetchLimit = Math.max(showCount * 3, 60);
+    const valueParams =
+      viewMode === "quality"
+        ? { limit: fetchLimit, min_edge: 0.03, min_ev: 0.02 }
+        : { limit: fetchLimit, min_edge: 0, min_ev: 0 };
+    const modelParams: Parameters<typeof getModelPicks>[0] =
+      viewMode === "quality"
+        ? { limit: fetchLimit, min_confidence: 0.6, grades: ["A", "B"] }
+        : {
+            limit: fetchLimit,
+            min_confidence: 0.45,
+            grades: ["A", "B", "C", "D"],
+          };
+
+    Promise.all([getStats(), getValueBets(valueParams)])
       .then(async ([statsData, valueData]) => {
         setStats(statsData);
-        if (valueData.bets.length > 0) {
-          setPicks(valueData.bets);
-          setPicksSource("value");
-          return;
+        const valueBets = valueData.bets;
+        let modelPicks: ValueBet[] = [];
+        const needsModel = valueBets.length < showCount || viewMode === "volume";
+        if (needsModel) {
+          modelPicks = await getModelPicks(modelParams);
         }
-        const modelPicks = await getModelPicks({ limit: 60 });
-        setPicks(modelPicks);
-        setPicksSource("model");
+        const valueKeys = new Set(
+          valueBets.map((b) => `${b.fixture_id}-${b.market}`),
+        );
+        const dedupedModel = modelPicks.filter(
+          (b) => !valueKeys.has(`${b.fixture_id}-${b.market}`),
+        );
+        const merged = [...valueBets, ...dedupedModel];
+        setPicks(merged);
+        if (valueBets.length > 0 && dedupedModel.length > 0) {
+          setPicksSource("mixed");
+        } else if (valueBets.length > 0) {
+          setPicksSource("value");
+        } else {
+          setPicksSource("model");
+        }
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : "Error cargando picks");
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [showCount, viewMode]);
 
   const rankedPicks = useMemo(() => {
     return [...picks]
       .sort((a, b) => scorePick(b) - scorePick(a))
-      .slice(0, 12);
-  }, [picks]);
+        .slice(0, showCount);
+  }, [picks, showCount]);
 
   const todayLabel = new Date().toLocaleDateString("es-ES", {
     day: "2-digit",
@@ -99,7 +139,11 @@ export default function Home() {
               <div className="neon-chip rounded-xl px-4 py-2 text-xs uppercase tracking-[0.2em]">
                 <span className="block text-[10px] text-cyan-300">Fuente</span>
                 <span className="text-white font-semibold">
-                  {picksSource === "value" ? "Odds reales" : "Cuota modelo"}
+                  {picksSource === "value"
+                    ? "Odds reales"
+                    : picksSource === "mixed"
+                      ? "Mixto"
+                      : "Cuota modelo"}
                 </span>
               </div>
             </div>
@@ -118,13 +162,53 @@ export default function Home() {
             </div>
             <div className="flex gap-3 flex-wrap text-xs">
               <span className="px-3 py-1 rounded-full neon-chip text-cyan-200">
-                {rankedPicks.length} picks activos
+                {rankedPicks.length} / {picks.length} picks
               </span>
               {stats && (
                 <span className="px-3 py-1 rounded-full neon-chip text-cyan-200">
                   {stats.predictions?.grade_a ?? 0} grado A
                 </span>
               )}
+            </div>
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-3 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="text-cyan-300 uppercase tracking-[0.2em]">Modo</span>
+              {([
+                { key: "quality", label: "Calidad" },
+                { key: "volume", label: "Volumen" },
+              ] as const).map((mode) => (
+                <button
+                  key={mode.key}
+                  onClick={() => setViewMode(mode.key)}
+                  className={`px-3 py-1 rounded-full transition-colors ${
+                    viewMode === mode.key
+                      ? "bg-cyan-500/30 text-cyan-100 border border-cyan-400/40"
+                      : "bg-gray-900/50 text-gray-400 border border-gray-700/50"
+                  }`}
+                >
+                  {mode.label}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-cyan-300 uppercase tracking-[0.2em]">
+                Mostrar
+              </span>
+              {[12, 30, 60, 120].map((count) => (
+                <button
+                  key={count}
+                  onClick={() => setShowCount(count)}
+                  className={`px-3 py-1 rounded-full transition-colors ${
+                    showCount === count
+                      ? "bg-purple-500/30 text-purple-100 border border-purple-400/40"
+                      : "bg-gray-900/50 text-gray-400 border border-gray-700/50"
+                  }`}
+                >
+                  {count}
+                </button>
+              ))}
             </div>
           </div>
 
