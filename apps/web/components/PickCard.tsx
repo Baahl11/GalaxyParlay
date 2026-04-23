@@ -77,6 +77,7 @@ export function PickCard({
   const probPct = Math.round(bet.model_prob * 100);
   const evPct = (bet.ev * 100).toFixed(1);
   const edgePct = (bet.edge * 100).toFixed(1);
+  const isModelOdds = bet.odds_source === "model";
 
   return (
     <div
@@ -135,12 +136,20 @@ export function PickCard({
         >
           Grado {bet.grade}
         </span>
-        <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-          EV +{evPct}%
-        </span>
-        <span className="px-2 py-0.5 rounded-full text-xs text-gray-400 bg-gray-700/40 border border-gray-600/30">
-          Edge +{edgePct}%
-        </span>
+        {isModelOdds ? (
+          <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+            Cuota modelo
+          </span>
+        ) : (
+          <>
+            <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              EV +{evPct}%
+            </span>
+            <span className="px-2 py-0.5 rounded-full text-xs text-gray-400 bg-gray-700/40 border border-gray-600/30">
+              Edge +{edgePct}%
+            </span>
+          </>
+        )}
         <span className="ml-auto text-sm font-bold text-white">
           @{bet.odds}
         </span>

@@ -1,6 +1,6 @@
 "use client";
 
-import { getValueBets, type ValueBet } from "@/lib/api";
+import { getModelPicks, getValueBets, type ValueBet } from "@/lib/api";
 import { useEffect, useState } from "react";
 import { PickCard } from "./PickCard";
 
@@ -26,16 +26,27 @@ export function TodayPicks({
   const [error, setError] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortKey>("ev");
   const [gradeFilter, setGradeFilter] = useState<string>("all");
+  const [picksSource, setPicksSource] = useState<"value" | "model">("value");
 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
     setError(null);
     getValueBets({ limit: 50 })
-      .then(({ bets: data }) => {
+      .then(async ({ bets: data }) => {
         if (cancelled) return;
-        setBets(data);
-        onPicksLoaded?.(data);
+        if (data.length > 0) {
+          setBets(data);
+          setPicksSource("value");
+          onPicksLoaded?.(data);
+          return;
+        }
+        const modelPicks = await getModelPicks({ limit: 50 });
+        if (cancelled) return;
+        setBets(modelPicks);
+        setPicksSource("model");
+        setSortBy("confidence");
+        onPicksLoaded?.(modelPicks);
       })
       .catch((err: unknown) => {
         if (cancelled) return;
@@ -98,7 +109,7 @@ export function TodayPicks({
       <div className="rounded-xl bg-gray-800/30 border border-gray-700/30 p-8 text-center">
         <div className="text-4xl mb-3">🔭</div>
         <p className="text-gray-400 text-sm">
-          No hay value bets disponibles hoy.
+          No hay picks disponibles hoy.
         </p>
         <p className="text-gray-600 text-xs mt-1">
           Las predicciones se actualizan cada 6 horas.
@@ -109,6 +120,11 @@ export function TodayPicks({
 
   return (
     <div className="flex flex-col h-full">
+      {picksSource === "model" && (
+        <div className="mb-3 rounded-lg border border-purple-500/30 bg-purple-500/10 px-3 py-2 text-xs text-purple-200">
+          Sin odds reales por ahora. Mostrando picks del modelo con cuota justa.
+        </div>
+      )}
       {/* Controls */}
       <div className="flex items-center gap-2 mb-3 flex-wrap">
         {/* Grade filter pills */}

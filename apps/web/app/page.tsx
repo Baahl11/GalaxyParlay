@@ -11,7 +11,7 @@ import {
   StatsCard,
   TodayPicks,
 } from "@/components";
-import { getFixtures, getStats, type ValueBet } from "@/lib/api";
+import { getFixturesWithQuality, getStats, type ValueBet } from "@/lib/api";
 import type { Fixture, StatsResponse } from "@/lib/types";
 import { useCallback, useEffect, useState } from "react";
 
@@ -41,7 +41,10 @@ export default function Home() {
 
   useEffect(() => {
     setLoadingFixtures(true);
-    Promise.all([getFixtures({ status: "NS", limit: 200 }), getStats()])
+    Promise.all([
+      getFixturesWithQuality({ status: "NS", limit: 200 }),
+      getStats(),
+    ])
       .then(([fixturesData, statsData]) => {
         setFixtures(fixturesData || []);
         setStats(statsData);

@@ -5,6 +5,7 @@ import type {
   Fixture,
   League,
   MultiMarketPrediction,
+  QualityScore,
   StatsResponse,
   TopPlayersResponse,
 } from "./types";
@@ -44,6 +45,39 @@ export async function getFixtures(params?: {
   const { data, error } = await query;
   if (error) throw new Error(`Failed to fetch fixtures: ${error.message}`);
   return (data as Fixture[]) || [];
+}
+
+/**
+ * Fetch fixtures and attach quality scores for galaxy rendering.
+ */
+export async function getFixturesWithQuality(params?: {
+  league_id?: number;
+  status?: string;
+  date_from?: string;
+  date_to?: string;
+  limit?: number;
+}): Promise<Fixture[]> {
+  const fixtures = await getFixtures(params);
+  if (fixtures.length === 0) return fixtures;
+
+  const fixtureIds = fixtures.map((f) => f.id);
+  const { data: qualityRows, error } = await supabase
+    .from("quality_scores")
+    .select("*")
+    .in("fixture_id", fixtureIds);
+
+  if (error || !qualityRows) return fixtures;
+
+  const byId: Record<number, QualityScore[]> = {};
+  for (const row of qualityRows as QualityScore[]) {
+    if (!byId[row.fixture_id]) byId[row.fixture_id] = [];
+    byId[row.fixture_id].push(row);
+  }
+
+  return fixtures.map((fixture) => ({
+    ...fixture,
+    quality_scores: byId[fixture.id] ?? [],
+  }));
 }
 
 /**
@@ -625,6 +659,7 @@ export async function getValueBets(params?: {
       market: marketKey,
       selection,
       odds: Math.round(bookmakerOdds * 100) / 100,
+      odds_source: "bookmaker",
       model_prob: Math.round(modelProb * 1000) / 1000,
       implied_prob: Math.round(impliedProb * 1000) / 1000,
       edge: Math.round(edge * 1000) / 1000,
@@ -665,6 +700,112 @@ export async function getValueBets(params?: {
   };
 }
 
+/**
+ * Fetch model picks without odds (fallback when no value bets).
+ * Uses fair odds from model probability and sets EV/edge to 0.
+ */
+export async function getModelPicks(params?: {
+  limit?: number;
+  min_confidence?: number;
+  grades?: Array<"A" | "B" | "C" | "D" | "F">;
+}): Promise<ValueBet[]> {
+  const limit = params?.limit ?? 40;
+  const minConfidence = params?.min_confidence ?? 0.5;
+  const grades = params?.grades ?? ["A", "B"];
+
+  const { data: preds, error: predError } = await supabase
+    .from("model_predictions")
+    .select(
+      `market_key, prediction, confidence_score, quality_grade, fixture_id,
+       fixtures!inner(home_team_name, away_team_name, kickoff_time, league_id, status)`
+    )
+    .in("quality_grade", grades)
+    .gte("confidence_score", minConfidence)
+    .in("market_key", ["match_winner", "over_under_2_5"])
+    .order("confidence_score", { ascending: false })
+    .limit(300);
+
+  if (predError || !preds || preds.length === 0) return [];
+
+  const activePreds = preds.filter((p) => {
+    const fx = p.fixtures as unknown as { status: string };
+    return fx.status === "NS";
+  });
+  if (activePreds.length === 0) return [];
+
+  const byKey: Record<string, typeof activePreds[number]> = {};
+  for (const row of activePreds) {
+    const key = `${row.fixture_id}-${row.market_key}`;
+    const existing = byKey[key];
+    if (!existing || (row.confidence_score as number) > (existing.confidence_score as number)) {
+      byKey[key] = row;
+    }
+  }
+
+  const picks: ValueBet[] = [];
+  for (const row of Object.values(byKey)) {
+    const fx = row.fixtures as unknown as {
+      home_team_name: string;
+      away_team_name: string;
+      kickoff_time: string;
+      league_id: number;
+    };
+    const pred = row.prediction as Record<string, number>;
+    const marketKey = row.market_key as string;
+    const fixtureId = row.fixture_id as number;
+
+    let selection = "";
+    let modelProb = 0;
+
+    if (marketKey === "match_winner") {
+      const homeP = pred.home_win ?? 0;
+      const drawP = pred.draw ?? 0;
+      const awayP = pred.away_win ?? 0;
+      const best = Math.max(homeP, drawP, awayP);
+      if (best === homeP) {
+        selection = "Home Win";
+        modelProb = homeP;
+      } else if (best === drawP) {
+        selection = "Draw";
+        modelProb = drawP;
+      } else {
+        selection = "Away Win";
+        modelProb = awayP;
+      }
+    } else if (marketKey === "over_under_2_5") {
+      const isOver = (pred.over ?? 0) >= (pred.under ?? 0);
+      selection = isOver ? "Over 2.5" : "Under 2.5";
+      modelProb = isOver ? (pred.over ?? 0) : (pred.under ?? 0);
+    }
+
+    if (modelProb <= 0) continue;
+
+    const fairOdds = Math.round((1 / modelProb) * 100) / 100;
+
+    picks.push({
+      fixture_id: fixtureId,
+      home_team: fx.home_team_name,
+      away_team: fx.away_team_name,
+      kickoff_time: fx.kickoff_time,
+      league_id: fx.league_id,
+      market: marketKey,
+      selection,
+      odds: fairOdds,
+      odds_source: "model",
+      model_prob: Math.round(modelProb * 1000) / 1000,
+      implied_prob: Math.round(modelProb * 1000) / 1000,
+      edge: 0,
+      ev: 0,
+      kelly_fraction: 0,
+      grade: row.quality_grade as string,
+      confidence: Math.round((row.confidence_score as number) * 1000) / 1000,
+    });
+  }
+
+  picks.sort((a, b) => b.confidence - a.confidence);
+  return picks.slice(0, limit);
+}
+
 // Value Bet types
 export interface ValueBet {
   fixture_id: number;
@@ -675,6 +816,7 @@ export interface ValueBet {
   market: string;
   selection: string;
   odds: number;
+  odds_source?: "bookmaker" | "model";
   model_prob: number;
   implied_prob: number;
   edge: number;
