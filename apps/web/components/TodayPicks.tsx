@@ -14,6 +14,15 @@ interface TodayPicksProps {
 
 type SortKey = "ev" | "odds" | "confidence";
 
+function isSameLocalDay(date: Date, base: Date): boolean {
+  if (Number.isNaN(date.getTime())) return false;
+  return (
+    date.getFullYear() === base.getFullYear() &&
+    date.getMonth() === base.getMonth() &&
+    date.getDate() === base.getDate()
+  );
+}
+
 export function TodayPicks({
   parlayPicks,
   highlightedFixtureId,
@@ -35,18 +44,25 @@ export function TodayPicks({
     getValueBets({ limit: 50 })
       .then(async ({ bets: data }) => {
         if (cancelled) return;
-        if (data.length > 0) {
-          setBets(data);
+        const now = new Date();
+        const todayBets = data.filter((bet) =>
+          isSameLocalDay(new Date(bet.kickoff_time), now),
+        );
+        if (todayBets.length > 0) {
+          setBets(todayBets);
           setPicksSource("value");
-          onPicksLoaded?.(data);
+          onPicksLoaded?.(todayBets);
           return;
         }
         const modelPicks = await getModelPicks({ limit: 50 });
         if (cancelled) return;
-        setBets(modelPicks);
+        const todayModel = modelPicks.filter((bet) =>
+          isSameLocalDay(new Date(bet.kickoff_time), now),
+        );
+        setBets(todayModel);
         setPicksSource("model");
         setSortBy("confidence");
-        onPicksLoaded?.(modelPicks);
+        onPicksLoaded?.(todayModel);
       })
       .catch((err: unknown) => {
         if (cancelled) return;

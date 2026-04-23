@@ -35,6 +35,15 @@ function scorePick(bet: ValueBet): number {
   return confScore + evScore + edgeScore;
 }
 
+function isSameLocalDay(date: Date, base: Date): boolean {
+  if (Number.isNaN(date.getTime())) return false;
+  return (
+    date.getFullYear() === base.getFullYear() &&
+    date.getMonth() === base.getMonth() &&
+    date.getDate() === base.getDate()
+  );
+}
+
 export default function Home() {
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [picks, setPicks] = useState<ValueBet[]>([]);
@@ -67,23 +76,30 @@ export default function Home() {
       .then(async ([statsData, valueData]) => {
         setStats(statsData);
         const valueBets = valueData.bets;
+        const now = new Date();
+        const valueBetsToday = valueBets.filter((bet) =>
+          isSameLocalDay(new Date(bet.kickoff_time), now),
+        );
         let modelPicks: ValueBet[] = [];
         const needsModel =
-          valueBets.length < showCount || viewMode === "volume";
+          valueBetsToday.length < showCount || viewMode === "volume";
         if (needsModel) {
           modelPicks = await getModelPicks(modelParams);
         }
         const valueKeys = new Set(
-          valueBets.map((b) => `${b.fixture_id}-${b.market}`),
+          valueBetsToday.map((b) => `${b.fixture_id}-${b.market}`),
         );
-        const dedupedModel = modelPicks.filter(
+        const modelPicksToday = modelPicks.filter((bet) =>
+          isSameLocalDay(new Date(bet.kickoff_time), now),
+        );
+        const dedupedModel = modelPicksToday.filter(
           (b) => !valueKeys.has(`${b.fixture_id}-${b.market}`),
         );
-        const merged = [...valueBets, ...dedupedModel];
+        const merged = [...valueBetsToday, ...dedupedModel];
         setPicks(merged);
-        if (valueBets.length > 0 && dedupedModel.length > 0) {
+        if (valueBetsToday.length > 0 && dedupedModel.length > 0) {
           setPicksSource("mixed");
-        } else if (valueBets.length > 0) {
+        } else if (valueBetsToday.length > 0) {
           setPicksSource("value");
         } else {
           setPicksSource("model");
