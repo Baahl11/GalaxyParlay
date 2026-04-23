@@ -99,8 +99,8 @@ export async function getStats(): Promise<StatsResponse> {
   const upcomingFixtures = (fixturesRes.data ?? []).filter(
     (f: { status: string }) => f.status === "NS",
   ).length;
-  const liveFixtures = (fixturesRes.data ?? []).filter((f: { status: string }) =>
-    ["1H", "2H", "HT", "LIVE"].includes(f.status),
+  const liveFixtures = (fixturesRes.data ?? []).filter(
+    (f: { status: string }) => ["1H", "2H", "HT", "LIVE"].includes(f.status),
   ).length;
 
   const totalPredictions = predictionsRes.count ?? 0;
@@ -174,7 +174,9 @@ export async function getMultiMarketPrediction(
     supabase.from("fixtures").select("*").eq("id", fixtureId).single(),
     supabase
       .from("model_predictions")
-      .select("market_key, prediction, confidence_score, quality_grade, features_used")
+      .select(
+        "market_key, prediction, confidence_score, quality_grade, features_used",
+      )
       .eq("fixture_id", fixtureId),
     supabase
       .from("quality_scores")
@@ -211,7 +213,10 @@ export async function getMultiMarketPrediction(
   const byKey: Record<string, (typeof rows)[0]> = {};
   for (const row of rows) {
     // Keep highest-confidence row per market_key
-    if (!byKey[row.market_key] || row.confidence_score > byKey[row.market_key].confidence_score) {
+    if (
+      !byKey[row.market_key] ||
+      row.confidence_score > byKey[row.market_key].confidence_score
+    ) {
       byKey[row.market_key] = row;
     }
   }
@@ -227,7 +232,10 @@ export async function getMultiMarketPrediction(
     : undefined;
 
   // ── over_under (total goals) ───────────────────────────────────────────────
-  const over_under: Record<string, { over: number; under: number; line: number }> = {};
+  const over_under: Record<
+    string,
+    { over: number; under: number; line: number }
+  > = {};
   for (const [mk, row] of Object.entries(byKey)) {
     if (mk.startsWith("over_under_")) {
       const suffix = mk.replace("over_under_", "");
@@ -241,7 +249,10 @@ export async function getMultiMarketPrediction(
   }
 
   // ── team_goals ─────────────────────────────────────────────────────────────
-  const team_goals: Record<string, { over: number; under: number; team: string; line: number }> = {};
+  const team_goals: Record<
+    string,
+    { over: number; under: number; team: string; line: number }
+  > = {};
   for (const [mk, row] of Object.entries(byKey)) {
     if (mk.startsWith("home_team_over_under_")) {
       const suffix = mk.replace("home_team_over_under_", "");
@@ -272,8 +283,11 @@ export async function getMultiMarketPrediction(
 
   // ── corners ────────────────────────────────────────────────────────────────
   const expectedCornersTotal =
-    rows.find((r) => r.market_key.startsWith("corners_") && r.features_used?.expected_corners)
-      ?.features_used?.expected_corners ?? 10;
+    rows.find(
+      (r) =>
+        r.market_key.startsWith("corners_") &&
+        r.features_used?.expected_corners,
+    )?.features_used?.expected_corners ?? 10;
   const corners: Record<string, unknown> = {
     expected: {
       home: Math.round(expectedCornersTotal * 0.47 * 10) / 10,
@@ -294,8 +308,10 @@ export async function getMultiMarketPrediction(
 
   // ── cards ──────────────────────────────────────────────────────────────────
   const expectedCardsTotal =
-    rows.find((r) => r.market_key.startsWith("cards_") && r.features_used?.expected_cards)
-      ?.features_used?.expected_cards ?? 3.5;
+    rows.find(
+      (r) =>
+        r.market_key.startsWith("cards_") && r.features_used?.expected_cards,
+    )?.features_used?.expected_cards ?? 3.5;
   const cards: Record<string, unknown> = {
     expected: {
       home_yellow: Math.round(expectedCardsTotal * 0.5 * 10) / 10,
@@ -352,7 +368,8 @@ export async function getMultiMarketPrediction(
   }
 
   // ── half_time ──────────────────────────────────────────────────────────────
-  const htGoals: Record<string, { over: number; under: number; line: number }> = {};
+  const htGoals: Record<string, { over: number; under: number; line: number }> =
+    {};
   for (const [mk, row] of Object.entries(byKey)) {
     if (mk.startsWith("first_half_over_under_")) {
       const suffix = mk.replace("first_half_over_under_", "");
@@ -365,7 +382,7 @@ export async function getMultiMarketPrediction(
     }
   }
   const half_time = {
-    result_1x2: match_winner ?? { home: 0.35, draw: 0.35, away: 0.30 },
+    result_1x2: match_winner ?? { home: 0.35, draw: 0.35, away: 0.3 },
     goals: htGoals,
     corners: {
       expected: {
@@ -399,7 +416,8 @@ export async function getMultiMarketPrediction(
   // ── quality score ─────────────────────────────────────────────────────────
   const avgQuality =
     qualityRows.length > 0
-      ? qualityRows.reduce((sum, r) => sum + r.model_confidence, 0) / qualityRows.length
+      ? qualityRows.reduce((sum, r) => sum + r.model_confidence, 0) /
+        qualityRows.length
       : undefined;
 
   return {
@@ -433,7 +451,13 @@ export async function getTopScorers(_params?: {
   limit?: number;
   min_goals?: number;
 }): Promise<TopPlayersResponse> {
-  return { status: "success", count: 0, total_players: 0, total_teams: 0, players: [] };
+  return {
+    status: "success",
+    count: 0,
+    total_players: 0,
+    total_teams: 0,
+    players: [],
+  };
 }
 
 /**
@@ -443,11 +467,18 @@ export async function getTopShooters(_params?: {
   limit?: number;
   min_shots?: number;
 }): Promise<TopPlayersResponse> {
-  return { status: "success", count: 0, total_players: 0, total_teams: 0, players: [] };
+  return {
+    status: "success",
+    count: 0,
+    total_players: 0,
+    total_teams: 0,
+    players: [],
+  };
 }
 
 /**
- * Fetch value bets derived from high-confidence A-grade predictions
+ * Fetch value bets by comparing model predictions against real bookmaker odds
+ * from odds_snapshots table. Calculates genuine EV = model_prob*(odds-1) - (1-model_prob).
  */
 export async function getValueBets(params?: {
   min_edge?: number;
@@ -455,77 +486,160 @@ export async function getValueBets(params?: {
   limit?: number;
 }): Promise<{ bets: ValueBet[]; summary: ValueBetSummary }> {
   const limit = params?.limit ?? 20;
-  const { data, error } = await supabase
+  const minEdge = params?.min_edge ?? 0.03;
+  const minEv = params?.min_ev ?? 0.02;
+
+  const emptyResult = {
+    bets: [],
+    summary: { total_bets: 0, avg_edge: 0, avg_ev: 0, best_ev: 0, total_kelly_units: 0 },
+  };
+
+  // Fetch A-grade predictions for key markets
+  const { data: preds, error: predError } = await supabase
     .from("model_predictions")
     .select(
       `market_key, prediction, confidence_score, quality_grade, fixture_id,
-       fixtures!inner(home_team_name, away_team_name, kickoff_time, league_id)`,
+       fixtures!inner(home_team_name, away_team_name, kickoff_time, league_id, status)`,
     )
     .eq("quality_grade", "A")
-    .gte("confidence_score", 0.6)
-    .in("market_key", ["match_winner", "over_under_2_5", "both_teams_score"])
+    .gte("confidence_score", 0.55)
+    .in("market_key", ["match_winner", "over_under_2_5"])
     .order("confidence_score", { ascending: false })
-    .limit(limit);
+    .limit(200);
 
-  if (error || !data) return { bets: [], summary: { total_bets: 0, avg_edge: 0, avg_ev: 0, best_ev: 0, total_kelly_units: 0 } };
+  if (predError || !preds || preds.length === 0) return emptyResult;
 
-  const bets: ValueBet[] = data.map((row: Record<string, unknown>) => {
-    const fx = row.fixtures as { home_team_name: string; away_team_name: string; kickoff_time: string; league_id: number };
+  // Only NS fixtures
+  const activePreds = preds.filter((p) => {
+    const fx = (p.fixtures as unknown) as { status: string };
+    return fx.status === "NS";
+  });
+  if (activePreds.length === 0) return emptyResult;
+
+  // Unique fixture IDs
+  const fixtureIds = [...new Set(activePreds.map((p) => p.fixture_id as number))];
+
+  // Fetch real bookmaker odds for those fixtures
+  const { data: oddsRows } = await supabase
+    .from("odds_snapshots")
+    .select("fixture_id, market_key, odds_data, bookmaker")
+    .in("fixture_id", fixtureIds)
+    .in("market_key", ["match_winner", "over_under_2.5"]);
+
+  // Build index: fixture_id -> oddsMarketKey -> { odds_data, bookmaker }
+  const oddsIndex: Record<number, Record<string, { data: Record<string, number>; bookmaker: string }>> = {};
+  for (const od of oddsRows ?? []) {
+    const fid = od.fixture_id as number;
+    const mk = od.market_key as string;
+    if (!oddsIndex[fid]) oddsIndex[fid] = {};
+    // Prefer Bet365, don't overwrite if already set
+    if (!oddsIndex[fid][mk]) {
+      oddsIndex[fid][mk] = { data: od.odds_data as Record<string, number>, bookmaker: od.bookmaker as string };
+    }
+  }
+
+  const bets: ValueBet[] = [];
+
+  for (const row of activePreds) {
+    const fx = (row.fixtures as unknown) as {
+      home_team_name: string;
+      away_team_name: string;
+      kickoff_time: string;
+      league_id: number;
+    };
     const pred = row.prediction as Record<string, number>;
-    const confidence = row.confidence_score as number;
     const marketKey = row.market_key as string;
+    const fixtureId = row.fixture_id as number;
+    const fixtureOdds = oddsIndex[fixtureId] ?? {};
 
-    let selection = "Home Win";
-    let modelProb = confidence;
+    // Map prediction market key → odds market key
+    const oddsMarketKey = marketKey === "over_under_2_5" ? "over_under_2.5" : marketKey;
+    const oddsEntry = fixtureOdds[oddsMarketKey];
+
+    if (!oddsEntry) continue; // no real odds for this fixture/market
+
+    let selection = "";
+    let modelProb = 0;
+    let bookmakerOdds = 0;
+    const bookmaker = oddsEntry.bookmaker;
+    const oddsData = oddsEntry.data;
+
     if (marketKey === "match_winner") {
-      const best = Math.max(pred.home_win ?? 0, pred.draw ?? 0, pred.away_win ?? 0);
-      if (best === (pred.home_win ?? 0)) { selection = "Home Win"; modelProb = pred.home_win ?? 0; }
-      else if (best === (pred.draw ?? 0)) { selection = "Draw"; modelProb = pred.draw ?? 0; }
-      else { selection = "Away Win"; modelProb = pred.away_win ?? 0; }
+      const homeP = pred.home_win ?? 0;
+      const drawP = pred.draw ?? 0;
+      const awayP = pred.away_win ?? 0;
+      const best = Math.max(homeP, drawP, awayP);
+      if (best === homeP) {
+        selection = "Home Win";
+        modelProb = homeP;
+        bookmakerOdds = oddsData["home"] ?? 0;
+      } else if (best === drawP) {
+        selection = "Draw";
+        modelProb = drawP;
+        bookmakerOdds = oddsData["draw"] ?? 0;
+      } else {
+        selection = "Away Win";
+        modelProb = awayP;
+        bookmakerOdds = oddsData["away"] ?? 0;
+      }
     } else if (marketKey === "over_under_2_5") {
-      selection = pred.over > pred.under ? "Over 2.5" : "Under 2.5";
-      modelProb = Math.max(pred.over ?? 0, pred.under ?? 0);
-    } else if (marketKey === "both_teams_score") {
-      selection = pred.yes > pred.no ? "BTTS Yes" : "BTTS No";
-      modelProb = Math.max(pred.yes ?? 0, pred.no ?? 0);
+      const isOver = (pred.over ?? 0) >= (pred.under ?? 0);
+      selection = isOver ? "Over 2.5" : "Under 2.5";
+      modelProb = isOver ? (pred.over ?? 0) : (pred.under ?? 0);
+      bookmakerOdds = isOver ? (oddsData["over 2.5"] ?? 0) : (oddsData["under 2.5"] ?? 0);
     }
 
-    const impliedProb = 1 / (1 / modelProb * 0.95); // synthetic fair odds
-    const odds = Math.round((1 / impliedProb) * 100) / 100;
-    const edge = Math.round((modelProb - impliedProb) * 100) / 100;
-    const ev = Math.round((modelProb * (odds - 1) - (1 - modelProb)) * 100) / 100;
+    if (!bookmakerOdds || bookmakerOdds < 1.1 || modelProb <= 0) continue;
 
-    return {
-      fixture_id: row.fixture_id as number,
+    const impliedProb = 1 / bookmakerOdds;
+    const edge = modelProb - impliedProb;
+    const ev = modelProb * (bookmakerOdds - 1) - (1 - modelProb);
+    const kellyFraction = edge > 0 ? Math.min(edge / (bookmakerOdds - 1), 0.1) : 0;
+
+    if (edge < minEdge || ev < minEv) continue;
+
+    bets.push({
+      fixture_id: fixtureId,
       home_team: fx.home_team_name,
       away_team: fx.away_team_name,
       kickoff_time: fx.kickoff_time,
       league_id: fx.league_id,
       market: marketKey,
       selection,
-      odds,
-      model_prob: Math.round(modelProb * 100) / 100,
-      implied_prob: Math.round(impliedProb * 100) / 100,
-      edge,
-      ev,
-      kelly_fraction: Math.round(edge / (odds - 1) * 100) / 100,
+      odds: Math.round(bookmakerOdds * 100) / 100,
+      model_prob: Math.round(modelProb * 1000) / 1000,
+      implied_prob: Math.round(impliedProb * 1000) / 1000,
+      edge: Math.round(edge * 1000) / 1000,
+      ev: Math.round(ev * 1000) / 1000,
+      kelly_fraction: Math.round(kellyFraction * 1000) / 1000,
       grade: row.quality_grade as string,
-      confidence: Math.round(confidence * 100) / 100,
-    };
-  });
+      confidence: Math.round((row.confidence_score as number) * 1000) / 1000,
+    });
+  }
 
-  const avgEdge = bets.length > 0 ? bets.reduce((s, b) => s + b.edge, 0) / bets.length : 0;
-  const avgEv = bets.length > 0 ? bets.reduce((s, b) => s + b.ev, 0) / bets.length : 0;
-  const bestEv = bets.length > 0 ? Math.max(...bets.map((b) => b.ev)) : 0;
+  // Sort by EV desc
+  bets.sort((a, b) => b.ev - a.ev);
+  const limitedBets = bets.slice(0, limit);
+
+  const avgEdge =
+    limitedBets.length > 0
+      ? limitedBets.reduce((s, b) => s + b.edge, 0) / limitedBets.length
+      : 0;
+  const avgEv =
+    limitedBets.length > 0
+      ? limitedBets.reduce((s, b) => s + b.ev, 0) / limitedBets.length
+      : 0;
+  const bestEv = limitedBets.length > 0 ? Math.max(...limitedBets.map((b) => b.ev)) : 0;
 
   return {
-    bets,
+    bets: limitedBets,
     summary: {
-      total_bets: bets.length,
-      avg_edge: Math.round(avgEdge * 100) / 100,
-      avg_ev: Math.round(avgEv * 100) / 100,
-      best_ev: Math.round(bestEv * 100) / 100,
-      total_kelly_units: Math.round(bets.reduce((s, b) => s + (b.kelly_fraction ?? 0), 0) * 100) / 100,
+      total_bets: limitedBets.length,
+      avg_edge: Math.round(avgEdge * 1000) / 1000,
+      avg_ev: Math.round(avgEv * 1000) / 1000,
+      best_ev: Math.round(bestEv * 1000) / 1000,
+      total_kelly_units:
+        Math.round(limitedBets.reduce((s, b) => s + b.kelly_fraction, 0) * 1000) / 1000,
     },
   };
 }
@@ -556,4 +670,25 @@ export interface ValueBetSummary {
   avg_ev: number;
   best_ev: number;
   total_kelly_units: number;
+}
+
+export interface BacktestData {
+  summary: { fixtures_tested: number; predictions_tested: number; markets_tested: number };
+  new_model: { accuracy: number; brier_score: number; log_loss: number };
+  by_market?: Record<string, { old_accuracy: number; new_accuracy: number; improvement: number; sample_size: number }>;
+}
+
+/**
+ * Fetch model accuracy stats from Railway backtest endpoint
+ */
+export async function getBacktestResults(): Promise<BacktestData | null> {
+  const railwayUrl = process.env.NEXT_PUBLIC_API_URL ?? "https://galaxyparlay-production.up.railway.app";
+  try {
+    const res = await fetch(`${railwayUrl}/jobs/backtest-results`, { next: { revalidate: 3600 } });
+    if (!res.ok) return null;
+    const json = await res.json();
+    return json.data as BacktestData;
+  } catch {
+    return null;
+  }
 }

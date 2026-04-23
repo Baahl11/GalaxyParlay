@@ -6,7 +6,9 @@ from datetime import datetime, timedelta
 from typing import Any, Dict, List
 
 import structlog
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Query
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, Request
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 from app.ml import MatchPredictor, QualityScorer
 from app.ml.dixon_coles import DixonColesModel, dixon_coles_model
@@ -20,6 +22,7 @@ from app.services.database import db_service
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 logger = structlog.get_logger()
+limiter = Limiter(key_func=get_remote_address)
 
 # ML instances
 predictor = MatchPredictor()
@@ -48,9 +51,9 @@ def sync_fixtures():
         total_fixtures = 0
         total_odds = 0
 
-        # Date range: today to 7 days from now
+        # Date range: today to 14 days from now
         date_from = datetime.utcnow().strftime("%Y-%m-%d")
-        date_to = (datetime.utcnow() + timedelta(days=7)).strftime("%Y-%m-%d")
+        date_to = (datetime.utcnow() + timedelta(days=14)).strftime("%Y-%m-%d")
 
         logger.info(
             "sync_fixtures_started",
@@ -316,6 +319,126 @@ def sync_odds(limit: int = 50):
 
     except Exception as e:
         logger.error("sync_odds_error", error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/sync-results")
+def sync_results():
+    """
+    Update results for recently finished fixtures.
+
+    Fetches status + scores for fixtures that were NS/LIVE in the last 24h
+    and updates them to FT with the final score. Runs every 3 hours.
+    """
+    try:
+        from datetime import timezone
+
+        client = api_football_client
+
+        # Find fixtures that should have finished: kickoff was in the past 36h and still NS
+        cutoff = datetime.utcnow() - timedelta(hours=36)
+        cutoff_str = cutoff.strftime("%Y-%m-%dT%H:%M:%S")
+        now_str = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S")
+
+        res = db_service.client.table("fixtures").select(
+            "id, home_team_name, away_team_name, kickoff_time, status, league_id, season"
+        ).lte("kickoff_time", now_str).gte("kickoff_time", cutoff_str).in_(
+            "status", ["NS", "1H", "HT", "2H", "ET", "P"]
+        ).execute()
+
+        candidates = res.data or []
+        logger.info("sync_results_started", candidates=len(candidates))
+
+        updated = 0
+        errors = 0
+
+        for fixture in candidates:
+            fixture_id = fixture["id"]
+            try:
+                api_result = client.get_fixture_by_id(fixture_id)
+                if not api_result:
+                    continue
+
+                api_fix = api_result
+                new_status = api_fix["fixture"]["status"]["short"]
+                goals = api_fix.get("goals", {})
+                home_score = goals.get("home")
+                away_score = goals.get("away")
+
+                db_service.client.table("fixtures").update({
+                    "status": new_status,
+                    "home_score": home_score,
+                    "away_score": away_score,
+                }).eq("id", fixture_id).execute()
+
+                logger.info(
+                    "fixture_result_updated",
+                    fixture_id=fixture_id,
+                    match=f"{fixture['home_team_name']} vs {fixture['away_team_name']}",
+                    status=new_status,
+                    score=f"{home_score}-{away_score}",
+                )
+                updated += 1
+
+            except Exception as e:
+                errors += 1
+                logger.warning("result_update_failed", fixture_id=fixture_id, error=str(e))
+
+        return {
+            "status": "success",
+            "candidates_checked": len(candidates),
+            "fixtures_updated": updated,
+            "errors": errors,
+        }
+
+    except Exception as e:
+        logger.error("sync_results_error", error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/backtest-results")
+def get_backtest_results():
+    """
+    Return model accuracy metrics from historical backtesting.
+    Serves the pre-computed backtest_results.json for display in frontend.
+    """
+    import json
+    import os
+
+    try:
+        # Look for the json file relative to worker root
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        results_path = os.path.join(base_dir, "backtest_results.json")
+        if os.path.exists(results_path):
+            with open(results_path) as f:
+                data = json.load(f)
+            return {"status": "success", "source": "file", "data": data}
+
+        # Fallback: compute live from FT fixtures in DB
+        ft_res = db_service.client.table("fixtures").select(
+            "id, home_score, away_score, status"
+        ).eq("status", "FT").limit(500).execute()
+        ft_fixtures = ft_res.data or []
+
+        if not ft_fixtures:
+            return {
+                "status": "no_data",
+                "message": "No finished fixtures yet — results will appear after matches complete",
+                "data": None,
+            }
+
+        total = len(ft_fixtures)
+        return {
+            "status": "success",
+            "source": "live",
+            "data": {
+                "summary": {"fixtures_tested": total, "predictions_tested": 0, "markets_tested": 0},
+                "message": f"{total} finished fixtures in DB",
+            },
+        }
+
+    except Exception as e:
+        logger.error("backtest_results_error", error=str(e))
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -2279,16 +2402,14 @@ def get_top_shooters(
 
 
 @router.post("/trigger-load-fixtures")
-def trigger_load_fixtures():
+@limiter.limit("5/minute")
+def trigger_load_fixtures(request: Request):
     """
     Trigger manual load of upcoming fixtures using existing sync-fixtures endpoint.
     """
     try:
         logger.info("manual_load_fixtures_triggered")
-
-        # Reusar el endpoint que ya funciona
         response = sync_fixtures()
-
         return {"status": "success", "message": "Fixtures loaded successfully", "result": response}
     except Exception as e:
         logger.error("manual_load_fixtures_error", error=str(e))
@@ -2296,16 +2417,14 @@ def trigger_load_fixtures():
 
 
 @router.post("/trigger-generate-predictions")
-def trigger_generate_predictions():
+@limiter.limit("5/minute")
+def trigger_generate_predictions(request: Request):
     """
     Trigger manual generation of predictions using existing run-predictions endpoint.
     """
     try:
         logger.info("manual_generate_predictions_triggered")
-
-        # Reusar el endpoint que ya funciona
         response = run_predictions()
-
         return {
             "status": "success",
             "message": "Predictions generated successfully",

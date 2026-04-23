@@ -10,6 +10,7 @@ export { GradeFilter } from "./GradeFilter";
 export { LeagueClusterView } from "./LeagueClusterView";
 export { LeagueFilter } from "./LeagueFilter";
 export { MatchDrawer } from "./MatchDrawer";
+export { ModelAccuracy } from "./ModelAccuracy";
 export { MultiMarketCard } from "./MultiMarketCard";
 export { NetworkGraphView } from "./NetworkGraphView";
 export { PlayerPropsSection } from "./PlayerPropsSection";

@@ -5,7 +5,9 @@ import {
   FixtureList,
   GalaxyCanvas,
   LeagueClusterView,
+  LeagueFilter,
   MatchDrawer,
+  ModelAccuracy,
   NetworkGraphView,
   PlayerPropsSection,
   StatsCard,
@@ -21,7 +23,8 @@ type TabKey =
   | "galaxy"
   | "fixtures"
   | "valuebets"
-  | "players";
+  | "players"
+  | "accuracy";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabKey>("network");
@@ -29,6 +32,7 @@ export default function Home() {
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedLeague, setSelectedLeague] = useState<number | null>(null);
 
   // Match Drawer State
   const [selectedFixture, setSelectedFixture] = useState<Fixture | null>(null);
@@ -43,7 +47,7 @@ export default function Home() {
     setError(null);
     try {
       const [fixturesData, statsData] = await Promise.all([
-        getFixtures({ status: "NS", limit: 100 }),
+        getFixtures({ status: "NS", limit: 200 }),
         getStats(),
       ]);
       setFixtures(fixturesData || []);
@@ -74,6 +78,7 @@ export default function Home() {
     { key: "fixtures", label: "List View", icon: "📅" },
     { key: "valuebets", label: "Value Bets", icon: "💎" },
     { key: "players", label: "Player Props", icon: "⚽" },
+    { key: "accuracy", label: "Accuracy", icon: "📊" },
   ];
 
   return (
@@ -276,6 +281,12 @@ export default function Home() {
 
         {activeTab === "fixtures" && (
           <>
+            <div className="mb-6">
+              <LeagueFilter
+                selectedLeague={selectedLeague}
+                onSelect={setSelectedLeague}
+              />
+            </div>
             {loading ? (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {[...Array(6)].map((_, i) => (
@@ -287,7 +298,11 @@ export default function Home() {
               </div>
             ) : (
               <FixtureList
-                fixtures={fixtures}
+                fixtures={
+                  selectedLeague
+                    ? fixtures.filter((f) => f.league_id === selectedLeague)
+                    : fixtures
+                }
                 title="Upcoming Fixtures"
                 onFixtureClick={handleFixtureClick}
               />
@@ -298,6 +313,8 @@ export default function Home() {
         {activeTab === "valuebets" && <ValueBetList limit={20} />}
 
         {activeTab === "players" && <PlayerPropsSection />}
+
+        {activeTab === "accuracy" && <ModelAccuracy />}
       </div>
 
       {/* Match Drawer */}

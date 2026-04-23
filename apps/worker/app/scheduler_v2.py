@@ -1,9 +1,8 @@
 """
 Automatic Background Jobs Scheduler - Production Version
-Uses direct service calls to existing working endpoints.
+Calls actual service functions directly on schedule.
 """
 
-import asyncio
 from typing import Optional
 
 import structlog
@@ -19,15 +18,19 @@ scheduler: Optional[AsyncIOScheduler] = None
 
 def job_load_fixtures_sync():
     """
-    Job: Cargar fixtures manualmente via manual trigger endpoint.
-    Frecuencia: Cada 12 horas (6 AM, 6 PM UTC)
-
-    Nota: Este job solo registra el evento. Las fixtures se cargan vía API manual.
+    Job: Load upcoming fixtures from API-Football for next 7 days.
+    Frequency: Every 12 hours (6 AM, 6 PM UTC)
     """
     try:
+        logger.info("job_load_fixtures_started")
+        # Import here to avoid circular import at module level
+        from app.routes.jobs import sync_fixtures
+
+        result = sync_fixtures()
         logger.info(
-            "job_load_fixtures_triggered",
-            message="Use POST /jobs/trigger-load-fixtures para cargar fixtures manualmente",
+            "job_load_fixtures_complete",
+            fixtures_synced=result.get("fixtures_synced", 0),
+            leagues_processed=result.get("leagues_processed", 0),
         )
     except Exception as e:
         logger.error("job_load_fixtures_error", error=str(e))
@@ -35,23 +38,45 @@ def job_load_fixtures_sync():
 
 def job_generate_predictions_sync():
     """
-    Job: Trigger para generar predicciones via endpoint manual.
-    Frecuencia: Cada 6 horas
-
-    Nota: Este job solo registra el evento. Las predicciones se generan vía API manual.
+    Job: Generate ML predictions for all upcoming NS fixtures.
+    Frequency: Every 6 hours
     """
     try:
+        logger.info("job_generate_predictions_started")
+        from app.routes.jobs import run_predictions
+
+        result = run_predictions()
         logger.info(
-            "job_generate_predictions_triggered",
-            message="Use POST /jobs/trigger-generate-predictions para generar predicciones manualmente",
+            "job_generate_predictions_complete",
+            predictions_generated=result.get("predictions_generated", 0),
+            fixtures_processed=result.get("fixtures_processed", 0),
         )
     except Exception as e:
         logger.error("job_generate_predictions_error", error=str(e))
 
 
+def job_sync_results_sync():
+    """
+    Job: Update results for recently finished fixtures.
+    Frequency: Every 3 hours
+    """
+    try:
+        logger.info("job_sync_results_started")
+        from app.routes.jobs import sync_results
+
+        result = sync_results()
+        logger.info(
+            "job_sync_results_complete",
+            updated=result.get("fixtures_updated", 0),
+            checked=result.get("candidates_checked", 0),
+        )
+    except Exception as e:
+        logger.error("job_sync_results_error", error=str(e))
+
+
 def start_scheduler():
     """
-    Inicia el scheduler con los jobs configurados.
+    Start the scheduler with production jobs.
     """
     global scheduler
 
@@ -63,22 +88,37 @@ def start_scheduler():
 
     scheduler = AsyncIOScheduler(timezone="UTC")
 
-    # Job 1: Recordatorio para cargar fixtures cada 12 horas (6 AM, 6 PM UTC)
+    # Job 1: Load fixtures every 12 hours (6 AM, 6 PM UTC)
     scheduler.add_job(
         job_load_fixtures_sync,
         trigger=CronTrigger(hour="6,18", minute="0"),
-        id="load_fixtures_reminder",
-        name="Load Fixtures Reminder",
+        id="load_fixtures",
+        name="Load Fixtures",
         replace_existing=True,
+        max_instances=1,
+        coalesce=True,
     )
 
-    # Job 2: Recordatorio para generar predicciones cada 6 horas
+    # Job 2: Generate predictions every 6 hours
     scheduler.add_job(
         job_generate_predictions_sync,
         trigger=IntervalTrigger(hours=6),
-        id="generate_predictions_reminder",
-        name="Generate Predictions Reminder",
+        id="generate_predictions",
+        name="Generate Predictions",
         replace_existing=True,
+        max_instances=1,
+        coalesce=True,
+    )
+
+    # Job 3: Sync results every 3 hours
+    scheduler.add_job(
+        job_sync_results_sync,
+        trigger=IntervalTrigger(hours=3),
+        id="sync_results",
+        name="Sync Results",
+        replace_existing=True,
+        max_instances=1,
+        coalesce=True,
     )
 
     scheduler.start()
