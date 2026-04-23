@@ -2234,6 +2234,7 @@ def sync_referee_statistics(
         api = RefereeStatsAPI(settings.APIFOOTBALL_API_KEY)
         synced = 0
         failed = 0
+        fallback_used = 0
 
         import asyncio
 
