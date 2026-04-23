@@ -260,6 +260,59 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 - [ ] Calibracion de probas (Platt/Isotonic) y mapping a grades A/B/C/D
 - [ ] Backtest por mercado con Brier, log loss, calibration, ROI y EV
 
+#### T01 — Alcance v1 + KPIs (listo para ejecutar)
+
+KPIs comunes (por mercado, global y por liga):
+
+- Coverage fixtures NS: >= 60% (player props: >= 25%)
+- Samples minimos: >= 300 picks por mercado antes de evaluar accuracy
+- Calibration: ECE <= 0.05, Brier <= 0.23 en binarios
+- Log loss: <= 0.69 (baseline coin-flip)
+- EV promedio >= 0 y edge promedio >= 2% cuando haya odds reales
+
+Alcance v1 por mercado (pre-match, fixtures NS, ventana 14 dias):
+
+- Corners: total O/U y team corners (home/away)
+- Cards + fouls: total cards O/U, team cards, fouls totales
+- BTTS: yes/no
+- 1st half totals: O/U 0.5 y 1.5 (segun cobertura de odds)
+- Offsides: total O/U, team offsides
+- Tackles: total O/U, team tackles (si hay data)
+- Player score/assist: anytime scorer, assist, shots on target 1+
+
+#### T02 — Inventario data + gaps (data map)
+
+Fuentes principales (API-Football):
+
+- /fixtures (kickoff, status, referee, score FT)
+- /fixtures/statistics (corners, shots, cards, fouls, offsides)
+- /fixtures/players (stats por jugador por fixture: shots, tackles, cards)
+- /teams/statistics (stats de temporada por equipo)
+- /players (stats de temporada por jugador)
+- /odds (markets y cuotas reales)
+
+Tablas actuales en DB:
+
+- fixtures, odds_snapshots, model_predictions, quality_scores
+- team_statistics, player_statistics, corner_statistics
+
+Gaps detectados (bloquean mercados):
+
+- HT goals: no se guardan en fixtures (necesario para 1st half totals)
+- Referee stats: falta tabla/job para bias de tarjetas y fouls por arbitro
+- Player minutes/lineups por fixture: falta dataset para proyectar minutos
+- Odds coverage: faltan market_keys para corners/cards/fouls/offsides/HT
+
+Mapa por mercado (data -> tabla -> gap):
+
+- Corners: fixtures/statistics + corner_statistics + odds_snapshots -> falta job de corner_statistics
+- Cards + fouls: fixtures/statistics + referee + odds_snapshots -> falta referee_stats
+- BTTS: fixtures FT + model_predictions + odds_snapshots -> ok (solo coverage odds)
+- 1st half totals: fixtures HT + odds_snapshots -> falta HT goals storage
+- Offsides: fixtures/statistics + team_statistics -> falta agregados por equipo
+- Tackles: fixtures/players + player_statistics -> falta agregados por equipo
+- Player score/assist: player_statistics + fixtures/players -> falta minutos proyectados
+
 ### P1 — Backend y pipeline
 
 - [ ] Extender generate_predictions para nuevos mercados en `multi_market_predictor.py`

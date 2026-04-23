@@ -453,6 +453,8 @@ def get_cache_stats() -> Dict[str, Any]:
 
 def _normalize_market_key(api_market_name: str) -> str:
     """Normalize API-Football market names to our standard keys"""
+    name = api_market_name.strip()
+    lower = name.lower()
     market_map = {
         "Match Winner": "match_winner",
         "Home/Away": "match_winner",
@@ -462,7 +464,25 @@ def _normalize_market_key(api_market_name: str) -> str:
         "Asian Handicap": "asian_handicap",
     }
 
-    return market_map.get(api_market_name, api_market_name.lower().replace(" ", "_"))
+    if name in market_map:
+        return market_map[name]
+
+    if "corner" in lower and "over/under" in lower:
+        return "corners_over_under"
+    if "card" in lower and "over/under" in lower:
+        return "cards_over_under"
+    if "foul" in lower and "over/under" in lower:
+        return "fouls_over_under"
+    if "offsides" in lower and "over/under" in lower:
+        return "offsides_over_under"
+    if "tackles" in lower and "over/under" in lower:
+        return "tackles_over_under"
+    if ("1st half" in lower or "first half" in lower) and "goal" in lower:
+        return "first_half_goals_over_under"
+    if ("1st half" in lower or "first half" in lower) and "corner" in lower:
+        return "first_half_corners_over_under"
+
+    return lower.replace(" ", "_")
 
 
 # Global singleton instance with caching
