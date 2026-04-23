@@ -666,16 +666,8 @@ async def get_player_props(
                     .limit(1)
                     .execute()
                 )
-                home_xg = (
-                    home_stats.data[0].get("goals_scored_avg")
-                    if home_stats.data
-                    else None
-                )
-                away_xg = (
-                    away_stats.data[0].get("goals_scored_avg")
-                    if away_stats.data
-                    else None
-                )
+                home_xg = home_stats.data[0].get("goals_scored_avg") if home_stats.data else None
+                away_xg = away_stats.data[0].get("goals_scored_avg") if away_stats.data else None
             except Exception as e:
                 logger.warning("player_props_stats_failed", error=str(e))
 

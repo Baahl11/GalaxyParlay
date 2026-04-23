@@ -328,6 +328,8 @@ Mapa por mercado (data -> tabla -> gap):
 - [ ] UI de player props con desglose de probas y minutos
 - [ ] Mostrar cobertura de mercados por fixture
 - [ ] Mejorar list view para 60/120 picks con paginacion o virtual list
+- [ ] Fix picks count en Modo Calidad/Volumen: respetar 12/30/60/120 y mostrar todos los picks/analisis disponibles
+- [ ] Alinear contador "grado A" con lo visible: mostrar lista de grado A (hoy) o aclarar que es global
 
 ### P2 — Calidad, observabilidad, compliance
 
