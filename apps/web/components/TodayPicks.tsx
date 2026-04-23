@@ -108,9 +108,7 @@ export function TodayPicks({
     return (
       <div className="rounded-xl bg-gray-800/30 border border-gray-700/30 p-8 text-center">
         <div className="text-4xl mb-3">🔭</div>
-        <p className="text-gray-400 text-sm">
-          No hay picks disponibles hoy.
-        </p>
+        <p className="text-gray-400 text-sm">No hay picks disponibles hoy.</p>
         <p className="text-gray-600 text-xs mt-1">
           Las predicciones se actualizan cada 6 horas.
         </p>

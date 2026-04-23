@@ -105,6 +105,17 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 - [x] Benchmark de accuracy esperado por mercado
 - [x] Matriz de correlación entre mercados
 
+#### Expansion de mercados (investigacion academica)
+
+- Mercados objetivo: corners, cards, fouls, 1st half totals, BTTS, tackles, player score/assist, offsides
+- Corners: compound Poisson regression para conteos y clustering de corners; base para O/U y team corners. Fuente: https://arxiv.org/abs/2112.13001
+- Cards + fouls: referee bias y home advantage afectan fouls y tarjetas. Fuente: https://paperity.org/p/280768679/home-advantage-mediated-ham-by-referee-bias-and-team-performance-during-covid
+- BTTS / score correlation: bivariate Poisson permite dependencia entre goles y mejora draws. Fuente: https://www.readkong.com/page/analysis-of-sports-data-by-using-bivariate-poisson-models-4354801
+- 1st half markets: xG usa tiempo de tiro y contexto; partir por halves para HT totals. Fuente: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0282295
+- Player score/assist: xG supera estadisticas tradicionales y soporta features de jugador; base para player props. Fuente: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0282295
+- Tackles + offsides: modelar como count data (Poisson/NegBin, overdispersion). Fuente: https://www.cambridge.org/core/books/regression-analysis-of-count-data/2AB83B406C5798030F7C91ECC99B1BE4
+- Goals/1X2 baseline: Poisson regression para scores y market inefficiencies. Fuente: https://research-information.bris.ac.uk/en/publications/modelling-association-football-scores-and-inefficiencies-in-the-f/
+
 ### Fase 3 — Mejoras del modelo (7/7 implementadas)
 
 | Mejora                                    | Impacto esperado      | Estado |
@@ -231,7 +242,104 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 
 ---
 
-## 6. QUICK REFERENCE
+## 6. TODO MAESTRO (E2E)
+
+### P0 — Datos y modelos (mercados core)
+
+- [ ] Priorizar mercados y alcance v1: corners, cards, fouls, BTTS, 1st half totals, offsides, tackles, player score/assist
+- [ ] Inventario de fuentes y campos por mercado (API-Football endpoints, referee data, player stats)
+- [ ] Expandir fixtures LATAM y ligas faltantes (Liga MX, Brasileirao, Libertadores, Sudamericana)
+- [ ] Completar coverage de odds_snapshots para nuevos mercados
+- [ ] Features comunes: form, pace, home/away, referee bias, schedule congestion
+- [ ] Corners: compound Poisson / NegBin con clustering temporal
+- [ ] Cards + fouls: count regression + referee effects + rivalry intensity
+- [ ] BTTS: bivariate Poisson con correlacion y ajuste de draws
+- [ ] 1st half totals: split HT/FT, features de early tempo y xG por minutos
+- [ ] Offsides + tackles: count regression con overdispersion
+- [ ] Player score/assist: xG por jugador + minutos proyectados + role/position
+- [ ] Calibracion de probas (Platt/Isotonic) y mapping a grades A/B/C/D
+- [ ] Backtest por mercado con Brier, log loss, calibration, ROI y EV
+
+### P1 — Backend y pipeline
+
+- [ ] Extender generate_predictions para nuevos mercados en `multi_market_predictor.py`
+- [ ] Endpoint `/player-props/{fixture_id}` con datos reales
+- [ ] Endpoint `/market-confidence` por mercado y liga
+- [ ] Job de sync de player stats y referee stats
+- [ ] Tabla/registro de versiones de modelo y features usados
+- [ ] Cache y rate limits por endpoint
+
+### P1 — Frontend
+
+- [ ] UI de filtros por mercado y halves
+- [ ] UI de player props con desglose de probas y minutos
+- [ ] Mostrar cobertura de mercados por fixture
+- [ ] Mejorar list view para 60/120 picks con paginacion o virtual list
+
+### P2 — Calidad, observabilidad, compliance
+
+- [ ] Quality gate por mercado (min samples, odds coverage, drift)
+- [ ] Alertas para jobs fallidos y drops de data
+- [ ] Tests unitarios y smoke tests E2E
+- [ ] Git history cleanup por tokens antiguos
+
+### P2 — Documentacion y release
+
+- [ ] Actualizar FASE_5_IMPLEMENTATION_SUMMARY y FASE_5_QUICK_REFERENCE
+- [ ] Anadir runbook de jobs y recovery
+- [ ] Checklist de deploy + rollback
+
+### Plan operativo (listo para ejecutar)
+
+Orden v1 de mercados (prioridad):
+
+1. Corners
+2. Cards + fouls
+3. BTTS
+4. 1st half totals
+5. Offsides
+6. Tackles
+7. Player score
+8. Player assist
+
+Estimacion: S = 1-2 dias, M = 3-5 dias, L = 1-2 semanas
+
+Definition of done (DoD) por ticket:
+
+- Modelo entrenado + calibrado
+- Backtest con Brier/log loss + ROI/EV
+- Endpoint y UI conectados
+- Documentacion minima actualizada
+
+| ID  | Ticket                          | Entregable                         | Est | Dep         |
+| --- | ------------------------------- | ---------------------------------- | --- | ----------- |
+| T01 | Alcance v1 + KPIs               | Spec v1 + KPIs por mercado         | S   | -           |
+| T02 | Inventario data + gaps          | Data map + faltantes               | S   | T01         |
+| T03 | Expandir fixtures LATAM         | Ligas LATAM activas + UI filtro    | M   | T02         |
+| T04 | Coverage odds_snapshots         | Odds para nuevos markets           | M   | T02         |
+| T05 | Feature set comun               | Features base + pipeline           | M   | T02         |
+| T06 | Job sync referee + player stats | Jobs + tablas actualizadas         | M   | T02         |
+| T07 | Modelo corners                  | Prob corners + O/U + team corners  | M   | T05,T04     |
+| T08 | Modelo cards + fouls            | Prob cards/fouls + referee effects | M   | T05,T06,T04 |
+| T09 | Modelo BTTS                     | Bivariate Poisson calibrado        | M   | T05         |
+| T10 | Modelo 1st half totals          | HT O/U + split tempo               | M   | T05         |
+| T11 | Modelo offsides                 | Count regression + overdispersion  | M   | T05         |
+| T12 | Modelo tackles                  | Count regression + overdispersion  | M   | T05         |
+| T13 | Player score/assist             | xG jugador + minutos proyectados   | L   | T06,T05     |
+| T14 | Calibracion + grades            | Platt/Isotonic + mapping A/B/C/D   | S   | T07-T13     |
+| T15 | Backtest por mercado            | Reportes por mercado               | M   | T07-T14     |
+| T16 | Endpoints markets               | /market-confidence + /player-props | M   | T07-T15     |
+| T17 | UI filtros markets/halves       | Filtros + coverage por fixture     | M   | T16         |
+| T18 | UI player props                 | Player props list + detalle        | M   | T16         |
+| T19 | Paginacion/virtual list         | List view escalable                | S   | T17         |
+| T20 | Quality gate + alertas          | Reglas + alerting jobs             | M   | T15         |
+| T21 | Docs + runbook                  | Runbook jobs + recovery            | S   | T20         |
+| T22 | Release checklist               | Checklist deploy/rollback          | S   | T21         |
+| T23 | Git history cleanup             | Historia limpia de secretos        | M   | -           |
+
+---
+
+## 7. QUICK REFERENCE
 
 ### URLs de producción
 

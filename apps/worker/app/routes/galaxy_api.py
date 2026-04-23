@@ -410,6 +410,7 @@ async def get_team_stats(team_id: int):
 from app.ml.ai_analysis import generate_daily_summary, generate_match_analysis
 from app.ml.dixon_coles import dixon_coles_model
 from app.ml.kelly import kelly_calculator
+from app.ml.multi_market_predictor import multi_market_predictor
 
 
 @router.get("/match-analysis/{fixture_id}")
@@ -608,6 +609,109 @@ async def get_match_analysis(
         raise
     except Exception as e:
         logger.error("match_analysis_error", fixture_id=fixture_id, error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/player-props/{fixture_id}")
+async def get_player_props(
+    fixture_id: int,
+    limit: int = Query(6, ge=1, le=15, description="Max players per team"),
+):
+    """
+    Get fixture-specific player props using player_statistics + xG.
+
+    Returns top players per team with anytime scorer and shots-on-target props.
+    """
+    try:
+        fixture = db_service.get_fixture_by_id(fixture_id)
+        if not fixture:
+            raise HTTPException(status_code=404, detail="Fixture not found")
+
+        home_team_id = fixture["home_team_id"]
+        away_team_id = fixture["away_team_id"]
+        league_id = fixture.get("league_id")
+
+        home_xg = None
+        away_xg = None
+
+        if dixon_coles_model.is_fitted:
+            try:
+                dc_pred = dixon_coles_model.predict_match(
+                    home_team_id=home_team_id,
+                    away_team_id=away_team_id,
+                    league_id=league_id,
+                )
+                home_xg = dc_pred["expected_goals"]["home"]
+                away_xg = dc_pred["expected_goals"]["away"]
+            except Exception as e:
+                logger.warning("player_props_dc_failed", error=str(e))
+
+        if home_xg is None or away_xg is None:
+            try:
+                home_stats = (
+                    db_service.client.table("team_statistics")
+                    .select("goals_scored_avg")
+                    .eq("team_id", home_team_id)
+                    .eq("league_id", league_id)
+                    .order("updated_at", desc=True)
+                    .limit(1)
+                    .execute()
+                )
+                away_stats = (
+                    db_service.client.table("team_statistics")
+                    .select("goals_scored_avg")
+                    .eq("team_id", away_team_id)
+                    .eq("league_id", league_id)
+                    .order("updated_at", desc=True)
+                    .limit(1)
+                    .execute()
+                )
+                home_xg = (
+                    home_stats.data[0].get("goals_scored_avg")
+                    if home_stats.data
+                    else None
+                )
+                away_xg = (
+                    away_stats.data[0].get("goals_scored_avg")
+                    if away_stats.data
+                    else None
+                )
+            except Exception as e:
+                logger.warning("player_props_stats_failed", error=str(e))
+
+        home_xg = float(home_xg) if home_xg is not None else 1.35
+        away_xg = float(away_xg) if away_xg is not None else 1.35
+
+        props = multi_market_predictor._safe_predict_player_props(
+            home_team_id=home_team_id,
+            away_team_id=away_team_id,
+            home_xg=home_xg,
+            away_xg=away_xg,
+        )
+
+        home_players = props.get("home_players", [])[:limit]
+        away_players = props.get("away_players", [])[:limit]
+
+        return {
+            "fixture_id": fixture_id,
+            "home_team": fixture.get("home_team_name"),
+            "away_team": fixture.get("away_team_name"),
+            "league_id": league_id,
+            "home_xg": home_xg,
+            "away_xg": away_xg,
+            "home_players": home_players,
+            "away_players": away_players,
+            "summary": {
+                "home_top_scorer": home_players[0] if home_players else None,
+                "away_top_scorer": away_players[0] if away_players else None,
+                "total_players": len(home_players) + len(away_players),
+            },
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("player_props_error", fixture_id=fixture_id, error=str(e))
         raise HTTPException(status_code=500, detail=str(e))
 
 

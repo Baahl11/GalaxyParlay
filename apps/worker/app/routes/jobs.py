@@ -2130,7 +2130,7 @@ def sync_player_statistics(
                 cards_data = stats.get("cards", {})
 
                 minutes = games.get("minutes") or 0
-                games_played = games.get("appearences") or 0
+                games_played = games.get("appearences") or games.get("appearances") or 0
 
                 goals = goals_data.get("total") or 0
                 assists = goals_data.get("assists") or 0
@@ -2245,7 +2245,7 @@ def sync_all_player_statistics(
                         cards_data = stats.get("cards", {})
 
                         minutes = games.get("minutes") or 0
-                        games_played = games.get("appearences") or 0
+                        games_played = games.get("appearences") or games.get("appearances") or 0
 
                         goals = goals_data.get("total") or 0
                         assists = goals_data.get("assists") or 0

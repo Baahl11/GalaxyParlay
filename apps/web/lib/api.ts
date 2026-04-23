@@ -5,6 +5,7 @@ import type {
   Fixture,
   League,
   MultiMarketPrediction,
+  PlayerStats,
   QualityScore,
   StatsResponse,
   TopPlayersResponse,
@@ -485,12 +486,29 @@ export async function getTopScorers(_params?: {
   limit?: number;
   min_goals?: number;
 }): Promise<TopPlayersResponse> {
+  const limit = _params?.limit ?? 20;
+  const minGoals = _params?.min_goals ?? 3;
+
+  const { data, error } = await supabase
+    .from("player_statistics")
+    .select(
+      "player_id, player_name, team_id, goals, assists, total_shots, shots_on_target, goals_per_90, shots_per_90, shots_on_target_per_90, games_played, minutes_played, yellow_cards, red_cards, stats_data",
+    )
+    .gte("goals", minGoals)
+    .order("goals", { ascending: false })
+    .limit(limit);
+
+  if (error) throw new Error(`Failed to fetch top scorers: ${error.message}`);
+
+  const players = (data ?? []).map((row) => normalizePlayerStats(row));
+  const totalTeams = new Set(players.map((player) => player.team_id)).size;
+
   return {
     status: "success",
-    count: 0,
-    total_players: 0,
-    total_teams: 0,
-    players: [],
+    count: players.length,
+    total_players: players.length,
+    total_teams: totalTeams,
+    players,
   };
 }
 
@@ -501,12 +519,52 @@ export async function getTopShooters(_params?: {
   limit?: number;
   min_shots?: number;
 }): Promise<TopPlayersResponse> {
+  const limit = _params?.limit ?? 20;
+  const minShots = _params?.min_shots ?? 20;
+
+  const { data, error } = await supabase
+    .from("player_statistics")
+    .select(
+      "player_id, player_name, team_id, goals, assists, total_shots, shots_on_target, goals_per_90, shots_per_90, shots_on_target_per_90, games_played, minutes_played, yellow_cards, red_cards, stats_data",
+    )
+    .gte("total_shots", minShots)
+    .order("shots_on_target", { ascending: false })
+    .limit(limit);
+
+  if (error) throw new Error(`Failed to fetch top shooters: ${error.message}`);
+
+  const players = (data ?? []).map((row) => normalizePlayerStats(row));
+  const totalTeams = new Set(players.map((player) => player.team_id)).size;
+
   return {
     status: "success",
-    count: 0,
-    total_players: 0,
-    total_teams: 0,
-    players: [],
+    count: players.length,
+    total_players: players.length,
+    total_teams: totalTeams,
+    players,
+  };
+}
+
+function normalizePlayerStats(row: any): PlayerStats {
+  const teamName = row?.stats_data?.statistics?.[0]?.team?.name;
+
+  return {
+    player_id: row?.player_id ?? 0,
+    player_name: row?.player_name ?? "",
+    team_id: row?.team_id ?? 0,
+    team_name: teamName ?? "",
+    goals: row?.goals ?? 0,
+    assists: row?.assists ?? 0,
+    total_shots: row?.total_shots ?? 0,
+    shots_on_target: row?.shots_on_target ?? 0,
+    goals_per_90: row?.goals_per_90 ?? 0,
+    shots_per_90: row?.shots_per_90 ?? undefined,
+    shots_on_target_per_90: row?.shots_on_target_per_90 ?? undefined,
+    appearances: row?.games_played ?? 0,
+    games_played: row?.games_played ?? 0,
+    minutes_played: row?.minutes_played ?? 0,
+    yellow_cards: row?.yellow_cards ?? 0,
+    red_cards: row?.red_cards ?? 0,
   };
 }
 
@@ -543,7 +601,7 @@ export async function getValueBets(params?: {
     )
     .eq("quality_grade", "A")
     .gte("confidence_score", 0.55)
-    .in("market_key", ["match_winner", "over_under_2_5"])
+    .in("market_key", ["match_winner", "over_under_2_5", "both_teams_score"])
     .order("confidence_score", { ascending: false })
     .limit(200);
 
@@ -566,7 +624,7 @@ export async function getValueBets(params?: {
     .from("odds_snapshots")
     .select("fixture_id, market_key, odds_data, bookmaker")
     .in("fixture_id", fixtureIds)
-    .in("market_key", ["match_winner", "over_under_2.5"]);
+    .in("market_key", ["match_winner", "over_under_2.5", "both_teams_score"]);
 
   // Build index: fixture_id -> oddsMarketKey -> { odds_data, bookmaker }
   const oddsIndex: Record<
@@ -638,6 +696,19 @@ export async function getValueBets(params?: {
       bookmakerOdds = isOver
         ? (oddsData["over 2.5"] ?? 0)
         : (oddsData["under 2.5"] ?? 0);
+    } else if (marketKey === "both_teams_score") {
+      const yesP = pred.yes ?? 0;
+      const noP = pred.no ?? 0;
+      const best = Math.max(yesP, noP);
+      if (best === yesP) {
+        selection = "BTTS Yes";
+        modelProb = yesP;
+        bookmakerOdds = oddsData["yes"] ?? 0;
+      } else {
+        selection = "BTTS No";
+        modelProb = noP;
+        bookmakerOdds = oddsData["no"] ?? 0;
+      }
     }
 
     if (!bookmakerOdds || bookmakerOdds < 1.1 || modelProb <= 0) continue;
@@ -717,11 +788,11 @@ export async function getModelPicks(params?: {
     .from("model_predictions")
     .select(
       `market_key, prediction, confidence_score, quality_grade, fixture_id,
-       fixtures!inner(home_team_name, away_team_name, kickoff_time, league_id, status)`
+       fixtures!inner(home_team_name, away_team_name, kickoff_time, league_id, status)`,
     )
     .in("quality_grade", grades)
     .gte("confidence_score", minConfidence)
-    .in("market_key", ["match_winner", "over_under_2_5"])
+    .in("market_key", ["match_winner", "over_under_2_5", "both_teams_score"])
     .order("confidence_score", { ascending: false })
     .limit(300);
 
@@ -733,11 +804,14 @@ export async function getModelPicks(params?: {
   });
   if (activePreds.length === 0) return [];
 
-  const byKey: Record<string, typeof activePreds[number]> = {};
+  const byKey: Record<string, (typeof activePreds)[number]> = {};
   for (const row of activePreds) {
     const key = `${row.fixture_id}-${row.market_key}`;
     const existing = byKey[key];
-    if (!existing || (row.confidence_score as number) > (existing.confidence_score as number)) {
+    if (
+      !existing ||
+      (row.confidence_score as number) > (existing.confidence_score as number)
+    ) {
       byKey[key] = row;
     }
   }
@@ -776,6 +850,17 @@ export async function getModelPicks(params?: {
       const isOver = (pred.over ?? 0) >= (pred.under ?? 0);
       selection = isOver ? "Over 2.5" : "Under 2.5";
       modelProb = isOver ? (pred.over ?? 0) : (pred.under ?? 0);
+    } else if (marketKey === "both_teams_score") {
+      const yesP = pred.yes ?? 0;
+      const noP = pred.no ?? 0;
+      const best = Math.max(yesP, noP);
+      if (best === yesP) {
+        selection = "BTTS Yes";
+        modelProb = yesP;
+      } else {
+        selection = "BTTS No";
+        modelProb = noP;
+      }
     }
 
     if (modelProb <= 0) continue;

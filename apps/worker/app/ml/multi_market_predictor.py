@@ -1335,7 +1335,15 @@ class MultiMarketPredictor:
         try:
             return self._predict_player_props(home_team_id, away_team_id, home_xg, away_xg)
         except Exception:
-            return {"home": [], "away": []}
+            return {
+                "home_players": [],
+                "away_players": [],
+                "summary": {
+                    "home_top_scorer": None,
+                    "away_top_scorer": None,
+                    "total_players": 0,
+                },
+            }
 
     def _predict_player_props(
         self, home_team_id: int, away_team_id: int, home_xg: float, away_xg: float

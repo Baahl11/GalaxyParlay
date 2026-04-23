@@ -1,9 +1,9 @@
 "use client";
 
 // Marc Loyera Picks — Neon Board
+import type { ValueBet } from "@/lib/api";
 import { getModelPicks, getStats, getValueBets } from "@/lib/api";
 import type { StatsResponse } from "@/lib/types";
-import type { ValueBet } from "@/lib/api";
 import { useEffect, useMemo, useState } from "react";
 
 const MARKET_LABELS: Record<string, string> = {
@@ -38,9 +38,9 @@ function scorePick(bet: ValueBet): number {
 export default function Home() {
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [picks, setPicks] = useState<ValueBet[]>([]);
-  const [picksSource, setPicksSource] = useState<
-    "value" | "model" | "mixed"
-  >("value");
+  const [picksSource, setPicksSource] = useState<"value" | "model" | "mixed">(
+    "value",
+  );
   const [viewMode, setViewMode] = useState<"quality" | "volume">("volume");
   const [showCount, setShowCount] = useState<number>(30);
   const [loading, setLoading] = useState(true);
@@ -68,7 +68,8 @@ export default function Home() {
         setStats(statsData);
         const valueBets = valueData.bets;
         let modelPicks: ValueBet[] = [];
-        const needsModel = valueBets.length < showCount || viewMode === "volume";
+        const needsModel =
+          valueBets.length < showCount || viewMode === "volume";
         if (needsModel) {
           modelPicks = await getModelPicks(modelParams);
         }
@@ -97,7 +98,7 @@ export default function Home() {
   const rankedPicks = useMemo(() => {
     return [...picks]
       .sort((a, b) => scorePick(b) - scorePick(a))
-        .slice(0, showCount);
+      .slice(0, showCount);
   }, [picks, showCount]);
 
   const todayLabel = new Date().toLocaleDateString("es-ES", {
@@ -174,11 +175,15 @@ export default function Home() {
 
           <div className="mt-4 flex flex-wrap gap-3 text-xs">
             <div className="flex items-center gap-2">
-              <span className="text-cyan-300 uppercase tracking-[0.2em]">Modo</span>
-              {([
-                { key: "quality", label: "Calidad" },
-                { key: "volume", label: "Volumen" },
-              ] as const).map((mode) => (
+              <span className="text-cyan-300 uppercase tracking-[0.2em]">
+                Modo
+              </span>
+              {(
+                [
+                  { key: "quality", label: "Calidad" },
+                  { key: "volume", label: "Volumen" },
+                ] as const
+              ).map((mode) => (
                 <button
                   key={mode.key}
                   onClick={() => setViewMode(mode.key)}
@@ -228,8 +233,8 @@ export default function Home() {
 
           {!loading && !error && rankedPicks.length === 0 && (
             <div className="mt-6 rounded-2xl neon-row p-6 text-center text-sm text-gray-300">
-              No hay picks disponibles hoy. Las predicciones se actualizan cada 6
-              horas.
+              No hay picks disponibles hoy. Las predicciones se actualizan cada
+              6 horas.
             </div>
           )}
 
@@ -258,7 +263,8 @@ export default function Home() {
 
                       <div>
                         <p className="font-semibold text-white">
-                          {bet.home_team} <span className="text-gray-500">vs</span>{" "}
+                          {bet.home_team}{" "}
+                          <span className="text-gray-500">vs</span>{" "}
                           {bet.away_team}
                         </p>
                         <p className="text-xs text-gray-400">
@@ -291,11 +297,11 @@ export default function Home() {
                       </div>
 
                       <div className="flex items-center gap-3">
-                        <div className="neon-ring">
-                          {probability}%
-                        </div>
+                        <div className="neon-ring">{probability}%</div>
                         <div className="text-xs text-gray-400">
-                          {bet.odds_source === "model" ? "Cuota modelo" : "Odds reales"}
+                          {bet.odds_source === "model"
+                            ? "Cuota modelo"
+                            : "Odds reales"}
                         </div>
                       </div>
                     </div>
