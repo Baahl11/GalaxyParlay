@@ -11,6 +11,7 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 
 from app.ml import MatchPredictor, QualityScorer
+from app.config import settings
 from app.ml.dixon_coles import DixonColesModel, dixon_coles_model
 from app.ml.elo import DEFAULT_RATINGS, TOP_TEAM_BONUSES, EloRatingSystem
 from app.services.apifootball import (
@@ -18,6 +19,7 @@ from app.services.apifootball import (
     transform_fixture_to_db,
     transform_odds_to_db,
 )
+from app.services.referee_scraper import RefereeStatsAPI
 from app.services.database import db_service
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
@@ -2186,6 +2188,104 @@ def sync_player_statistics(
 
     except Exception as e:
         logger.error("sync_player_stats_error", error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/sync-referee-stats")
+def sync_referee_statistics(
+    limit: int = Query(50, description="Max referees to sync"),
+    season: int = Query(2025, description="Season"),
+):
+    """
+    Sync referee statistics for referees in upcoming fixtures.
+
+    Uses API-Football /referees endpoint and stores results in referee_statistics.
+    """
+    try:
+        if not settings.APIFOOTBALL_API_KEY:
+            return {
+                "status": "warning",
+                "message": "APIFOOTBALL_API_KEY not configured",
+                "referees_synced": 0,
+            }
+
+        fixtures = (
+            db_service.client.table("fixtures")
+            .select("referee, league_id")
+            .eq("status", "NS")
+            .execute()
+        )
+
+        referee_map = {}
+        for row in fixtures.data or []:
+            name = row.get("referee")
+            league_id = row.get("league_id")
+            if name and league_id and name not in referee_map:
+                referee_map[name] = league_id
+
+        if not referee_map:
+            return {
+                "status": "warning",
+                "message": "No referees found in upcoming fixtures",
+                "referees_synced": 0,
+            }
+
+        api = RefereeStatsAPI(settings.APIFOOTBALL_API_KEY)
+        synced = 0
+        failed = 0
+
+        import asyncio
+
+        for referee_name, league_id in list(referee_map.items())[:limit]:
+            try:
+                stats = asyncio.run(
+                    api.get_referee_stats(
+                        referee_name=referee_name, league_id=league_id, season=season
+                    )
+                )
+                if not stats:
+                    failed += 1
+                    continue
+
+                payload = {
+                    "referee_id": stats.get("referee_id"),
+                    "referee_name": stats.get("name") or referee_name,
+                    "league_id": league_id,
+                    "season": season,
+                    "total_games": stats.get("total_games"),
+                    "avg_yellow_cards": stats.get("avg_yellow_cards"),
+                    "avg_red_cards": stats.get("avg_red_cards"),
+                    "strictness_score": stats.get("strictness_score"),
+                    "consistency_score": stats.get("consistency_score"),
+                    "home_bias": stats.get("home_bias"),
+                    "stats_data": stats,
+                    "updated_at": datetime.utcnow().isoformat(),
+                }
+
+                db_service.client.table("referee_statistics").upsert(
+                    payload, on_conflict="referee_name,league_id,season"
+                ).execute()
+
+                synced += 1
+            except Exception as e:
+                failed += 1
+                logger.warning(
+                    "referee_sync_failed",
+                    referee=referee_name,
+                    league_id=league_id,
+                    error=str(e),
+                )
+
+        return {
+            "status": "success",
+            "referees_synced": synced,
+            "referees_failed": failed,
+            "total_referees": len(referee_map),
+            "season": season,
+        }
+
+    except Exception as e:
+        logger.error("sync_referee_stats_error", error=str(e))
         raise HTTPException(status_code=500, detail=str(e))
 
 

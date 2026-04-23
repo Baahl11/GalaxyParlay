@@ -287,16 +287,42 @@ class MatchPredictor:
             referee_data = None
             if referee_name:
                 try:
-                    from ..services.referee_scraper import get_referee_database
+                    if DB_AVAILABLE:
+                        result = (
+                            db_service.client.table("referee_statistics")
+                            .select(
+                                "referee_name, total_games, avg_yellow_cards, avg_red_cards, strictness_score, consistency_score, home_bias"
+                            )
+                            .eq("referee_name", referee_name)
+                            .order("updated_at", desc=True)
+                            .limit(1)
+                            .execute()
+                        )
+                        if result.data:
+                            row = result.data[0]
+                            referee_data = {
+                                "name": row.get("referee_name") or referee_name,
+                                "total_games": row.get("total_games"),
+                                "avg_yellow_cards": row.get("avg_yellow_cards"),
+                                "avg_red_cards": row.get("avg_red_cards"),
+                                "strictness_score": row.get("strictness_score"),
+                                "consistency_score": row.get("consistency_score"),
+                                "home_bias": row.get("home_bias"),
+                            }
 
-                    referee_db = get_referee_database()
+                    if not referee_data:
+                        from ..services.referee_scraper import get_referee_database
 
-                    # Try to get referee profile (will use cache if available)
-                    import asyncio
+                        referee_db = get_referee_database()
 
-                    referee_data = asyncio.run(
-                        referee_db.get_referee(referee_name=referee_name, league_id=league_id)
-                    )
+                        # Try to get referee profile (will use cache if available)
+                        import asyncio
+
+                        referee_data = asyncio.run(
+                            referee_db.get_referee(
+                                referee_name=referee_name, league_id=league_id
+                            )
+                        )
 
                     if referee_data:
                         logger.info(
