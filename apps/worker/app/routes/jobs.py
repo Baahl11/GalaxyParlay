@@ -2024,6 +2024,7 @@ def sync_league_team_statistics(
 
         synced = 0
         failed = 0
+        fallback_used = 0
 
         for team_id in list(team_ids)[:30]:  # Limit to 30 teams per call
             try:
@@ -2244,8 +2245,24 @@ def sync_referee_statistics(
                     )
                 )
                 if not stats:
-                    failed += 1
-                    continue
+                    stats = asyncio.run(
+                        api.get_referee_stats(
+                            referee_name=referee_name, league_id=None, season=season
+                        )
+                    )
+
+                if not stats:
+                    stats = {
+                        "name": referee_name,
+                        "total_games": 0,
+                        "avg_yellow_cards": 3.5,
+                        "avg_red_cards": 0.08,
+                        "strictness_score": 0.5,
+                        "consistency_score": 0.8,
+                        "home_bias": 1.0,
+                        "source": "default",
+                    }
+                    fallback_used += 1
 
                 payload = {
                     "referee_id": stats.get("referee_id"),
@@ -2280,6 +2297,7 @@ def sync_referee_statistics(
             "status": "success",
             "referees_synced": synced,
             "referees_failed": failed,
+            "referees_defaulted": fallback_used,
             "total_referees": len(referee_map),
             "season": season,
         }
