@@ -1,31 +1,35 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Orbitron, Rajdhani } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-orbitron',
+});
+
+const rajdhani = Rajdhani({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-rajdhani',
+});
 
 export const metadata: Metadata = {
-  title: 'ParlayGalaxy - Smart Football Betting Intelligence',
-  description: 'Data-driven football predictions with transparent quality scoring and interactive Galaxy visualization.',
-  keywords: ['football', 'betting', 'predictions', 'sports analytics', 'machine learning'],
-  authors: [{ name: 'ParlayGalaxy Team' }],
+  title: 'Marc Loyera Picks - Smart Betting Only',
+  description: 'Neon-style football picks ranking with model confidence and market insights.',
+  keywords: ['football', 'betting', 'picks', 'sports analytics', 'machine learning'],
+  authors: [{ name: 'Marc Loyera Picks' }],
   openGraph: {
-    title: 'ParlayGalaxy',
-    description: 'Smart Football Betting Intelligence Platform',
+    title: 'Marc Loyera Picks',
+    description: 'Smart Betting Only — Neon Picks Board',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ParlayGalaxy',
-    description: 'Smart Football Betting Intelligence Platform',
+    title: 'Marc Loyera Picks',
+    description: 'Smart Betting Only — Neon Picks Board',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
-  themeColor: '#1B2735',
 };
 
 export default function RootLayout({
@@ -35,7 +39,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={`${inter.className} bg-gray-950 text-white antialiased`}>
+      <body
+        className={`${orbitron.variable} ${rajdhani.variable} bg-[#05040b] text-white antialiased font-body`}
+      >
         <div className="relative min-h-screen">
           {children}
         </div>

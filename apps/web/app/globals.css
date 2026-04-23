@@ -4,6 +4,11 @@
 
 @layer base {
   :root {
+    --neon-pink: #ff4fd8;
+    --neon-blue: #30c7ff;
+    --neon-yellow: #ffd84d;
+    --neon-purple: #a855f7;
+    --neon-bg: #05040b;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -56,6 +61,61 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Neon theme helpers */
+.neon-bg {
+  background:
+    radial-gradient(1200px circle at 18% 18%, rgba(48, 199, 255, 0.12), transparent 45%),
+    radial-gradient(900px circle at 80% 12%, rgba(255, 79, 216, 0.16), transparent 45%),
+    radial-gradient(900px circle at 50% 80%, rgba(168, 85, 247, 0.16), transparent 45%),
+    linear-gradient(180deg, #05040b 0%, #070915 100%);
+  min-height: 100vh;
+}
+
+.neon-panel {
+  background: rgba(8, 10, 18, 0.8);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  box-shadow:
+    0 0 40px rgba(168, 85, 247, 0.2),
+    inset 0 0 25px rgba(48, 199, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.neon-title {
+  text-shadow:
+    0 0 18px rgba(255, 79, 216, 0.65),
+    0 0 32px rgba(48, 199, 255, 0.5);
+}
+
+.neon-outline {
+  border: 1px solid rgba(255, 79, 216, 0.5);
+  box-shadow: 0 0 18px rgba(255, 79, 216, 0.4);
+}
+
+.neon-chip {
+  border: 1px solid rgba(48, 199, 255, 0.4);
+  background: rgba(8, 12, 22, 0.7);
+  box-shadow: 0 0 14px rgba(48, 199, 255, 0.35);
+}
+
+.neon-ring {
+  width: 46px;
+  height: 46px;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 216, 77, 0.8);
+  color: #ffe58a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(255, 216, 77, 0.45);
+}
+
+.neon-row {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(6, 8, 14, 0.65);
+  box-shadow: inset 0 0 14px rgba(48, 199, 255, 0.08);
 }
 
 /* Custom scrollbar */
