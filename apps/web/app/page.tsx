@@ -76,7 +76,12 @@ export default function Home() {
             grades: ["A", "B", "C", "D"],
           };
     if (gradeFilter === "A") {
-      modelParams = { ...modelParams, min_confidence: 0, grades: ["A"] };
+      modelParams = {
+        ...modelParams,
+        min_confidence: 0,
+        grades: ["A"],
+        marketKeys: timeScope === "all" ? "ALL" : modelParams.marketKeys,
+      };
     }
     if (timeScope === "all") {
       modelParams = { ...modelParams, status: "ALL" };

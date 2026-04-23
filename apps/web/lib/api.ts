@@ -780,21 +780,32 @@ export async function getModelPicks(params?: {
   min_confidence?: number;
   grades?: Array<"A" | "B" | "C" | "D" | "F">;
   status?: "NS" | "ALL";
+  marketKeys?: string[] | "ALL";
 }): Promise<ValueBet[]> {
   const limit = params?.limit ?? 40;
   const minConfidence = params?.min_confidence ?? 0.5;
   const grades = params?.grades ?? ["A", "B", "C", "D"];
   const status = params?.status ?? "NS";
+  const marketKeys = params?.marketKeys ?? [
+    "match_winner",
+    "over_under_2_5",
+    "both_teams_score",
+  ];
 
-  const { data: preds, error: predError } = await supabase
+  let query = supabase
     .from("model_predictions")
     .select(
       `market_key, prediction, confidence_score, quality_grade, fixture_id,
        fixtures!inner(home_team_name, away_team_name, kickoff_time, league_id, status)`,
     )
     .in("quality_grade", grades)
-    .gte("confidence_score", minConfidence)
-    .in("market_key", ["match_winner", "over_under_2_5", "both_teams_score"])
+    .gte("confidence_score", minConfidence);
+
+  if (marketKeys !== "ALL") {
+    query = query.in("market_key", marketKeys);
+  }
+
+  const { data: preds, error: predError } = await query
     .order("confidence_score", { ascending: false })
     .limit(Math.max(limit, 300));
 
@@ -832,40 +843,9 @@ export async function getModelPicks(params?: {
     const marketKey = row.market_key as string;
     const fixtureId = row.fixture_id as number;
 
-    let selection = "";
-    let modelProb = 0;
-
-    if (marketKey === "match_winner") {
-      const homeP = pred.home_win ?? 0;
-      const drawP = pred.draw ?? 0;
-      const awayP = pred.away_win ?? 0;
-      const best = Math.max(homeP, drawP, awayP);
-      if (best === homeP) {
-        selection = "Home Win";
-        modelProb = homeP;
-      } else if (best === drawP) {
-        selection = "Draw";
-        modelProb = drawP;
-      } else {
-        selection = "Away Win";
-        modelProb = awayP;
-      }
-    } else if (marketKey === "over_under_2_5") {
-      const isOver = (pred.over ?? 0) >= (pred.under ?? 0);
-      selection = isOver ? "Over 2.5" : "Under 2.5";
-      modelProb = isOver ? (pred.over ?? 0) : (pred.under ?? 0);
-    } else if (marketKey === "both_teams_score") {
-      const yesP = pred.yes ?? 0;
-      const noP = pred.no ?? 0;
-      const best = Math.max(yesP, noP);
-      if (best === yesP) {
-        selection = "BTTS Yes";
-        modelProb = yesP;
-      } else {
-        selection = "BTTS No";
-        modelProb = noP;
-      }
-    }
+    const pick = deriveSelection(marketKey, pred);
+    const selection = pick.selection;
+    const modelProb = pick.modelProb;
 
     if (modelProb <= 0) continue;
 
@@ -893,6 +873,104 @@ export async function getModelPicks(params?: {
 
   picks.sort((a, b) => b.confidence - a.confidence);
   return picks.slice(0, limit);
+}
+
+function deriveSelection(
+  marketKey: string,
+  pred: Record<string, number>,
+): { selection: string; modelProb: number } {
+  if (marketKey === "match_winner") {
+    const homeP = pred.home_win ?? 0;
+    const drawP = pred.draw ?? 0;
+    const awayP = pred.away_win ?? 0;
+    const best = Math.max(homeP, drawP, awayP);
+    if (best === homeP) return { selection: "Home Win", modelProb: homeP };
+    if (best === drawP) return { selection: "Draw", modelProb: drawP };
+    return { selection: "Away Win", modelProb: awayP };
+  }
+
+  if (marketKey === "both_teams_score") {
+    const yesP = pred.yes ?? 0;
+    const noP = pred.no ?? 0;
+    const best = Math.max(yesP, noP);
+    if (best === yesP) return { selection: "BTTS Yes", modelProb: yesP };
+    return { selection: "BTTS No", modelProb: noP };
+  }
+
+  if (
+    marketKey.startsWith("over_under_") ||
+    marketKey.startsWith("home_team_over_under_") ||
+    marketKey.startsWith("away_team_over_under_") ||
+    marketKey.startsWith("corners_over_under_") ||
+    marketKey.startsWith("cards_over_under_") ||
+    marketKey.startsWith("fouls_over_under_") ||
+    marketKey.startsWith("offsides_over_under_") ||
+    marketKey.startsWith("tackles_over_under_") ||
+    marketKey.startsWith("first_half_over_under_")
+  ) {
+    const isOver = (pred.over ?? 0) >= (pred.under ?? 0);
+    const lineSuffix = getOverUnderSuffix(marketKey);
+    const line = parseLineSuffix(lineSuffix);
+    const label = marketKey.startsWith("corners_over_under_")
+      ? "Corners"
+      : marketKey.startsWith("cards_over_under_")
+        ? "Cards"
+        : marketKey.startsWith("fouls_over_under_")
+          ? "Fouls"
+          : marketKey.startsWith("offsides_over_under_")
+            ? "Offsides"
+            : marketKey.startsWith("tackles_over_under_")
+              ? "Tackles"
+              : marketKey.startsWith("first_half_over_under_")
+                ? "1H Goals"
+                : marketKey.startsWith("home_team_over_under_")
+                  ? "Home Goals"
+                  : marketKey.startsWith("away_team_over_under_")
+                    ? "Away Goals"
+                    : "Goals";
+    return {
+      selection: `${label} ${isOver ? "Over" : "Under"} ${line}`,
+      modelProb: isOver ? (pred.over ?? 0) : (pred.under ?? 0),
+    };
+  }
+
+  const entries = Object.entries(pred).filter(([, v]) => typeof v === "number");
+  if (entries.length === 0) {
+    return { selection: "Prediccion", modelProb: 0 };
+  }
+  entries.sort((a, b) => b[1] - a[1]);
+  const [bestKey, bestProb] = entries[0];
+  return {
+    selection: formatOutcomeKey(bestKey),
+    modelProb: bestProb,
+  };
+}
+
+function formatOutcomeKey(key: string): string {
+  const normalized = key.replace(/_/g, " ").trim();
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+}
+
+function getOverUnderSuffix(marketKey: string): string {
+  const prefixes = [
+    "over_under_",
+    "home_team_over_under_",
+    "away_team_over_under_",
+    "corners_over_under_",
+    "cards_over_under_",
+    "fouls_over_under_",
+    "offsides_over_under_",
+    "tackles_over_under_",
+    "first_half_over_under_",
+  ];
+
+  for (const prefix of prefixes) {
+    if (marketKey.startsWith(prefix)) {
+      return marketKey.replace(prefix, "");
+    }
+  }
+
+  return marketKey.substring(marketKey.lastIndexOf("_") + 1);
 }
 
 // Value Bet types
