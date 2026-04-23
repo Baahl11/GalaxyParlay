@@ -1,6 +1,6 @@
 "use client";
 
-import { getBacktestResults, BacktestData } from "@/lib/api";
+import { BacktestData, getBacktestResults } from "@/lib/api";
 import { useEffect, useState } from "react";
 
 export function ModelAccuracy() {
@@ -16,7 +16,9 @@ export function ModelAccuracy() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-48">
-        <div className="text-gray-400 animate-pulse">Loading accuracy data…</div>
+        <div className="text-gray-400 animate-pulse">
+          Loading accuracy data…
+        </div>
       </div>
     );
   }
@@ -26,7 +28,9 @@ export function ModelAccuracy() {
       <div className="text-center py-12 bg-gray-800/30 rounded-2xl border border-gray-700/50">
         <div className="text-4xl mb-3">📊</div>
         <p className="text-gray-400">No backtesting data available yet.</p>
-        <p className="text-gray-500 text-sm mt-1">Results will appear after live matches complete.</p>
+        <p className="text-gray-500 text-sm mt-1">
+          Results will appear after live matches complete.
+        </p>
       </div>
     );
   }
@@ -48,26 +52,38 @@ export function ModelAccuracy() {
           📊 Model Accuracy
         </h2>
         <p className="text-gray-400 text-sm">
-          Backtested on <span className="text-white font-semibold">{summary.fixtures_tested.toLocaleString()}</span> historical fixtures
-          &nbsp;·&nbsp;
-          <span className="text-white font-semibold">{summary.predictions_tested.toLocaleString()}</span> predictions
+          Backtested on{" "}
+          <span className="text-white font-semibold">
+            {summary.fixtures_tested.toLocaleString()}
+          </span>{" "}
+          historical fixtures &nbsp;·&nbsp;
+          <span className="text-white font-semibold">
+            {summary.predictions_tested.toLocaleString()}
+          </span>{" "}
+          predictions
         </p>
       </div>
 
       {/* Key Metrics */}
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-gray-800/50 rounded-2xl border border-gray-700/50 p-6 text-center">
-          <div className="text-4xl font-black text-green-400">{accuracyPct}%</div>
+          <div className="text-4xl font-black text-green-400">
+            {accuracyPct}%
+          </div>
           <div className="text-gray-400 text-sm mt-1">Overall Accuracy</div>
           <div className="text-gray-500 text-xs mt-1">% of correct picks</div>
         </div>
         <div className="bg-gray-800/50 rounded-2xl border border-gray-700/50 p-6 text-center">
           <div className="text-4xl font-black text-blue-400">{brierPct}%</div>
           <div className="text-gray-400 text-sm mt-1">Brier Score</div>
-          <div className="text-gray-500 text-xs mt-1">Calibration (lower = better)</div>
+          <div className="text-gray-500 text-xs mt-1">
+            Calibration (lower = better)
+          </div>
         </div>
         <div className="bg-gray-800/50 rounded-2xl border border-gray-700/50 p-6 text-center">
-          <div className="text-4xl font-black text-purple-400">{summary.markets_tested}</div>
+          <div className="text-4xl font-black text-purple-400">
+            {summary.markets_tested}
+          </div>
           <div className="text-gray-400 text-sm mt-1">Markets Tested</div>
           <div className="text-gray-500 text-xs mt-1">Betting market types</div>
         </div>
@@ -94,8 +110,12 @@ export function ModelAccuracy() {
                       style={{ width: `${barWidth}%` }}
                     />
                   </div>
-                  <div className="w-16 text-right text-white font-semibold text-sm">{pct}%</div>
-                  <div className="w-20 text-right text-gray-500 text-xs">n={stats.sample_size}</div>
+                  <div className="w-16 text-right text-white font-semibold text-sm">
+                    {pct}%
+                  </div>
+                  <div className="w-20 text-right text-gray-500 text-xs">
+                    n={stats.sample_size}
+                  </div>
                 </div>
               );
             })}
@@ -104,7 +124,8 @@ export function ModelAccuracy() {
       )}
 
       <p className="text-center text-gray-600 text-xs">
-        ⚠️ Historical performance does not guarantee future results. Gamble responsibly.
+        ⚠️ Historical performance does not guarantee future results. Gamble
+        responsibly.
       </p>
     </div>
   );

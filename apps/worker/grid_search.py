@@ -17,7 +17,7 @@ import itertools
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import structlog
 
@@ -74,7 +74,7 @@ class ParameterGridSearch:
             * len(self.param_grid["home_advantage"])
         )
 
-    def get_actual_outcome(self, fixture: Dict, market_key: str, outcome: str) -> bool:
+    def get_actual_outcome(self, fixture: Dict, market_key: str, outcome: str) -> Optional[bool]:
         """
         Determine if outcome actually occurred
         (Updated to use database format: home_score/away_score)

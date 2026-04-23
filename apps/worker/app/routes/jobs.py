@@ -340,11 +340,14 @@ def sync_results():
         cutoff_str = cutoff.strftime("%Y-%m-%dT%H:%M:%S")
         now_str = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S")
 
-        res = db_service.client.table("fixtures").select(
-            "id, home_team_name, away_team_name, kickoff_time, status, league_id, season"
-        ).lte("kickoff_time", now_str).gte("kickoff_time", cutoff_str).in_(
-            "status", ["NS", "1H", "HT", "2H", "ET", "P"]
-        ).execute()
+        res = (
+            db_service.client.table("fixtures")
+            .select("id, home_team_name, away_team_name, kickoff_time, status, league_id, season")
+            .lte("kickoff_time", now_str)
+            .gte("kickoff_time", cutoff_str)
+            .in_("status", ["NS", "1H", "HT", "2H", "ET", "P"])
+            .execute()
+        )
 
         candidates = res.data or []
         logger.info("sync_results_started", candidates=len(candidates))
@@ -365,11 +368,13 @@ def sync_results():
                 home_score = goals.get("home")
                 away_score = goals.get("away")
 
-                db_service.client.table("fixtures").update({
-                    "status": new_status,
-                    "home_score": home_score,
-                    "away_score": away_score,
-                }).eq("id", fixture_id).execute()
+                db_service.client.table("fixtures").update(
+                    {
+                        "status": new_status,
+                        "home_score": home_score,
+                        "away_score": away_score,
+                    }
+                ).eq("id", fixture_id).execute()
 
                 logger.info(
                     "fixture_result_updated",
@@ -415,9 +420,13 @@ def get_backtest_results():
             return {"status": "success", "source": "file", "data": data}
 
         # Fallback: compute live from FT fixtures in DB
-        ft_res = db_service.client.table("fixtures").select(
-            "id, home_score, away_score, status"
-        ).eq("status", "FT").limit(500).execute()
+        ft_res = (
+            db_service.client.table("fixtures")
+            .select("id, home_score, away_score, status")
+            .eq("status", "FT")
+            .limit(500)
+            .execute()
+        )
         ft_fixtures = ft_res.data or []
 
         if not ft_fixtures:

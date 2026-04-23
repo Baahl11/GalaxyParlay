@@ -1,0 +1,18 @@
+{
+  "venvPath": ".",
+  "venv": "venv",
+  "pythonVersion": "3.11",
+  "pythonPlatform": "Linux",
+  "reportMissingModuleSource": "none",
+  "reportMissingImports": "none",
+  "reportUnknownVariableType": "none",
+  "reportUnknownMemberType": "none",
+  "reportUnknownArgumentType": "none",
+  "reportUnknownParameterType": "none",
+  "reportAttributeAccessIssue": "none",
+  "reportArgumentType": "none",
+  "reportReturnType": "none",
+  "reportIndexIssue": "none",
+  "reportOperatorIssue": "none",
+  "reportCallIssue": "none"
+}

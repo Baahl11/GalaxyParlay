@@ -491,7 +491,13 @@ export async function getValueBets(params?: {
 
   const emptyResult = {
     bets: [],
-    summary: { total_bets: 0, avg_edge: 0, avg_ev: 0, best_ev: 0, total_kelly_units: 0 },
+    summary: {
+      total_bets: 0,
+      avg_edge: 0,
+      avg_ev: 0,
+      best_ev: 0,
+      total_kelly_units: 0,
+    },
   };
 
   // Fetch A-grade predictions for key markets
@@ -511,13 +517,15 @@ export async function getValueBets(params?: {
 
   // Only NS fixtures
   const activePreds = preds.filter((p) => {
-    const fx = (p.fixtures as unknown) as { status: string };
+    const fx = p.fixtures as unknown as { status: string };
     return fx.status === "NS";
   });
   if (activePreds.length === 0) return emptyResult;
 
   // Unique fixture IDs
-  const fixtureIds = [...new Set(activePreds.map((p) => p.fixture_id as number))];
+  const fixtureIds = [
+    ...new Set(activePreds.map((p) => p.fixture_id as number)),
+  ];
 
   // Fetch real bookmaker odds for those fixtures
   const { data: oddsRows } = await supabase
@@ -527,21 +535,27 @@ export async function getValueBets(params?: {
     .in("market_key", ["match_winner", "over_under_2.5"]);
 
   // Build index: fixture_id -> oddsMarketKey -> { odds_data, bookmaker }
-  const oddsIndex: Record<number, Record<string, { data: Record<string, number>; bookmaker: string }>> = {};
+  const oddsIndex: Record<
+    number,
+    Record<string, { data: Record<string, number>; bookmaker: string }>
+  > = {};
   for (const od of oddsRows ?? []) {
     const fid = od.fixture_id as number;
     const mk = od.market_key as string;
     if (!oddsIndex[fid]) oddsIndex[fid] = {};
     // Prefer Bet365, don't overwrite if already set
     if (!oddsIndex[fid][mk]) {
-      oddsIndex[fid][mk] = { data: od.odds_data as Record<string, number>, bookmaker: od.bookmaker as string };
+      oddsIndex[fid][mk] = {
+        data: od.odds_data as Record<string, number>,
+        bookmaker: od.bookmaker as string,
+      };
     }
   }
 
   const bets: ValueBet[] = [];
 
   for (const row of activePreds) {
-    const fx = (row.fixtures as unknown) as {
+    const fx = row.fixtures as unknown as {
       home_team_name: string;
       away_team_name: string;
       kickoff_time: string;
@@ -553,7 +567,8 @@ export async function getValueBets(params?: {
     const fixtureOdds = oddsIndex[fixtureId] ?? {};
 
     // Map prediction market key → odds market key
-    const oddsMarketKey = marketKey === "over_under_2_5" ? "over_under_2.5" : marketKey;
+    const oddsMarketKey =
+      marketKey === "over_under_2_5" ? "over_under_2.5" : marketKey;
     const oddsEntry = fixtureOdds[oddsMarketKey];
 
     if (!oddsEntry) continue; // no real odds for this fixture/market
@@ -586,7 +601,9 @@ export async function getValueBets(params?: {
       const isOver = (pred.over ?? 0) >= (pred.under ?? 0);
       selection = isOver ? "Over 2.5" : "Under 2.5";
       modelProb = isOver ? (pred.over ?? 0) : (pred.under ?? 0);
-      bookmakerOdds = isOver ? (oddsData["over 2.5"] ?? 0) : (oddsData["under 2.5"] ?? 0);
+      bookmakerOdds = isOver
+        ? (oddsData["over 2.5"] ?? 0)
+        : (oddsData["under 2.5"] ?? 0);
     }
 
     if (!bookmakerOdds || bookmakerOdds < 1.1 || modelProb <= 0) continue;
@@ -594,7 +611,8 @@ export async function getValueBets(params?: {
     const impliedProb = 1 / bookmakerOdds;
     const edge = modelProb - impliedProb;
     const ev = modelProb * (bookmakerOdds - 1) - (1 - modelProb);
-    const kellyFraction = edge > 0 ? Math.min(edge / (bookmakerOdds - 1), 0.1) : 0;
+    const kellyFraction =
+      edge > 0 ? Math.min(edge / (bookmakerOdds - 1), 0.1) : 0;
 
     if (edge < minEdge || ev < minEv) continue;
 
@@ -629,7 +647,8 @@ export async function getValueBets(params?: {
     limitedBets.length > 0
       ? limitedBets.reduce((s, b) => s + b.ev, 0) / limitedBets.length
       : 0;
-  const bestEv = limitedBets.length > 0 ? Math.max(...limitedBets.map((b) => b.ev)) : 0;
+  const bestEv =
+    limitedBets.length > 0 ? Math.max(...limitedBets.map((b) => b.ev)) : 0;
 
   return {
     bets: limitedBets,
@@ -639,7 +658,9 @@ export async function getValueBets(params?: {
       avg_ev: Math.round(avgEv * 1000) / 1000,
       best_ev: Math.round(bestEv * 1000) / 1000,
       total_kelly_units:
-        Math.round(limitedBets.reduce((s, b) => s + b.kelly_fraction, 0) * 1000) / 1000,
+        Math.round(
+          limitedBets.reduce((s, b) => s + b.kelly_fraction, 0) * 1000,
+        ) / 1000,
     },
   };
 }
@@ -673,18 +694,34 @@ export interface ValueBetSummary {
 }
 
 export interface BacktestData {
-  summary: { fixtures_tested: number; predictions_tested: number; markets_tested: number };
+  summary: {
+    fixtures_tested: number;
+    predictions_tested: number;
+    markets_tested: number;
+  };
   new_model: { accuracy: number; brier_score: number; log_loss: number };
-  by_market?: Record<string, { old_accuracy: number; new_accuracy: number; improvement: number; sample_size: number }>;
+  by_market?: Record<
+    string,
+    {
+      old_accuracy: number;
+      new_accuracy: number;
+      improvement: number;
+      sample_size: number;
+    }
+  >;
 }
 
 /**
  * Fetch model accuracy stats from Railway backtest endpoint
  */
 export async function getBacktestResults(): Promise<BacktestData | null> {
-  const railwayUrl = process.env.NEXT_PUBLIC_API_URL ?? "https://galaxyparlay-production.up.railway.app";
+  const railwayUrl =
+    process.env.NEXT_PUBLIC_API_URL ??
+    "https://galaxyparlay-production.up.railway.app";
   try {
-    const res = await fetch(`${railwayUrl}/jobs/backtest-results`, { next: { revalidate: 3600 } });
+    const res = await fetch(`${railwayUrl}/jobs/backtest-results`, {
+      next: { revalidate: 3600 },
+    });
     if (!res.ok) return null;
     const json = await res.json();
     return json.data as BacktestData;

@@ -1,4 +1,5 @@
 # GalaxyParlay — Plan Maestro
+
 **Última actualización:** 22 Abril 2026  
 **Estado:** Producción activa ✅
 
@@ -9,6 +10,7 @@
 Plataforma de analítica deportiva educativa **(18+)**. Muestra el calendario semanal de partidos como una **vista tipo galaxia** (zoom/pan) con probabilidades ML por mercados de apuestas. Sin integración con sportsbooks, sin afiliación, sin payouts.
 
 **Principios:**
+
 - Calendario primero (semana como eje)
 - Transparencia: nada es "seguro"
 - Data Quality Gate (grades A/B/C/D)
@@ -18,16 +20,17 @@ Plataforma de analítica deportiva educativa **(18+)**. Muestra el calendario se
 
 ## 2. STACK & INFRAESTRUCTURA
 
-| Capa | Tecnología | URL / Ubicación |
-|------|-----------|-----------------|
-| Frontend | Next.js 14 + React 18.2 + TypeScript + Tailwind | https://galaxyparlay.vercel.app |
-| Backend | FastAPI Python 3.11 + APScheduler | https://galaxyparlay-production.up.railway.app |
-| Base de datos | Supabase PostgreSQL 17 | pqswprhhgpsvhvhsxscw.supabase.co |
-| ML stack | XGBoost + Dixon-Coles + Contextual Elo + xG | `apps/worker/app/ml/` |
-| Data source | API-Football Pro (7,500 req/día, season 2025) | `APIFOOTBALL_API_KEY` en .env |
-| Monorepo | Turborepo + pnpm workspaces | raíz del proyecto |
+| Capa          | Tecnología                                      | URL / Ubicación                                |
+| ------------- | ----------------------------------------------- | ---------------------------------------------- |
+| Frontend      | Next.js 14 + React 18.2 + TypeScript + Tailwind | https://galaxyparlay.vercel.app                |
+| Backend       | FastAPI Python 3.11 + APScheduler               | https://galaxyparlay-production.up.railway.app |
+| Base de datos | Supabase PostgreSQL 17                          | pqswprhhgpsvhvhsxscw.supabase.co               |
+| ML stack      | XGBoost + Dixon-Coles + Contextual Elo + xG     | `apps/worker/app/ml/`                          |
+| Data source   | API-Football Pro (7,500 req/día, season 2025)   | `APIFOOTBALL_API_KEY` en .env                  |
+| Monorepo      | Turborepo + pnpm workspaces                     | raíz del proyecto                              |
 
 ### Estructura de carpetas clave
+
 ```
 apps/
   web/                     # Next.js frontend
@@ -56,6 +59,7 @@ supabase/
 ### Variables de entorno
 
 **`apps/worker/.env`**
+
 ```
 SUPABASE_URL=https://pqswprhhgpsvhvhsxscw.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=<ver Railway env vars>
@@ -65,6 +69,7 @@ API_BURST_CAPACITY=20
 ```
 
 **`apps/web/.env.local`**
+
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://pqswprhhgpsvhvhsxscw.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<ver Vercel env vars>
@@ -76,12 +81,14 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 ## 3. ✅ LO QUE ESTÁ IMPLEMENTADO
 
 ### Fase 0 — Fundación
+
 - [x] Monorepo Turborepo (pnpm workspaces)
 - [x] Next.js 14 + FastAPI bootstrapped
 - [x] Supabase schema: `leagues`, `fixtures`, `model_predictions`, `odds_snapshots`, `watchlists`
 - [x] RLS (Row Level Security) configurado
 
 ### Fase 1 — Frontend visual
+
 - [x] `GalaxyCanvas` — vista tipo galaxia con nodos por partido
 - [x] `NetworkGraphView` — grafo de relaciones entre equipos
 - [x] `LeagueClusterView` — clusters por liga
@@ -92,6 +99,7 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 - [x] 7 tabs: Network Graph, Liga Clusters, Galaxy View, List View, Value Bets, Player Props, Accuracy
 
 ### Fase 2 — Investigación científica
+
 - [x] Base científica para 35 mercados documentada
 - [x] Referencias: Dixon & Coles 1997, Karlis & Ntzoufras 2003
 - [x] Benchmark de accuracy esperado por mercado
@@ -99,17 +107,18 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 
 ### Fase 3 — Mejoras del modelo (7/7 implementadas)
 
-| Mejora | Impacto esperado | Estado |
-|--------|-----------------|--------|
-| Negative Binomial para Corners | +5-8% | ✅ |
-| Base de datos de árbitros | +7-10% en cards | ✅ |
-| Features avanzadas de offsides | +5-8% | ✅ |
-| Bivariate Poisson (Dixon-Coles) para BTTS | +4-6% | ✅ |
-| Contextual Elo (home/away/H2H/form) | +3-5% en match_winner | ✅ |
-| Integración xG real desde API-Football | +5-7% global | ✅ |
-| Backtesting framework | validación | ✅ |
+| Mejora                                    | Impacto esperado      | Estado |
+| ----------------------------------------- | --------------------- | ------ |
+| Negative Binomial para Corners            | +5-8%                 | ✅     |
+| Base de datos de árbitros                 | +7-10% en cards       | ✅     |
+| Features avanzadas de offsides            | +5-8%                 | ✅     |
+| Bivariate Poisson (Dixon-Coles) para BTTS | +4-6%                 | ✅     |
+| Contextual Elo (home/away/H2H/form)       | +3-5% en match_winner | ✅     |
+| Integración xG real desde API-Football    | +5-7% global          | ✅     |
+| Backtesting framework                     | validación            | ✅     |
 
 ### Fase 4 — Backtesting & Validación
+
 - [x] **1,000 fixtures backtestados**, 16,506 predicciones, 9 mercados
 - [x] Accuracy global: **72.18%** | Brier score: 0.1862
 - [x] Accuracy por liga: La Liga 74.81% (mejor) / UCL 63.89% (peor)
@@ -117,6 +126,7 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 - [x] Archivo: `apps/worker/backtest_results.json`
 
 ### Fase 5 — Features avanzados
+
 - [x] **League-specific home advantage calibration** (`league_config.py`)
   - UCL: 63.89% → target 68-70% (+5-7%)
   - Bundesliga: 68.50% → target 71-73%
@@ -128,6 +138,7 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 - [x] Market confidence badges en frontend
 
 ### FIFA Integration
+
 - [x] 100+ equipos con 16 stats cada uno
 - [x] Integrado en `dixon_coles.py` (match_winner: quality gap + star player adjustment)
 - [x] Integrado en `multi_market_predictor.py` (corners: pace/skill, cards: physical mismatch, shots, offsides)
@@ -135,6 +146,7 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 - ⚠️ Datos son estimados/mock — no API oficial de SoFIFA
 
 ### Producción & Mejoras recientes (Abril 2026)
+
 - [x] Sync window: 7 → **14 días** (más fixtures cargados)
 - [x] **EV real**: `getValueBets` usa odds reales de `odds_snapshots` (no sintéticas)
   - Edge mínimo: 3% | EV mínimo: 2%
@@ -146,13 +158,15 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 - [x] 22 ligas activas (Europa + LATAM + Asia + Oceanía + Copa Europa)
 
 ### APScheduler (3 jobs automáticos)
-| Job | Frecuencia | Función |
-|-----|-----------|---------|
-| load_fixtures | Cada 12h (cron 6AM/6PM UTC) | Sync fixtures desde API-Football |
-| generate_predictions | Cada 6h | Genera predicciones para fixtures NS |
-| sync_results | Cada 3h | Actualiza scores FT de últimas 36h |
+
+| Job                  | Frecuencia                  | Función                              |
+| -------------------- | --------------------------- | ------------------------------------ |
+| load_fixtures        | Cada 12h (cron 6AM/6PM UTC) | Sync fixtures desde API-Football     |
+| generate_predictions | Cada 6h                     | Genera predicciones para fixtures NS |
+| sync_results         | Cada 3h                     | Actualiza scores FT de últimas 36h   |
 
 ### Seguridad
+
 - [x] Tokens hardcodeados removidos de todos los scripts Python/PS
 - [x] Variables de entorno en Railway + Vercel
 - [x] `.gitignore` protegiendo `.env` y `.env.local`
@@ -163,15 +177,18 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 ## 4. ❌ LO QUE FALTA (priorizado)
 
 ### 🔴 Crítico
+
 1. **Git history cleanup** — JWT del proyecto antiguo `REMOVED_JWT` (no activo) sigue en git history. Usar BFG Repo Cleaner o `git filter-repo` para reescribir historia.
 2. **Player Props con datos reales** — El tab "Player Props" existe en frontend pero no tiene datos reales. API-Football Pro incluye player stats; falta implementar el endpoint y componente.
 
 ### 🟡 Importante
+
 3. **Dixon-Coles extendido a Over/Under** — Actualmente O/U usa Poisson independiente. Extender la correlación bivariate a Over/Under daría +2-4% accuracy. (ver `ANALISIS_PROFUNDO` archivado)
 4. **BTTS en backtest** — El mercado BTTS no está incluido en el backtest de 1,000 fixtures. Bivariate Poisson mejora BTTS significativamente pero no está validado.
 5. **Más fixtures** — 133 fixtures es poco para ligas LATAM. Ampliar: Liga MX (262), Brasileirão (71), Libertadores (13), Sudamericana (11).
 
 ### 🟢 Mejoras futuras
+
 6. **Autenticación de usuarios** — Supabase Auth + watchlist flow completo en frontend (schema ya tiene RLS listo)
 7. **Paginación** — Frontend carga todos los fixtures en memoria. Con más ligas necesita infinite scroll o paginación server-side
 8. **Live scores** — APScheduler job para fixtures LIVE (no solo FT)
@@ -217,6 +234,7 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 ## 6. QUICK REFERENCE
 
 ### URLs de producción
+
 ```
 Frontend:  https://galaxyparlay.vercel.app
 Backend:   https://galaxyparlay-production.up.railway.app
@@ -224,6 +242,7 @@ Supabase:  https://pqswprhhgpsvhvhsxscw.supabase.co
 ```
 
 ### Comandos frecuentes
+
 ```powershell
 # Instalar dependencias
 cd c:\Users\gm_me\GalaxyParlay
@@ -256,6 +275,7 @@ cd apps/worker
 ```
 
 ### Endpoints backend principales
+
 ```
 GET  /health                                       Healthcheck
 GET  /api/fixtures?status=NS&limit=100             Fixtures próximos
@@ -271,6 +291,7 @@ GET  /market-confidence                            Badges de confianza por merca
 ```
 
 ### Tablas Supabase clave
+
 ```sql
 leagues             -- ligas activas (league_id, name, country, season)
 fixtures            -- partidos (id, league_id, kickoff_time, status, teams, scores)
@@ -280,6 +301,7 @@ watchlists          -- favoritos por usuario (user_id, fixture_id)
 ```
 
 ### Formato de odds en DB
+
 ```json
 // match_winner:
 {"home": 2.25, "draw": 3.8, "away": 2.88}
@@ -292,6 +314,7 @@ watchlists          -- favoritos por usuario (user_id, fixture_id)
 ```
 
 ### IDs de ligas (API-Football)
+
 ```
 39  = Premier League        140 = La Liga
 78  = Bundesliga            135 = Serie A
@@ -309,6 +332,7 @@ watchlists          -- favoritos por usuario (user_id, fixture_id)
 ## 7. MODELO ML — RESUMEN TÉCNICO
 
 ### Arquitectura del modelo
+
 ```
 Input features (por fixture):
   - Elo ratings: home_elo, away_elo, h2h_elo, recent_form
@@ -332,6 +356,7 @@ Calibración:
 ```
 
 ### 35 Mercados activos
+
 ```
 Goals (6):      over_under_0_5 → over_under_5_5
 Corners (6):    corners_over_under_7_5 → corners_over_under_12_5
@@ -347,6 +372,7 @@ Core (3):       match_winner, both_teams_score, first_half_over_under_0_5
 ## 8. SEGURIDAD
 
 ### Estado actual
+
 - ✅ Tokens hardcodeados removidos del código fuente (Feb 2026)
 - ✅ Railway env vars: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `APIFOOTBALL_API_KEY`
 - ✅ Vercel env vars: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -355,6 +381,7 @@ Core (3):       match_winner, both_teams_score, first_half_over_under_0_5
 - ✅ Proyecto activo: `pqswprhhgpsvhvhsxscw` — keys solo en env vars
 
 ### Si necesitas rotar keys del proyecto activo
+
 1. Supabase Dashboard → Settings → API → Regenerate keys
 2. Actualizar Railway env vars: `railway variables set KEY=nuevo_valor`
 3. Actualizar Vercel env vars: Dashboard → Settings → Environment Variables
@@ -384,5 +411,5 @@ API-Football Pro (7,500 req/día)
 
 ---
 
-*Documento mantenido en: `PLAN_MAESTRO.md` en la raíz del proyecto.*  
-*Para historial completo de implementación ver commits de git desde Enero 2026.*
+_Documento mantenido en: `PLAN_MAESTRO.md` en la raíz del proyecto._  
+_Para historial completo de implementación ver commits de git desde Enero 2026._

@@ -48,6 +48,11 @@ except ImportError:
 logger = structlog.get_logger()
 
 
+def _r(x: Any, ndigits: int = 4) -> float:
+    """Cast numpy scalar/array to plain float then round. Avoids numpy ndarray round() overload errors."""
+    return round(float(x), ndigits)
+
+
 class RefereeProfile:
     """
     Referee profile for cards prediction
@@ -58,7 +63,7 @@ class RefereeProfile:
     Reference: Boyko et al. (2007), Buraimo et al. (2010)
     """
 
-    def __init__(self, referee_name: str = None, referee_data: Optional[Dict] = None):
+    def __init__(self, referee_name: Optional[str] = None, referee_data: Optional[Dict] = None):
         self.name = referee_name
 
         if referee_data:
@@ -339,14 +344,14 @@ class MultiMarketPredictor:
         self,
         home_team_id: int,
         away_team_id: int,
-        home_xg: float = None,
-        away_xg: float = None,
+        home_xg: Optional[float] = None,
+        away_xg: Optional[float] = None,
         is_derby: bool = False,
         match_importance: str = "normal",
         referee_data: Optional[Dict] = None,
-        referee_name: str = None,
+        referee_name: Optional[str] = None,
         is_cup: bool = False,
-        league_id: int = None,
+        league_id: Optional[int] = None,
     ) -> Dict[str, Any]:
         """
         Predict all available markets for a fixture.
@@ -498,8 +503,8 @@ class MultiMarketPredictor:
 
             key = f"over_under_{str(line).replace('.', '_')}"
             results[key] = {
-                "over": round(over_prob, 4),
-                "under": round(under_prob, 4),
+                "over": _r(over_prob),
+                "under": _r(under_prob),
                 "line": line,
             }
 
@@ -516,8 +521,8 @@ class MultiMarketPredictor:
 
                 key = f"{team}_over_{str(line).replace('.', '_')}"
                 results[key] = {
-                    "over": round(over_prob, 4),
-                    "under": round(under_prob, 4),
+                    "over": _r(over_prob),
+                    "under": _r(under_prob),
                     "team": team,
                     "line": line,
                 }
@@ -601,7 +606,7 @@ class MultiMarketPredictor:
         # Ensure bounds
         btts_yes = max(0.10, min(0.95, btts_yes))
 
-        return {"yes": round(btts_yes, 4), "no": round(1 - btts_yes, 4)}
+        return {"yes": _r(btts_yes), "no": _r(1 - btts_yes)}
 
     def _predict_match_winner(self, home_xg: float, away_xg: float) -> Dict[str, float]:
         """
@@ -656,9 +661,9 @@ class MultiMarketPredictor:
         away_win_prob /= total
 
         return {
-            "home_win": round(home_win_prob, 4),
-            "draw": round(draw_prob, 4),
-            "away_win": round(away_win_prob, 4),
+            "home_win": _r(home_win_prob),
+            "draw": _r(draw_prob),
+            "away_win": _r(away_win_prob),
         }
 
     def _predict_corners(
@@ -760,7 +765,7 @@ class MultiMarketPredictor:
             over_prob = 1 - under_prob
 
             key = f"total_over_{str(line).replace('.', '_')}"
-            results[key] = {"over": round(over_prob, 4), "under": round(under_prob, 4)}
+            results[key] = {"over": _r(over_prob), "under": _r(under_prob)}
 
         # Team corners over/under - ALSO USE NEGATIVE BINOMIAL
         for team, xc in [("home", home_corners), ("away", away_corners)]:
@@ -771,8 +776,8 @@ class MultiMarketPredictor:
 
                 under_prob = sum(nbinom.pmf(c, n, p) for c in range(int(line) + 1))
                 results[f"{team}_over_{str(line).replace('.', '_')}"] = {
-                    "over": round(1 - under_prob, 4),
-                    "under": round(under_prob, 4),
+                    "over": _r(1 - under_prob),
+                    "under": _r(under_prob),
                 }
 
         return results
@@ -878,8 +883,8 @@ class MultiMarketPredictor:
         for line in [2.5, 3.5, 4.5, 5.5, 6.5]:
             under_prob = sum(poisson.pmf(c, total_cards) for c in range(int(line) + 1))
             results[f"total_over_{str(line).replace('.', '_')}"] = {
-                "over": round(1 - under_prob, 4),
-                "under": round(under_prob, 4),
+                "over": _r(1 - under_prob),
+                "under": _r(under_prob),
             }
 
         return results
@@ -976,8 +981,8 @@ class MultiMarketPredictor:
         for line in [6.5, 7.5, 8.5, 9.5, 10.5]:
             under_prob = sum(poisson.pmf(s, total_sot) for s in range(int(line) + 1))
             results[f"sot_over_{str(line).replace('.', '_')}"] = {
-                "over": round(1 - under_prob, 4),
-                "under": round(under_prob, 4),
+                "over": _r(1 - under_prob),
+                "under": _r(under_prob),
             }
 
         return results
@@ -991,9 +996,7 @@ class MultiMarketPredictor:
         for h in range(max_goals + 1):
             for a in range(max_goals + 1):
                 prob = poisson.pmf(h, home_xg) * poisson.pmf(a, away_xg)
-                scores.append(
-                    {"home": h, "away": a, "score": f"{h}-{a}", "probability": round(prob, 4)}
-                )
+                scores.append({"home": h, "away": a, "score": f"{h}-{a}", "probability": _r(prob)})
 
         # Sort by probability and return top 10
         scores.sort(key=lambda x: x["probability"], reverse=True)
@@ -1054,8 +1057,8 @@ class MultiMarketPredictor:
             over_prob = 1 - under_prob
 
             ht_over_under[f"over_under_{str(line).replace('.', '_')}"] = {
-                "over": round(over_prob, 4),
-                "under": round(under_prob, 4),
+                "over": _r(over_prob),
+                "under": _r(under_prob),
                 "line": line,
             }
 
@@ -1102,17 +1105,17 @@ class MultiMarketPredictor:
             over_prob = 1 - under_prob
 
             ht_corners_ou[f"corners_over_{str(line).replace('.', '_')}"] = {
-                "over": round(over_prob, 4),
-                "under": round(under_prob, 4),
+                "over": _r(over_prob),
+                "under": _r(under_prob),
                 "line": line,
             }
 
         return {
             # 1X2 Result
             "result_1x2": {
-                "home": round(ht_home_win, 4),
-                "draw": round(ht_draw, 4),
-                "away": round(ht_away_win, 4),
+                "home": _r(ht_home_win),
+                "draw": _r(ht_draw),
+                "away": _r(ht_away_win),
             },
             # Goals Over/Under
             "goals": ht_over_under,
@@ -1307,8 +1310,8 @@ class MultiMarketPredictor:
 
             key = f"total_over_{str(line).replace('.', '_')}"
             results[key] = {
-                "over": round(over_prob, 4),
-                "under": round(under_prob, 4),
+                "over": _r(over_prob),
+                "under": _r(under_prob),
                 "line": line,
             }
 
@@ -1317,8 +1320,8 @@ class MultiMarketPredictor:
             for line in [1.5, 2.5, 3.5]:
                 under_prob = sum(poisson.pmf(o, xo) for o in range(int(line) + 1))
                 results[f"{team}_over_{str(line).replace('.', '_')}"] = {
-                    "over": round(1 - under_prob, 4),
-                    "under": round(under_prob, 4),
+                    "over": _r(1 - under_prob),
+                    "under": _r(under_prob),
                     "team": team,
                     "line": line,
                 }
@@ -1449,8 +1452,8 @@ class MultiMarketPredictor:
 
                     player_data = {
                         "player_name": player["player_name"],
-                        "anytime_scorer": round(scorer_prob, 4),
-                        "shots_on_target_1plus": round(sot_prob, 4),
+                        "anytime_scorer": _r(scorer_prob),
+                        "shots_on_target_1plus": _r(sot_prob),
                         "goals_per_90": round(goals_per_90, 2),
                         "player_xg": round(player_xg, 2),
                         "games_played": games,

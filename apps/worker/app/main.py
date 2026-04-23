@@ -80,7 +80,7 @@ app = FastAPI(
 
 # Attach rate limiter to app state
 app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)  # type: ignore[arg-type]
 
 # CORS middleware
 app.add_middleware(
@@ -95,29 +95,6 @@ app.add_middleware(
 app.include_router(jobs.router)
 app.include_router(galaxy_api.router)
 app.include_router(test_player_props.router)
-
-
-@app.get("/")
-def root():
-    """Health check endpoint"""
-    return {
-        "service": "ParlayGalaxy Worker",
-        "status": "operational",
-        "version": settings.APP_VERSION,
-    }
-
-
-@app.get("/health")
-def health():
-    """Detailed health check"""
-    return {
-        "status": "healthy",
-        "checks": {
-            "database": "pending",
-            "cache": "pending",
-            "api_football": "pending",
-        },
-    }
 
 
 @app.get("/test-db")

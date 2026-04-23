@@ -1,321 +1,251 @@
 "use client";
 
-// ParlayGalaxy - Main Page (v2.1)
+// GalaxyParlay — Main Page v3.0 (Galaxy + Picks Hybrid)
 import {
   FixtureList,
   GalaxyCanvas,
-  LeagueClusterView,
   LeagueFilter,
   MatchDrawer,
   ModelAccuracy,
-  NetworkGraphView,
-  PlayerPropsSection,
+  ParlayBuilder,
   StatsCard,
-  ValueBetList,
+  TodayPicks,
 } from "@/components";
-import { getFixtures, getStats } from "@/lib/api";
+import { getFixtures, getStats, type ValueBet } from "@/lib/api";
 import type { Fixture, StatsResponse } from "@/lib/types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-type TabKey =
-  | "network"
-  | "clusters"
-  | "galaxy"
-  | "fixtures"
-  | "valuebets"
-  | "players"
-  | "accuracy";
+type ViewKey = "picks" | "fixtures" | "stats";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<TabKey>("network");
+  const [activeView, setActiveView] = useState<ViewKey>("picks");
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
   const [stats, setStats] = useState<StatsResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loadingFixtures, setLoadingFixtures] = useState(true);
   const [selectedLeague, setSelectedLeague] = useState<number | null>(null);
 
-  // Match Drawer State
+  // Galaxy interaction
+  const [highlightedFixtureId, setHighlightedFixtureId] = useState<number | null>(null);
+
+  // Parlay state
+  const [parlayPicks, setParlayPicks] = useState<ValueBet[]>([]);
+
+  // Match Drawer
   const [selectedFixture, setSelectedFixture] = useState<Fixture | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // Track loaded picks for cross-referencing with galaxy clicks
+  const [allPicks, setAllPicks] = useState<ValueBet[]>([]);
+
   useEffect(() => {
-    loadData();
+    setLoadingFixtures(true);
+    Promise.all([
+      getFixtures({ status: "NS", limit: 200 }),
+      getStats(),
+    ])
+      .then(([fixturesData, statsData]) => {
+        setFixtures(fixturesData || []);
+        setStats(statsData);
+      })
+      .catch(console.error)
+      .finally(() => setLoadingFixtures(false));
   }, []);
 
-  const loadData = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const [fixturesData, statsData] = await Promise.all([
-        getFixtures({ status: "NS", limit: 200 }),
-        getStats(),
-      ]);
-      setFixtures(fixturesData || []);
-      setStats(statsData);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load data");
-      setFixtures([]); // Asegurar array vacío en caso de error
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleFixtureClick = (fixture: Fixture) => {
-    console.log("[HomePage] 🎯 Fixture clicked:", {
-      id: fixture.id,
-      home: fixture.home_team_name,
-      away: fixture.away_team_name,
-    });
+  const handleFixtureClick = useCallback((fixture: Fixture) => {
     setSelectedFixture(fixture);
     setDrawerOpen(true);
-    console.log("[HomePage] ✅ Drawer should open now");
-  };
+    setHighlightedFixtureId(fixture.id);
+  }, []);
 
-  const tabs: { key: TabKey; label: string; icon: string }[] = [
-    { key: "network", label: "Network Graph", icon: "🕸️" },
-    { key: "clusters", label: "Liga Clusters", icon: "⚡" },
-    { key: "galaxy", label: "Galaxy View", icon: "🌌" },
-    { key: "fixtures", label: "List View", icon: "📅" },
-    { key: "valuebets", label: "Value Bets", icon: "💎" },
-    { key: "players", label: "Player Props", icon: "⚽" },
-    { key: "accuracy", label: "Accuracy", icon: "📊" },
+  const handleGalaxyClick = useCallback(
+    (fixture: Fixture) => {
+      setHighlightedFixtureId(fixture.id);
+      setSelectedFixture(fixture);
+      setDrawerOpen(true);
+    },
+    [],
+  );
+
+  const handleToggleParlay = useCallback((bet: ValueBet) => {
+    setParlayPicks((prev) => {
+      const key = `${bet.fixture_id}-${bet.market}`;
+      const exists = prev.some(
+        (p) => `${p.fixture_id}-${p.market}` === key,
+      );
+      return exists ? prev.filter((p) => `${p.fixture_id}-${p.market}` !== key) : [...prev, bet];
+    });
+  }, []);
+
+  const handleRemoveFromParlay = useCallback(
+    (fixtureId: number, market: string) => {
+      setParlayPicks((prev) =>
+        prev.filter(
+          (p) => !(p.fixture_id === fixtureId && p.market === market),
+        ),
+      );
+    },
+    [],
+  );
+
+  const handlePicksLoaded = useCallback((bets: ValueBet[]) => {
+    setAllPicks(bets);
+  }, []);
+
+  const navTabs: { key: ViewKey; label: string; icon: string }[] = [
+    { key: "picks", label: "Picks del Día", icon: "🎯" },
+    { key: "fixtures", label: "Partidos", icon: "📅" },
+    { key: "stats", label: "Precisión", icon: "📊" },
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 py-12 sm:py-16 relative">
-          <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent mb-4">
-              ParlayGalaxy
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-400 mb-2">
-              Smart Football Betting Intelligence
-            </p>
-            <p className="text-gray-500 max-w-2xl mx-auto mb-6">
-              AI-powered predictions with ensemble ML models, real-time odds
-              tracking, and quality grades to maximize your edge.
-            </p>
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
+      {/* ── Top Nav ──────────────────────────────────────────────── */}
+      <header className="border-b border-gray-800/60 bg-gray-950/95 backdrop-blur-sm sticky top-0 z-20">
+        <div className="max-w-screen-2xl mx-auto px-4 py-3 flex items-center gap-4">
+          {/* Brand */}
+          <div className="flex items-center gap-2 mr-4">
+            <span className="text-2xl">🌌</span>
+            <span className="font-black text-lg bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+              GalaxyParlay
+            </span>
+          </div>
 
-            {/* Refresh Button */}
-            <button
-              onClick={loadData}
-              disabled={loading}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg transition-colors disabled:opacity-50"
-            >
-              <svg
-                className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+          {/* Nav tabs */}
+          <nav className="flex gap-1">
+            {navTabs.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveView(tab.key)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                  activeView === tab.key
+                    ? "bg-purple-600/30 text-white border border-purple-500/40"
+                    : "text-gray-400 hover:text-white hover:bg-gray-800/60"
+                }`}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                />
-              </svg>
-              Refresh Data
-            </button>
+                <span>{tab.icon}</span>
+                <span className="hidden sm:inline">{tab.label}</span>
+              </button>
+            ))}
+          </nav>
+
+          {/* Right: parlay badge */}
+          <div className="ml-auto flex items-center gap-3">
+            {parlayPicks.length > 0 && (
+              <span className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-purple-600/20 border border-purple-500/30 rounded-lg text-sm text-purple-300">
+                🎲 {parlayPicks.length} pick{parlayPicks.length !== 1 ? "s" : ""}
+                {" "}@
+                {(parlayPicks.reduce((a, b) => a * b.odds, 1)).toFixed(2)}
+              </span>
+            )}
+            <span className="text-xs text-gray-600">+18 · Educativo</span>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Stats Section */}
-      {stats && (
-        <div className="max-w-7xl mx-auto px-4 -mt-4 mb-8">
-          <StatsCard stats={stats} />
+      {/* ── Main Content ─────────────────────────────────────────── */}
+      {activeView === "picks" && (
+        <div className="flex-1 flex overflow-hidden max-w-screen-2xl mx-auto w-full">
+          {/* Left: Galaxy Canvas — hidden on small screens */}
+          <aside className="hidden xl:flex xl:w-[42%] flex-col border-r border-gray-800/60 overflow-hidden">
+            <div className="px-4 pt-4 pb-2 flex items-center justify-between">
+              <h2 className="text-sm font-semibold text-gray-400 flex items-center gap-2">
+                <span>🌌</span> Mapa de Partidos
+              </h2>
+              {loadingFixtures && (
+                <span className="text-xs text-gray-600 animate-pulse">Cargando…</span>
+              )}
+            </div>
+            <div className="flex-1 overflow-hidden px-2 pb-2">
+              {!loadingFixtures && fixtures.length > 0 ? (
+                <GalaxyCanvas
+                  fixtures={fixtures}
+                  onFixtureClick={handleGalaxyClick}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center">
+                    <div className="text-5xl mb-3 animate-pulse">🌌</div>
+                    <p className="text-gray-600 text-sm">
+                      {loadingFixtures ? "Cargando galaxy…" : "Sin partidos"}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </aside>
+
+          {/* Right: Picks + Parlay */}
+          <main className="flex-1 flex flex-col overflow-hidden">
+            {/* Picks list — scrollable */}
+            <div className="flex-1 overflow-y-auto px-4 pt-4 pb-2">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-base font-bold text-white flex items-center gap-2">
+                  <span>🎯</span> Picks del Día
+                </h2>
+                {stats && (
+                  <span className="text-xs text-gray-500">
+                    {stats.predictions?.grade_a ?? 0} grado A
+                  </span>
+                )}
+              </div>
+              <TodayPicks
+                parlayPicks={parlayPicks}
+                highlightedFixtureId={highlightedFixtureId}
+                onToggleParlay={handleToggleParlay}
+                onClickFixture={(fid: number) => {
+                  const fx = fixtures.find((f) => f.id === fid);
+                  if (fx) handleFixtureClick(fx);
+                }}
+                onPicksLoaded={handlePicksLoaded}
+              />
+            </div>
+
+            {/* Parlay builder — sticky bottom */}
+            <div className="px-4 pb-4 pt-2 border-t border-gray-800/60 bg-gray-950/80 backdrop-blur-sm">
+              <ParlayBuilder
+                picks={parlayPicks}
+                onRemovePick={handleRemoveFromParlay}
+                onClear={() => setParlayPicks([])}
+              />
+            </div>
+          </main>
         </div>
       )}
 
-      {/* Main Tabs */}
-      <div className="max-w-7xl mx-auto px-4 mb-6">
-        <div className="flex gap-2 p-1 bg-gray-800/50 rounded-xl border border-gray-700/50">
-          {tabs.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                activeTab === tab.key
-                  ? "bg-gradient-to-r from-purple-500/30 to-pink-500/30 text-white border border-purple-500/30"
-                  : "text-gray-400 hover:text-white hover:bg-gray-700/30"
-              }`}
-            >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
-              {tab.key === "fixtures" && fixtures && fixtures.length > 0 && (
-                <span className="ml-1 px-2 py-0.5 bg-gray-700/50 rounded-full text-xs">
-                  {fixtures.length}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Tab Content */}
-      <div className="max-w-7xl mx-auto px-4 pb-20">
-        {error && (
-          <div className="text-center py-12 bg-red-900/20 rounded-xl border border-red-500/30 mb-6">
-            <div className="text-4xl mb-4">⚠️</div>
-            <h3 className="text-xl font-semibold text-red-400 mb-2">
-              Connection Error
-            </h3>
-            <p className="text-gray-500 mb-4">{error}</p>
-            <button
-              onClick={loadData}
-              className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-colors"
-            >
-              Retry
-            </button>
+      {activeView === "fixtures" && (
+        <div className="flex-1 max-w-screen-xl mx-auto w-full px-4 py-6">
+          <div className="mb-4">
+            <LeagueFilter
+              selectedLeague={selectedLeague}
+              onSelect={setSelectedLeague}
+            />
           </div>
-        )}
-
-        {activeTab === "network" && (
-          <>
-            {loading ? (
-              <div className="flex items-center justify-center h-96 bg-gray-800/50 rounded-2xl">
-                <div className="text-center">
-                  <div className="text-6xl mb-4 animate-pulse">🕸️</div>
-                  <p className="text-gray-400">Loading Network Graph...</p>
-                </div>
-              </div>
-            ) : (
-              <div className="h-[800px] bg-gray-900/50 rounded-2xl border border-gray-700/50 overflow-hidden">
-                <NetworkGraphView
-                  fixtures={fixtures}
-                  onFixtureClick={handleFixtureClick}
-                />
-              </div>
-            )}
-          </>
-        )}
-
-        {activeTab === "clusters" && (
-          <>
-            {loading ? (
-              <div className="flex items-center justify-center h-96 bg-gray-800/50 rounded-2xl">
-                <div className="text-center">
-                  <div className="text-6xl mb-4 animate-pulse">⚡</div>
-                  <p className="text-gray-400">Loading Clusters...</p>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <div className="mb-6 text-center">
-                  <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 mb-2 flex items-center justify-center gap-3">
-                    <span className="text-4xl">⚡</span>
-                    <span>LEAGUE CLUSTERS</span>
-                    <span className="text-4xl">🎯</span>
-                  </h2>
-                  <p className="text-sm text-gray-400 max-w-2xl mx-auto">
-                    <span className="text-purple-400 font-semibold">
-                      Fixtures agrupados por liga
-                    </span>{" "}
-                    • Colores indican{" "}
-                    <span className="text-green-400">calidad</span> y{" "}
-                    <span className="text-red-400">urgencia</span> •
-                    <span className="text-yellow-400">🔥 HOY</span>,
-                    <span className="text-orange-400"> ⏰ MAÑANA</span>,
-                    <span className="text-blue-400"> 📅 PRÓXIMOS</span>
-                  </p>
-                  <p className="text-xs text-gray-500 mt-2">
-                    💡 Cada círculo representa un pick • Click para ver detalles
-                    completos del match
-                  </p>
-                </div>
-                <LeagueClusterView
-                  fixtures={fixtures}
-                  onFixtureClick={handleFixtureClick}
-                />
-              </div>
-            )}
-          </>
-        )}
-
-        {activeTab === "galaxy" && (
-          <>
-            {loading ? (
-              <div className="flex items-center justify-center h-96 bg-gray-800/50 rounded-2xl">
-                <div className="text-center">
-                  <div className="text-6xl mb-4 animate-pulse">🌌</div>
-                  <p className="text-gray-400">Loading Galaxy...</p>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <div className="mb-6 text-center">
-                  <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 mb-2 flex items-center justify-center gap-3">
-                    <span className="text-4xl">🌌</span>
-                    <span>GALAXY VIEW</span>
-                    <span className="text-4xl">✨</span>
-                  </h2>
-                  <p className="text-sm text-gray-400 max-w-2xl mx-auto">
-                    <span className="text-purple-400 font-semibold">
-                      Interactive fixture visualization
-                    </span>{" "}
-                    • Fixtures clustered by AI quality grade •
-                    <span className="text-green-400">Green = Best picks</span>,
-                    <span className="text-amber-400"> Amber = Good picks</span>,
-                    <span className="text-gray-400">
-                      {" "}
-                      Gray = Lower confidence
-                    </span>
-                  </p>
-                  <p className="text-xs text-gray-500 mt-2">
-                    💡 Hover over stars to see all predictions (Match Winner,
-                    Over/Under, BTTS, Corners) • Click to open detailed view
-                  </p>
-                </div>
-                <GalaxyCanvas
-                  fixtures={fixtures}
-                  onFixtureClick={handleFixtureClick}
-                />
-              </div>
-            )}
-          </>
-        )}
-
-        {activeTab === "fixtures" && (
-          <>
-            <div className="mb-6">
-              <LeagueFilter
-                selectedLeague={selectedLeague}
-                onSelect={setSelectedLeague}
-              />
+          {loadingFixtures ? (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-48 bg-gray-800/40 rounded-2xl animate-pulse" />
+              ))}
             </div>
-            {loading ? (
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {[...Array(6)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-48 bg-gray-800/50 rounded-2xl animate-pulse"
-                  />
-                ))}
-              </div>
-            ) : (
-              <FixtureList
-                fixtures={
-                  selectedLeague
-                    ? fixtures.filter((f) => f.league_id === selectedLeague)
-                    : fixtures
-                }
-                title="Upcoming Fixtures"
-                onFixtureClick={handleFixtureClick}
-              />
-            )}
-          </>
-        )}
+          ) : (
+            <FixtureList
+              fixtures={
+                selectedLeague
+                  ? fixtures.filter((f) => f.league_id === selectedLeague)
+                  : fixtures
+              }
+              title={`Próximos partidos${selectedLeague ? " · filtrado" : ""}`}
+              onFixtureClick={handleFixtureClick}
+            />
+          )}
+        </div>
+      )}
 
-        {activeTab === "valuebets" && <ValueBetList limit={20} />}
-
-        {activeTab === "players" && <PlayerPropsSection />}
-
-        {activeTab === "accuracy" && <ModelAccuracy />}
-      </div>
+      {activeView === "stats" && (
+        <div className="flex-1 max-w-screen-xl mx-auto w-full px-4 py-6 space-y-6">
+          {stats && <StatsCard stats={stats} />}
+          <ModelAccuracy />
+        </div>
+      )}
 
       {/* Match Drawer */}
       <MatchDrawer
@@ -325,14 +255,12 @@ export default function Home() {
       />
 
       {/* Footer */}
-      <footer className="border-t border-gray-800 py-8">
-        <div className="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
-          <p>🚀 ParlayGalaxy v1.0.0 • Powered by AI & API-Football</p>
-          <p className="mt-2">
-            ⚠️ For entertainment purposes only. Please gamble responsibly.
-          </p>
-        </div>
+      <footer className="border-t border-gray-800/60 py-4 mt-auto">
+        <p className="text-center text-xs text-gray-600">
+          GalaxyParlay · Powered by AI & API-Football · Solo con fines educativos · +18
+        </p>
       </footer>
-    </main>
+    </div>
   );
 }
+
