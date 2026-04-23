@@ -25,7 +25,9 @@ export default function Home() {
   const [selectedLeague, setSelectedLeague] = useState<number | null>(null);
 
   // Galaxy interaction
-  const [highlightedFixtureId, setHighlightedFixtureId] = useState<number | null>(null);
+  const [highlightedFixtureId, setHighlightedFixtureId] = useState<
+    number | null
+  >(null);
 
   // Parlay state
   const [parlayPicks, setParlayPicks] = useState<ValueBet[]>([]);
@@ -39,10 +41,7 @@ export default function Home() {
 
   useEffect(() => {
     setLoadingFixtures(true);
-    Promise.all([
-      getFixtures({ status: "NS", limit: 200 }),
-      getStats(),
-    ])
+    Promise.all([getFixtures({ status: "NS", limit: 200 }), getStats()])
       .then(([fixturesData, statsData]) => {
         setFixtures(fixturesData || []);
         setStats(statsData);
@@ -57,22 +56,19 @@ export default function Home() {
     setHighlightedFixtureId(fixture.id);
   }, []);
 
-  const handleGalaxyClick = useCallback(
-    (fixture: Fixture) => {
-      setHighlightedFixtureId(fixture.id);
-      setSelectedFixture(fixture);
-      setDrawerOpen(true);
-    },
-    [],
-  );
+  const handleGalaxyClick = useCallback((fixture: Fixture) => {
+    setHighlightedFixtureId(fixture.id);
+    setSelectedFixture(fixture);
+    setDrawerOpen(true);
+  }, []);
 
   const handleToggleParlay = useCallback((bet: ValueBet) => {
     setParlayPicks((prev) => {
       const key = `${bet.fixture_id}-${bet.market}`;
-      const exists = prev.some(
-        (p) => `${p.fixture_id}-${p.market}` === key,
-      );
-      return exists ? prev.filter((p) => `${p.fixture_id}-${p.market}` !== key) : [...prev, bet];
+      const exists = prev.some((p) => `${p.fixture_id}-${p.market}` === key);
+      return exists
+        ? prev.filter((p) => `${p.fixture_id}-${p.market}` !== key)
+        : [...prev, bet];
     });
   }, []);
 
@@ -132,9 +128,9 @@ export default function Home() {
           <div className="ml-auto flex items-center gap-3">
             {parlayPicks.length > 0 && (
               <span className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-purple-600/20 border border-purple-500/30 rounded-lg text-sm text-purple-300">
-                🎲 {parlayPicks.length} pick{parlayPicks.length !== 1 ? "s" : ""}
-                {" "}@
-                {(parlayPicks.reduce((a, b) => a * b.odds, 1)).toFixed(2)}
+                🎲 {parlayPicks.length} pick
+                {parlayPicks.length !== 1 ? "s" : ""} @
+                {parlayPicks.reduce((a, b) => a * b.odds, 1).toFixed(2)}
               </span>
             )}
             <span className="text-xs text-gray-600">+18 · Educativo</span>
@@ -152,7 +148,9 @@ export default function Home() {
                 <span>🌌</span> Mapa de Partidos
               </h2>
               {loadingFixtures && (
-                <span className="text-xs text-gray-600 animate-pulse">Cargando…</span>
+                <span className="text-xs text-gray-600 animate-pulse">
+                  Cargando…
+                </span>
               )}
             </div>
             <div className="flex-1 overflow-hidden px-2 pb-2">
@@ -223,7 +221,10 @@ export default function Home() {
           {loadingFixtures ? (
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="h-48 bg-gray-800/40 rounded-2xl animate-pulse" />
+                <div
+                  key={i}
+                  className="h-48 bg-gray-800/40 rounded-2xl animate-pulse"
+                />
               ))}
             </div>
           ) : (
@@ -257,10 +258,10 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-gray-800/60 py-4 mt-auto">
         <p className="text-center text-xs text-gray-600">
-          GalaxyParlay · Powered by AI & API-Football · Solo con fines educativos · +18
+          GalaxyParlay · Powered by AI & API-Football · Solo con fines
+          educativos · +18
         </p>
       </footer>
     </div>
   );
 }
-

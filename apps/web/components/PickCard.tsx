@@ -93,13 +93,16 @@ export function PickCard({
           <span>{leagueFlag}</span>
           <span>{leagueName}</span>
         </span>
-        <span className="text-xs text-gray-500">{formatTime(bet.kickoff_time)}</span>
+        <span className="text-xs text-gray-500">
+          {formatTime(bet.kickoff_time)}
+        </span>
       </div>
 
       {/* Match */}
       <div className="mb-3">
         <p className="font-semibold text-white text-sm leading-tight">
-          {bet.home_team} <span className="text-gray-500">vs</span> {bet.away_team}
+          {bet.home_team} <span className="text-gray-500">vs</span>{" "}
+          {bet.away_team}
         </p>
       </div>
 
@@ -119,7 +122,9 @@ export function PickCard({
         </div>
         <div className="flex justify-between mt-1">
           <span className="text-xs text-gray-500">Prob. modelo</span>
-          <span className={`text-xs font-semibold ${gradeStyle.text}`}>{probPct}%</span>
+          <span className={`text-xs font-semibold ${gradeStyle.text}`}>
+            {probPct}%
+          </span>
         </div>
       </div>
 
@@ -136,7 +141,9 @@ export function PickCard({
         <span className="px-2 py-0.5 rounded-full text-xs text-gray-400 bg-gray-700/40 border border-gray-600/30">
           Edge +{edgePct}%
         </span>
-        <span className="ml-auto text-sm font-bold text-white">@{bet.odds}</span>
+        <span className="ml-auto text-sm font-bold text-white">
+          @{bet.odds}
+        </span>
       </div>
 
       {/* Add to Parlay button */}

@@ -27,7 +27,11 @@ function buildShareText(picks: ValueBet[], combinedOdds: number): string {
   return lines.join("\n");
 }
 
-export function ParlayBuilder({ picks, onRemovePick, onClear }: ParlayBuilderProps) {
+export function ParlayBuilder({
+  picks,
+  onRemovePick,
+  onClear,
+}: ParlayBuilderProps) {
   const combinedOdds =
     picks.length > 0
       ? Math.round(picks.reduce((acc, p) => acc * p.odds, 1) * 100) / 100
@@ -45,16 +49,17 @@ export function ParlayBuilder({ picks, onRemovePick, onClear }: ParlayBuilderPro
     if (picks.length === 0) return;
     const text = buildShareText(picks, combinedOdds);
     if (navigator.share) {
-      navigator
-        .share({ title: "Mi Parlay — GalaxyParlay", text })
-        .catch(() => {
-          // fallback: copy to clipboard
-          navigator.clipboard.writeText(text).catch(() => {});
-        });
+      navigator.share({ title: "Mi Parlay — GalaxyParlay", text }).catch(() => {
+        // fallback: copy to clipboard
+        navigator.clipboard.writeText(text).catch(() => {});
+      });
     } else {
-      navigator.clipboard.writeText(text).then(() => {
-        alert("¡Parlay copiado al portapapeles!");
-      }).catch(() => {});
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          alert("¡Parlay copiado al portapapeles!");
+        })
+        .catch(() => {});
     }
   }, [picks, combinedOdds]);
 
@@ -101,9 +106,12 @@ export function ParlayBuilder({ picks, onRemovePick, onClear }: ParlayBuilderPro
               >
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-white truncate">
-                    {LEAGUE_FLAGS[p.league_id] ?? "⚽"} {p.home_team} vs {p.away_team}
+                    {LEAGUE_FLAGS[p.league_id] ?? "⚽"} {p.home_team} vs{" "}
+                    {p.away_team}
                   </p>
-                  <p className="text-xs text-gray-400 truncate">{p.selection}</p>
+                  <p className="text-xs text-gray-400 truncate">
+                    {p.selection}
+                  </p>
                 </div>
                 <div className="flex items-center gap-3 ml-3">
                   <span className="text-sm font-bold text-white whitespace-nowrap">
