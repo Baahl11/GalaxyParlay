@@ -51,6 +51,10 @@ export default function Home() {
     "value",
   );
   const [viewMode, setViewMode] = useState<"quality" | "volume">("volume");
+  const [timeScope, setTimeScope] = useState<"today" | "all">("today");
+  const [gradeFilter, setGradeFilter] = useState<
+    "all" | "A" | "B" | "C" | "D"
+  >("all");
   const [showCount, setShowCount] = useState<number>(30);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -58,12 +62,12 @@ export default function Home() {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    const fetchLimit = Math.max(showCount * 3, 60);
+    const fetchLimit = Math.max(showCount * 3, timeScope === "all" ? 200 : 60);
     const valueParams =
       viewMode === "quality"
         ? { limit: fetchLimit, min_edge: 0.03, min_ev: 0.02 }
         : { limit: fetchLimit, min_edge: 0, min_ev: 0 };
-    const modelParams: Parameters<typeof getModelPicks>[0] =
+    let modelParams: Parameters<typeof getModelPicks>[0] =
       viewMode === "quality"
         ? { limit: fetchLimit, min_confidence: 0.6, grades: ["A", "B"] }
         : {
@@ -71,35 +75,43 @@ export default function Home() {
             min_confidence: 0.45,
             grades: ["A", "B", "C", "D"],
           };
+    if (gradeFilter === "A") {
+      modelParams = { ...modelParams, min_confidence: 0, grades: ["A"] };
+    }
 
     Promise.all([getStats(), getValueBets(valueParams)])
       .then(async ([statsData, valueData]) => {
         setStats(statsData);
         const valueBets = valueData.bets;
         const now = new Date();
-        const valueBetsToday = valueBets.filter((bet) =>
-          isSameLocalDay(new Date(bet.kickoff_time), now),
-        );
+        const scopeIsToday = timeScope === "today";
+        const valueBetsScoped = scopeIsToday
+          ? valueBets.filter((bet) =>
+              isSameLocalDay(new Date(bet.kickoff_time), now),
+            )
+          : valueBets;
         let modelPicks: ValueBet[] = [];
         const needsModel =
-          valueBetsToday.length < showCount || viewMode === "volume";
+          valueBetsScoped.length < showCount || viewMode === "volume";
         if (needsModel) {
           modelPicks = await getModelPicks(modelParams);
         }
         const valueKeys = new Set(
-          valueBetsToday.map((b) => `${b.fixture_id}-${b.market}`),
+          valueBetsScoped.map((b) => `${b.fixture_id}-${b.market}`),
         );
-        const modelPicksToday = modelPicks.filter((bet) =>
-          isSameLocalDay(new Date(bet.kickoff_time), now),
-        );
-        const dedupedModel = modelPicksToday.filter(
+        const modelPicksScoped = scopeIsToday
+          ? modelPicks.filter((bet) =>
+              isSameLocalDay(new Date(bet.kickoff_time), now),
+            )
+          : modelPicks;
+        const dedupedModel = modelPicksScoped.filter(
           (b) => !valueKeys.has(`${b.fixture_id}-${b.market}`),
         );
-        const merged = [...valueBetsToday, ...dedupedModel];
+        const merged = [...valueBetsScoped, ...dedupedModel];
         setPicks(merged);
-        if (valueBetsToday.length > 0 && dedupedModel.length > 0) {
+        if (valueBetsScoped.length > 0 && dedupedModel.length > 0) {
           setPicksSource("mixed");
-        } else if (valueBetsToday.length > 0) {
+        } else if (valueBetsScoped.length > 0) {
           setPicksSource("value");
         } else {
           setPicksSource("model");
@@ -109,13 +121,22 @@ export default function Home() {
         setError(err instanceof Error ? err.message : "Error cargando picks");
       })
       .finally(() => setLoading(false));
-  }, [showCount, viewMode]);
+  }, [showCount, viewMode, timeScope, gradeFilter]);
+
+  const filteredPicks = useMemo(() => {
+    if (gradeFilter === "all") return picks;
+    return picks.filter((bet) => bet.grade === gradeFilter);
+  }, [picks, gradeFilter]);
 
   const rankedPicks = useMemo(() => {
-    return [...picks]
+    return [...filteredPicks]
       .sort((a, b) => scorePick(b) - scorePick(a))
       .slice(0, showCount);
-  }, [picks, showCount]);
+  }, [filteredPicks, showCount]);
+
+  const gradeAInScope = useMemo(() => {
+    return picks.filter((bet) => bet.grade === "A").length;
+  }, [picks]);
 
   const todayLabel = new Date().toLocaleDateString("es-ES", {
     day: "2-digit",
@@ -171,7 +192,9 @@ export default function Home() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h2 className="text-lg font-display tracking-wider text-white">
-                Ranking de Picks del Día
+                {timeScope === "today"
+                  ? "Ranking de Picks del Día"
+                  : "Ranking de Picks Globales"}
               </h2>
               <p className="text-sm text-gray-400">
                 Ordenados por EV, edge y confianza del modelo.
@@ -179,17 +202,53 @@ export default function Home() {
             </div>
             <div className="flex gap-3 flex-wrap text-xs">
               <span className="px-3 py-1 rounded-full neon-chip text-cyan-200">
-                {rankedPicks.length} / {picks.length} picks
+                {rankedPicks.length} / {filteredPicks.length} picks
+              </span>
+              <span className="px-3 py-1 rounded-full neon-chip text-cyan-200">
+                {gradeAInScope} grado A
+                {timeScope === "today" ? " hoy" : " en vista"}
               </span>
               {stats && (
-                <span className="px-3 py-1 rounded-full neon-chip text-cyan-200">
-                  {stats.predictions?.grade_a ?? 0} grado A
-                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTimeScope("all");
+                    setGradeFilter("A");
+                    setViewMode("quality");
+                    setShowCount(300);
+                  }}
+                  className="px-3 py-1 rounded-full neon-chip text-cyan-200 hover:text-white hover:border-cyan-200/60 transition-colors"
+                >
+                  {stats.predictions?.grade_a ?? 0} grado A global
+                </button>
               )}
             </div>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-3 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="text-cyan-300 uppercase tracking-[0.2em]">
+                Alcance
+              </span>
+              {(
+                [
+                  { key: "today", label: "Hoy" },
+                  { key: "all", label: "Todos" },
+                ] as const
+              ).map((scope) => (
+                <button
+                  key={scope.key}
+                  onClick={() => setTimeScope(scope.key)}
+                  className={`px-3 py-1 rounded-full transition-colors ${
+                    timeScope === scope.key
+                      ? "bg-emerald-500/30 text-emerald-100 border border-emerald-400/40"
+                      : "bg-gray-900/50 text-gray-400 border border-gray-700/50"
+                  }`}
+                >
+                  {scope.label}
+                </button>
+              ))}
+            </div>
             <div className="flex items-center gap-2">
               <span className="text-cyan-300 uppercase tracking-[0.2em]">
                 Modo
@@ -215,9 +274,29 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-cyan-300 uppercase tracking-[0.2em]">
+                Grado
+              </span>
+              {(
+                ["all", "A", "B", "C", "D"] as const
+              ).map((grade) => (
+                <button
+                  key={grade}
+                  onClick={() => setGradeFilter(grade)}
+                  className={`px-3 py-1 rounded-full transition-colors ${
+                    gradeFilter === grade
+                      ? "bg-indigo-500/30 text-indigo-100 border border-indigo-400/40"
+                      : "bg-gray-900/50 text-gray-400 border border-gray-700/50"
+                  }`}
+                >
+                  {grade === "all" ? "Todos" : grade}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-cyan-300 uppercase tracking-[0.2em]">
                 Mostrar
               </span>
-              {[12, 30, 60, 120].map((count) => (
+              {[12, 30, 60, 120, 200, 300].map((count) => (
                 <button
                   key={count}
                   onClick={() => setShowCount(count)}
