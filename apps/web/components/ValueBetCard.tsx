@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { LEAGUE_FLAGS, LEAGUE_NAMES } from '@/lib/types';
+import { LEAGUE_FLAGS, LEAGUE_NAMES } from "@/lib/types";
 
 export interface ValueBetData {
   fixture_id: number;
@@ -49,65 +49,71 @@ export function ValueBetCard({ valueBet, compact = false }: ValueBetCardProps) {
     value_score,
   } = valueBet;
 
-  const leagueFlag = LEAGUE_FLAGS[league_id] || '⚽';
+  const leagueFlag = LEAGUE_FLAGS[league_id] || "⚽";
   const leagueName = LEAGUE_NAMES[league_id] || `League ${league_id}`;
 
   // Format kickoff time
   const kickoff = new Date(kickoff_time);
-  const timeStr = kickoff.toLocaleTimeString('en-US', { 
-    hour: '2-digit', 
-    minute: '2-digit',
-    hour12: false 
+  const timeStr = kickoff.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
   });
-  const dateStr = kickoff.toLocaleDateString('en-US', { 
-    weekday: 'short',
-    month: 'short', 
-    day: 'numeric' 
+  const dateStr = kickoff.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
   });
 
   // Grade colors
   const gradeColors: Record<string, string> = {
-    'S': 'bg-fuchsia-500',
-    'A': 'bg-green-500',
-    'B': 'bg-blue-500',
-    'C': 'bg-yellow-500',
-    'D': 'bg-orange-500',
-    'F': 'bg-red-500',
+    S: "bg-fuchsia-500",
+    A: "bg-green-500",
+    B: "bg-blue-500",
+    C: "bg-yellow-500",
+    D: "bg-orange-500",
+    F: "bg-red-500",
   };
 
   // Market display names
   const marketNames: Record<string, string> = {
-    'match_winner': '1X2',
-    'over_under_2.5': 'O/U 2.5',
-    'both_teams_score': 'BTTS',
+    match_winner: "1X2",
+    "over_under_2.5": "O/U 2.5",
+    both_teams_score: "BTTS",
   };
 
   // EV color based on value
   const getEvColor = (ev: number) => {
-    if (ev >= 10) return 'text-green-400';
-    if (ev >= 5) return 'text-emerald-400';
-    if (ev >= 3) return 'text-yellow-400';
-    return 'text-orange-400';
+    if (ev >= 10) return "text-green-400";
+    if (ev >= 5) return "text-emerald-400";
+    if (ev >= 3) return "text-yellow-400";
+    return "text-orange-400";
   };
 
   if (compact) {
     return (
       <div className="bg-gray-800/50 rounded-xl p-3 border border-gray-700/50 hover:border-purple-500/50 transition-all">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs text-gray-400">{leagueFlag} {leagueName}</span>
-          <span className={`px-1.5 py-0.5 rounded text-xs font-bold text-white ${gradeColors[quality_grade]}`}>
+          <span className="text-xs text-gray-400">
+            {leagueFlag} {leagueName}
+          </span>
+          <span
+            className={`px-1.5 py-0.5 rounded text-xs font-bold text-white ${gradeColors[quality_grade]}`}
+          >
             {quality_grade}
           </span>
         </div>
-        
+
         <div className="text-sm font-medium text-white mb-1">
           {home_team} vs {away_team}
         </div>
-        
+
         <div className="flex items-center justify-between">
           <div>
             <span className="text-purple-400 font-semibold">{selection}</span>
-            <span className="text-gray-500 ml-2">@ {bookmaker_odds.toFixed(2)}</span>
+            <span className="text-gray-500 ml-2">
+              @ {bookmaker_odds.toFixed(2)}
+            </span>
           </div>
           <div className={`font-bold ${getEvColor(ev_percent)}`}>
             +{ev_percent}% EV
@@ -124,13 +130,19 @@ export function ValueBetCard({ valueBet, compact = false }: ValueBetCardProps) {
         <div className="flex items-center gap-2">
           <span className="text-lg">{leagueFlag}</span>
           <span className="text-sm text-gray-400">{leagueName}</span>
-          <span className="text-xs text-gray-500">• {marketNames[market_key]}</span>
+          <span className="text-xs text-gray-500">
+            • {marketNames[market_key]}
+          </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className={`px-2 py-0.5 rounded text-xs font-bold text-white ${gradeColors[quality_grade]}`}>
+          <span
+            className={`px-2 py-0.5 rounded text-xs font-bold text-white ${gradeColors[quality_grade]}`}
+          >
             Grade {quality_grade}
           </span>
-          <span className="text-xs text-gray-500">{dateStr} {timeStr}</span>
+          <span className="text-xs text-gray-500">
+            {dateStr} {timeStr}
+          </span>
         </div>
       </div>
 
@@ -146,25 +158,37 @@ export function ValueBetCard({ valueBet, compact = false }: ValueBetCardProps) {
         <div className="bg-gray-800/50 rounded-xl p-4 mb-4">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <div className="text-xs text-gray-400 uppercase tracking-wide">Selection</div>
-              <div className="text-xl font-bold text-purple-400">{selection}</div>
+              <div className="text-xs text-gray-400 uppercase tracking-wide">
+                Selection
+              </div>
+              <div className="text-xl font-bold text-purple-400">
+                {selection}
+              </div>
             </div>
             <div className="text-right">
-              <div className="text-xs text-gray-400 uppercase tracking-wide">{bookmaker}</div>
-              <div className="text-2xl font-bold text-white">{bookmaker_odds.toFixed(2)}</div>
+              <div className="text-xs text-gray-400 uppercase tracking-wide">
+                {bookmaker}
+              </div>
+              <div className="text-2xl font-bold text-white">
+                {bookmaker_odds.toFixed(2)}
+              </div>
             </div>
           </div>
-          
+
           {/* Probability comparison */}
           <div className="flex items-center gap-4 text-sm">
             <div className="flex-1">
               <div className="text-gray-400 text-xs">Model Probability</div>
-              <div className="text-white font-medium">{(model_probability * 100).toFixed(1)}%</div>
+              <div className="text-white font-medium">
+                {(model_probability * 100).toFixed(1)}%
+              </div>
             </div>
             <div className="text-2xl text-green-400">→</div>
             <div className="flex-1 text-right">
               <div className="text-gray-400 text-xs">Implied from Odds</div>
-              <div className="text-gray-300 font-medium">{(valueBet.implied_probability * 100).toFixed(1)}%</div>
+              <div className="text-gray-300 font-medium">
+                {(valueBet.implied_probability * 100).toFixed(1)}%
+              </div>
             </div>
           </div>
         </div>
@@ -173,20 +197,32 @@ export function ValueBetCard({ valueBet, compact = false }: ValueBetCardProps) {
         <div className="grid grid-cols-3 gap-3">
           {/* Edge */}
           <div className="bg-gray-800/30 rounded-lg p-3 text-center">
-            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">Edge</div>
-            <div className="text-xl font-bold text-blue-400">+{edge_percent}%</div>
+            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+              Edge
+            </div>
+            <div className="text-xl font-bold text-blue-400">
+              +{edge_percent}%
+            </div>
           </div>
-          
+
           {/* EV */}
           <div className="bg-gray-800/30 rounded-lg p-3 text-center">
-            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">Expected Value</div>
-            <div className={`text-xl font-bold ${getEvColor(ev_percent)}`}>+{ev_percent}%</div>
+            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+              Expected Value
+            </div>
+            <div className={`text-xl font-bold ${getEvColor(ev_percent)}`}>
+              +{ev_percent}%
+            </div>
           </div>
-          
+
           {/* Kelly */}
           <div className="bg-gray-800/30 rounded-lg p-3 text-center">
-            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">Kelly Stake</div>
-            <div className="text-xl font-bold text-purple-400">{kelly_percent}%</div>
+            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">
+              Kelly Stake
+            </div>
+            <div className="text-xl font-bold text-purple-400">
+              {kelly_percent}%
+            </div>
           </div>
         </div>
 
@@ -197,7 +233,7 @@ export function ValueBetCard({ valueBet, compact = false }: ValueBetCardProps) {
             <span>{value_score.toFixed(0)}/100</span>
           </div>
           <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(value_score, 100)}%` }}
             />
@@ -207,7 +243,9 @@ export function ValueBetCard({ valueBet, compact = false }: ValueBetCardProps) {
         {/* Confidence */}
         <div className="mt-3 flex items-center justify-between text-sm">
           <span className="text-gray-400">Model Confidence</span>
-          <span className="text-white font-medium">{(confidence_score * 100).toFixed(0)}%</span>
+          <span className="text-white font-medium">
+            {(confidence_score * 100).toFixed(0)}%
+          </span>
         </div>
       </div>
     </div>

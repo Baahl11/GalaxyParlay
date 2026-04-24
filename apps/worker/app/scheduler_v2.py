@@ -74,6 +74,25 @@ def job_sync_results_sync():
         logger.error("job_sync_results_error", error=str(e))
 
 
+def job_sync_player_stats():
+    """
+    Job: Sync player season statistics from API-Football.
+    Frequency: Every Sunday at 3 AM UTC (weekly)
+    """
+    try:
+        logger.info("job_sync_player_stats_started")
+        from app.routes.jobs import sync_all_player_statistics
+
+        result = sync_all_player_statistics()
+        logger.info(
+            "job_sync_player_stats_complete",
+            players_synced=result.get("players_synced", 0),
+            teams_processed=result.get("teams_processed", 0),
+        )
+    except Exception as e:
+        logger.error("job_sync_player_stats_error", error=str(e))
+
+
 def job_sync_live_scores():
     """
     Job: Update live fixtures and scores.
@@ -146,6 +165,17 @@ def start_scheduler():
         trigger=IntervalTrigger(minutes=5),
         id="sync_live_scores",
         name="Sync Live Scores",
+        replace_existing=True,
+        max_instances=1,
+        coalesce=True,
+    )
+
+    # Job 5: Sync player statistics weekly (Sunday 3 AM UTC)
+    scheduler.add_job(
+        job_sync_player_stats,
+        trigger=CronTrigger(day_of_week="sun", hour="3", minute="0"),
+        id="sync_player_stats",
+        name="Sync Player Stats",
         replace_existing=True,
         max_instances=1,
         coalesce=True,

@@ -17,20 +17,28 @@ const rajdhani = Rajdhani({
 export const metadata: Metadata = {
   title: "Marc Loyera Picks - Smart Betting Only",
   description:
-    "Neon-style football picks ranking with model confidence and market insights.",
+    "Neon-style football picks ranking with model confidence and market insights. Solo fines educativos 18+.",
   keywords: [
     "football",
     "betting",
     "picks",
     "sports analytics",
     "machine learning",
+    "pronosticos futbol",
   ],
   authors: [{ name: "Marc Loyera Picks" }],
+  manifest: "/manifest.json",
+  themeColor: "#06b6d4",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
   openGraph: {
     title: "Marc Loyera Picks",
     description: "Smart Betting Only — Neon Picks Board",
     type: "website",
-    locale: "en_US",
+    locale: "es_MX",
   },
   twitter: {
     card: "summary_large_image",

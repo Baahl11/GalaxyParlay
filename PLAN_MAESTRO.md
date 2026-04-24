@@ -364,31 +364,31 @@ Definition of done (DoD) por ticket:
 - Endpoint y UI conectados
 - Documentacion minima actualizada
 
-| ID  | Ticket                          | Entregable                         | Est | Dep         |
-| --- | ------------------------------- | ---------------------------------- | --- | ----------- |
-| T01 | Alcance v1 + KPIs               | Spec v1 + KPIs por mercado         | S   | -           |
-| T02 | Inventario data + gaps          | Data map + faltantes               | S   | T01         |
-| T03 | Expandir fixtures LATAM         | Ligas LATAM activas + UI filtro    | M   | T02         |
-| T04 | Coverage odds_snapshots         | Odds para nuevos markets           | M   | T02         |
-| T05 | Feature set comun               | Features base + pipeline           | M   | T02         |
-| T06 | Job sync referee + player stats | Jobs + tablas actualizadas         | M   | T02         |
-| T07 | Modelo corners                  | Prob corners + O/U + team corners  | M   | T05,T04     |
-| T08 | Modelo cards + fouls            | Prob cards/fouls + referee effects | M   | T05,T06,T04 |
-| T09 | Modelo BTTS                     | Bivariate Poisson calibrado        | M   | T05         |
-| T10 | Modelo 1st half totals          | HT O/U + split tempo               | M   | T05         |
-| T11 | Modelo offsides                 | Count regression + overdispersion  | M   | T05         |
-| T12 | Modelo tackles                  | Count regression + overdispersion  | M   | T05         |
-| T13 | Player score/assist             | xG jugador + minutos proyectados   | L   | T06,T05     |
-| T14 | Calibracion + grades            | Platt/Isotonic + mapping A/B/C/D   | S   | T07-T13     |
-| T15 | Backtest por mercado            | Reportes por mercado               | M   | T07-T14     |
-| T16 | Endpoints markets               | /market-confidence + /player-props | M   | T07-T15     |
-| T17 | UI filtros markets/halves       | Filtros + coverage por fixture     | M   | T16         |
-| T18 | UI player props                 | Player props list + detalle        | M   | T16         |
-| T19 | Paginacion/virtual list         | List view escalable                | S   | T17         |
-| T20 | Quality gate + alertas          | Reglas + alerting jobs             | M   | T15         |
-| T21 | Docs + runbook                  | Runbook jobs + recovery            | S   | T20         |
-| T22 | Release checklist               | Checklist deploy/rollback          | S   | T21         |
-| T23 | Git history cleanup             | Historia limpia de secretos        | M ✅| -           |
+| ID  | Ticket                          | Entregable                         | Est  | Dep         |
+| --- | ------------------------------- | ---------------------------------- | ---- | ----------- |
+| T01 | Alcance v1 + KPIs               | Spec v1 + KPIs por mercado         | S    | -           |
+| T02 | Inventario data + gaps          | Data map + faltantes               | S    | T01         |
+| T03 | Expandir fixtures LATAM         | Ligas LATAM activas + UI filtro    | M    | T02         |
+| T04 | Coverage odds_snapshots         | Odds para nuevos markets           | M    | T02         |
+| T05 | Feature set comun               | Features base + pipeline           | M    | T02         |
+| T06 | Job sync referee + player stats | Jobs + tablas actualizadas         | M    | T02         |
+| T07 | Modelo corners                  | Prob corners + O/U + team corners  | M    | T05,T04     |
+| T08 | Modelo cards + fouls            | Prob cards/fouls + referee effects | M    | T05,T06,T04 |
+| T09 | Modelo BTTS                     | Bivariate Poisson calibrado        | M    | T05         |
+| T10 | Modelo 1st half totals          | HT O/U + split tempo               | M    | T05         |
+| T11 | Modelo offsides                 | Count regression + overdispersion  | M    | T05         |
+| T12 | Modelo tackles                  | Count regression + overdispersion  | M    | T05         |
+| T13 | Player score/assist             | xG jugador + minutos proyectados   | L    | T06,T05     |
+| T14 | Calibracion + grades            | Platt/Isotonic + mapping A/B/C/D   | S    | T07-T13     |
+| T15 | Backtest por mercado            | Reportes por mercado               | M    | T07-T14     |
+| T16 | Endpoints markets               | /market-confidence + /player-props | M    | T07-T15     |
+| T17 | UI filtros markets/halves       | Filtros + coverage por fixture     | M    | T16         |
+| T18 | UI player props                 | Player props list + detalle        | M    | T16         |
+| T19 | Paginacion/virtual list         | List view escalable                | S    | T17         |
+| T20 | Quality gate + alertas          | Reglas + alerting jobs             | M    | T15         |
+| T21 | Docs + runbook                  | Runbook jobs + recovery            | S    | T20         |
+| T22 | Release checklist               | Checklist deploy/rollback          | S    | T21         |
+| T23 | Git history cleanup             | Historia limpia de secretos        | M ✅ | -           |
 
 ---
 
@@ -575,9 +575,11 @@ API-Football Pro (7,500 req/día)
 ## 10. EXTRA — AUDIT COMPETITIVO Y PLAN DE ESCALAMIENTO
 
 ### Alcance
+
 Comparación basada en la lista de competidores y claims públicos proporcionados; sin verificación independiente.
 
 ### Competidores directos
+
 - **ParlayPlug**: análisis con modelos, cuotas, EV.
 - **BetsWall**: claim de alta efectividad (+84% no verificado).
 - **Verse Picks**: rewards y gamificación.
@@ -586,16 +588,17 @@ Comparación basada en la lista de competidores y claims públicos proporcionado
 
 ### Comparación por factores
 
-| Factor | GalaxyParlay hoy | Competidores top |
-| --- | --- | --- |
-| UI/UX | Web MVP, foco data | Apps mobile pulidas + onboarding |
-| Datos | ML + grades; live parcial | Odds live/feeds amplios |
-| Confianza | Nuevo, sin prueba social | Reviews + historial visible |
-| Monetización | No definida | Suscripción + afiliados + rewards |
-| Distribución | Orgánica | Influencers + paid |
-| Compliance | Educativo 18+ | Licencias/operación regulada (varía) |
+| Factor       | GalaxyParlay hoy          | Competidores top                     |
+| ------------ | ------------------------- | ------------------------------------ |
+| UI/UX        | Web MVP, foco data        | Apps mobile pulidas + onboarding     |
+| Datos        | ML + grades; live parcial | Odds live/feeds amplios              |
+| Confianza    | Nuevo, sin prueba social  | Reviews + historial visible          |
+| Monetización | No definida               | Suscripción + afiliados + rewards    |
+| Distribución | Orgánica                  | Influencers + paid                   |
+| Compliance   | Educativo 18+             | Licencias/operación regulada (varía) |
 
 ### Qué tienen ellos que nosotros no
+
 - Prueba social e historial verificable.
 - Apps nativas + push notifications.
 - Monetización clara y funnels.
@@ -603,6 +606,7 @@ Comparación basada en la lista de competidores y claims públicos proporcionado
 - Integración directa con sportsbook/cashout.
 
 ### Qué tenemos nosotros (ventaja potencial)
+
 - Motor multi-mercado + quality grades (35 mercados, 22 ligas).
 - Transparencia de EV y probabilidades (grades A/B/C/D).
 - Smart parlay validator (correlación 45+ pares).
@@ -610,16 +614,19 @@ Comparación basada en la lista de competidores y claims públicos proporcionado
 - Capacidad de iterar rápido en web.
 
 ### Diagnóstico
+
 - Hoy competimos como MVP: buen core técnico, débil en confianza, UX y negocio.
 - La brecha principal es **comercial y de distribución**, no técnica.
 - Sin prueba social, monetización clara y UX mobile, no podemos entrar al mercado masivo.
 
 ### Camino recomendado
+
 **México-first → LATAM → USA** cuando exista prueba social, compliance y monetización estable.
 
 ### Plan por fases
 
 **Fase 0-30 días**
+
 - Diferenciador claro: "Quality Gate + EV + tracking público".
 - Historial de picks y resultados verificables en la app.
 - Etiquetas de riesgo (Fuerte/Medio/Riesgo).
@@ -627,30 +634,35 @@ Comparación basada en la lista de competidores y claims públicos proporcionado
 - PWA + notificaciones básicas.
 
 **Fase 31-90 días**
+
 - Monetización v1 (suscripción + afiliados).
 - Onboarding y funnels.
 - Live scores/odds donde sea posible.
 - UI mobile-first y tabla/list view refinada.
 
 **Fase 90-180 días**
+
 - Gamificación ligera (streaks, badges, leaderboards).
 - Programa de referidos + partnerships.
 - API B2B / data licensing.
 - Expansión de ligas y mercados.
 
 ### Monetización recomendada
+
 - Suscripción mensual con picks PRO (Telegram/Discord premium).
 - Afiliados con casas de apuestas (comisión por registro).
 - Freemium + contenido + marca personal.
 - B2B API cuando haya prueba social consolidada.
 
 ### KPIs clave
+
 - Conversión free→pro, retención 30d, ARPU.
 - Accuracy/Brier por mercado y coverage de fixtures.
 - % picks con tracking y ROI reportado.
 - DAU/MAU y uso de watchlist.
 
 ### Riesgos y mitigación
+
 - **Regulación**: copy educativo 18+, revisión legal antes de lanzar monetización.
 - **Claims**: evitar promesas de ganancia, solo resultados verificables.
 - **Dependencia APIs**: cache + fallback y monitoreo.

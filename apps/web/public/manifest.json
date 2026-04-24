@@ -1,0 +1,19 @@
+{
+  "name": "Marc Loyera Picks",
+  "short_name": "ML Picks",
+  "description": "Smart football picks with ML model confidence and EV analysis. 18+.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05040b",
+  "theme_color": "#06b6d4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["sports", "entertainment"],
+  "lang": "es"
+}

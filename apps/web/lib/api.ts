@@ -1122,29 +1122,30 @@ export async function getWatchlist(): Promise<WatchlistItem[]> {
     markets_of_interest: (row.markets_of_interest as string[]) ?? null,
     notes: (row.notes as string) ?? null,
     added_at: row.added_at as string,
-    fixture: row.fixtures as WatchlistItem["fixture"],
+    fixture: row.fixtures as unknown as WatchlistItem["fixture"],
   }));
 }
 
 export async function addToWatchlist(
   fixtureId: number,
   marketsOfInterest: string[] = [],
-): Promise<{ status: "success" | "auth_required" | "error"; message?: string }> {
+): Promise<{
+  status: "success" | "auth_required" | "error";
+  message?: string;
+}> {
   const { data: userData, error: userError } = await supabase.auth.getUser();
   if (userError || !userData.user) {
     return { status: "auth_required", message: "Debes iniciar sesion" };
   }
 
-  const { error } = await supabase
-    .from("watchlists")
-    .upsert(
-      {
-        user_id: userData.user.id,
-        fixture_id: fixtureId,
-        markets_of_interest: marketsOfInterest,
-      },
-      { onConflict: "user_id,fixture_id" },
-    );
+  const { error } = await supabase.from("watchlists").upsert(
+    {
+      user_id: userData.user.id,
+      fixture_id: fixtureId,
+      markets_of_interest: marketsOfInterest,
+    },
+    { onConflict: "user_id,fixture_id" },
+  );
 
   if (error) {
     return { status: "error", message: error.message };
@@ -1156,9 +1157,55 @@ export async function addToWatchlist(
 export async function removeWatchlistItem(
   watchlistId: string,
 ): Promise<{ status: "success" | "error"; message?: string }> {
-  const { error } = await supabase.from("watchlists").delete().eq("id", watchlistId);
+  const { error } = await supabase
+    .from("watchlists")
+    .delete()
+    .eq("id", watchlistId);
   if (error) {
     return { status: "error", message: error.message };
   }
   return { status: "success" };
+}
+
+// ── Player Props via Railway backend ─────────────────────────────────────────
+
+export interface PlayerPropItem {
+  player_id: number;
+  player_name: string;
+  team: "home" | "away";
+  team_name: string;
+  goals_per_90: number;
+  shots_per_90: number;
+  shots_on_target_per_90: number;
+  anytime_scorer_prob: number;
+  shots_on_target_1plus_prob: number;
+  games_played: number;
+  minutes_played: number;
+  grade: string;
+}
+
+export interface PlayerPropsResponse {
+  fixture_id: number;
+  home_team: string;
+  away_team: string;
+  home_expected_goals: number;
+  away_expected_goals: number;
+  players: PlayerPropItem[];
+  source: string;
+}
+
+const RAILWAY_API = process.env.NEXT_PUBLIC_API_URL ?? "https://galaxyparlay-production.up.railway.app";
+
+export async function getPlayerPropsForFixture(
+  fixtureId: number,
+): Promise<PlayerPropsResponse | null> {
+  try {
+    const res = await fetch(`${RAILWAY_API}/api/player-props/${fixtureId}`, {
+      next: { revalidate: 1800 },
+    });
+    if (!res.ok) return null;
+    return res.json() as Promise<PlayerPropsResponse>;
+  } catch {
+    return null;
+  }
 }

@@ -8,9 +8,15 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 const MARKET_LABELS: Record<string, string> = {
-  match_winner: "Ganador",
-  over_under_2_5: "Over/Under 2.5",
+  match_winner: "1X2",
+  over_under_0_5: "O/U 0.5",
+  over_under_1_5: "O/U 1.5",
+  over_under_2_5: "O/U 2.5",
+  over_under_3_5: "O/U 3.5",
+  over_under_4_5: "O/U 4.5",
   both_teams_score: "BTTS",
+  first_half_over_under_0_5: "HT O/U 0.5",
+  first_half_over_under_1_5: "HT O/U 1.5",
 };
 
 function toAmericanOdds(decimalOdds: number): string {
@@ -35,6 +41,12 @@ function scorePick(bet: ValueBet): number {
   const edgeScore =
     bet.odds_source === "bookmaker" ? bet.edge * 100 * weight : 0;
   return confScore + evScore + edgeScore;
+}
+
+function riskLabel(grade: string): { label: string; cls: string } {
+  if (grade === "S" || grade === "A") return { label: "🔥 Fuerte", cls: "text-emerald-400" };
+  if (grade === "B") return { label: "⚡ Medio", cls: "text-yellow-400" };
+  return { label: "⚠️ Riesgo", cls: "text-orange-400" };
 }
 
 function isSameLocalDay(date: Date, base: Date): boolean {
@@ -141,6 +153,11 @@ export default function Home() {
       .finally(() => setLoading(false));
   }, [showCount, viewMode, timeScope, gradeFilter]);
 
+  // Reset showCount when mode switches
+  useEffect(() => {
+    setShowCount(viewMode === "quality" ? 12 : 30);
+  }, [viewMode]);
+
   const filteredPicks = useMemo(() => {
     if (gradeFilter === "all") return picks;
     return picks.filter((bet) => bet.grade === gradeFilter);
@@ -203,6 +220,12 @@ export default function Home() {
                 </span>
               </div>
               <div className="flex items-center gap-2">
+                <Link
+                  href="/historial"
+                  className="px-4 py-2 rounded-full border border-emerald-400/40 text-emerald-100 text-xs hover:bg-emerald-500/20"
+                >
+                  Historial
+                </Link>
                 <Link
                   href="/watchlist"
                   className="px-4 py-2 rounded-full border border-cyan-400/40 text-cyan-100 text-xs hover:bg-cyan-500/20"
@@ -364,6 +387,12 @@ export default function Home() {
           )}
 
           {!loading && !error && rankedPicks.length > 0 && (
+            <>
+            {picksSource === "model" && (
+              <div className="mt-4 rounded-xl bg-yellow-900/20 border border-yellow-500/30 p-3 text-xs text-yellow-300">
+                ⚠️ Sin odds de mercado disponibles — cuotas calculadas por modelo. Mínimo 300 muestras para validez estadística.
+              </div>
+            )}
             <div className="mt-6 space-y-3">
               <div className="hidden md:grid grid-cols-[70px_1.6fr_1.2fr_120px_120px] text-xs uppercase tracking-[0.3em] text-cyan-200">
                 <span>#</span>
@@ -409,6 +438,7 @@ export default function Home() {
                         <span className="px-2 py-1 rounded-full text-xs bg-purple-500/20 text-purple-200 border border-purple-400/30">
                           Grado {bet.grade}
                         </span>
+                        {(() => { const r = riskLabel(bet.grade); return <span className={`px-2 py-1 rounded-full text-xs border border-gray-700/50 bg-gray-800/60 font-semibold ${r.cls}`}>{r.label}</span>; })()}
                         <span className="px-2 py-1 rounded-full text-xs bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
                           Conf. {Math.round(bet.confidence * 100)}%
                         </span>
@@ -446,6 +476,7 @@ export default function Home() {
                 </button>
               </div>
             )}
+            </>
           )}
         </section>
 
