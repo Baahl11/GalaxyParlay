@@ -17,7 +17,7 @@ import re
 import time
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 import structlog
@@ -217,24 +217,17 @@ class FIFAPlayerScraper:
             TeamRatings object with aggregated metrics, or None if team not found
         """
         try:
-            # Import expanded FIFA database
-            from app.services.fifa_team_database import get_team_fifa_stats
-
-            # Normalize name to slug format
-            team_slug = team_name.lower().replace(" ", "-").strip()
-
-            logger.info("fifa_scraper_fetching", team=team_slug)
-
-            # Get team stats directly from database
-            team_data = get_team_fifa_stats(team_slug)
-            if not team_data:
+            normalized_name = self._normalize_team_name(team_name)
+            team_url = self._search_team(normalized_name)
+            if not team_url:
                 logger.warning("fifa_team_not_found", team=team_name)
                 return None
 
-            # Generate realistic players based on team stats
-            players = self._generate_team_players(team_slug, team_data, top_n_players)
+            logger.info("fifa_scraper_fetching", team=normalized_name, url=team_url)
+
+            players = self._scrape_team_players(team_url, top_n_players)
             if not players:
-                logger.warning("fifa_no_players_found", team=team_name)
+                logger.warning("fifa_no_players_found", team=team_name, url=team_url)
                 return None
 
             # Calculate aggregated metrics
@@ -264,38 +257,29 @@ class FIFAPlayerScraper:
             Team URL or None if not found
         """
         try:
-            # For now, construct URL directly (SOFIFA has predictable URLs)
-            # Format: https://sofifa.com/team/{team_id}/{team_slug}
-            # We'll use a simplified approach: search by name pattern
+            response = self.session.get(
+                self.SEARCH_URL, params={"keyword": team_name}, timeout=15
+            )
+            if response.status_code != 200:
+                logger.warning(
+                    "fifa_search_failed",
+                    team=team_name,
+                    status=response.status_code,
+                )
+                return None
 
-            # Common team IDs (hardcoded for major teams to avoid scraping)
-            TEAM_IDS = {
-                "Arsenal": "1",
-                "Chelsea": "5",
-                "Liverpool": "9",
-                "Manchester City": "10",
-                "Manchester United": "11",
-                "Tottenham Hotspur": "18",
-                "Real Madrid": "243",
-                "FC Barcelona": "241",
-                "Bayern München": "21",
-                "Juventus": "45",
-                "Paris Saint-Germain": "73",
-                "Borussia Dortmund": "22",
-                "Atlético Madrid": "240",
-                "Inter": "44",
-                "Milan": "47",
-            }
+            soup = BeautifulSoup(response.text, "html.parser")
+            link = soup.find("a", href=re.compile(r"^/team/\d+"))
+            if not link:
+                return None
 
-            # Try to find team ID
-            for name, team_id in TEAM_IDS.items():
-                if name.lower() in team_name.lower() or team_name.lower() in name.lower():
-                    slug = name.lower().replace(" ", "-").replace("ü", "u")
-                    return f"{self.BASE_URL}/team/{team_id}/{slug}"
+            href = link.get("href", "")
+            if not href:
+                return None
 
-            # If not found in hardcoded list, return None
-            # TODO: Implement actual search if needed
-            return None
+            if href.startswith("/"):
+                return f"{self.BASE_URL}{href}"
+            return href
 
         except Exception as e:
             logger.error("fifa_search_error", team=team_name, error=str(e))
@@ -384,9 +368,7 @@ class FIFAPlayerScraper:
 
     def _scrape_team_players(self, team_url: str, top_n: int) -> List[PlayerRating]:
         """
-        LEGACY METHOD: Scrape player ratings from team page
-
-        This method is kept for backwards compatibility but now delegates to _generate_team_players
+        Scrape player ratings from team page
 
         Args:
             team_url: SOFIFA team URL (format: /team/{id}/{slug})
@@ -395,30 +377,224 @@ class FIFAPlayerScraper:
         Returns:
             List of PlayerRating objects
         """
-        # Import expanded FIFA database
-        from app.services.fifa_team_database import get_team_fifa_stats
+        try:
+            url = team_url if team_url.startswith("http") else f"{self.BASE_URL}{team_url}"
+            response = self.session.get(url, timeout=20)
+            if response.status_code != 200:
+                logger.warning(
+                    "fifa_team_page_failed",
+                    url=url,
+                    status=response.status_code,
+                )
+                return []
 
-        # Extract team slug from URL
-        team_slug = team_url.split("/")[-1]
+            soup = BeautifulSoup(response.text, "html.parser")
+            match = re.search(r"/team/\d+/([^/]+)", url)
+            team_slug = match.group(1) if match else ""
+            rows = soup.select("table tbody tr")
+            players: List[PlayerRating] = []
 
-        # Get team stats from expanded database (100+ teams)
-        team_data = get_team_fifa_stats(team_slug)
+            for row in rows:
+                player_link = row.find("a", href=re.compile(r"^/player/"))
+                if not player_link:
+                    continue
 
-        if not team_data:
-            # Fallback to generic mid-table team
-            team_data = {
-                "overall": 75,
-                "attack": 75,
-                "midfield": 75,
-                "defense": 75,
-                "pace": 75,
-                "physical": 76,
-                "skill": 74,
-                "age": 27.0,
-                "value": 250,
-            }
+                name = player_link.get_text(strip=True)
+                position = self._extract_position(row)
+                if position == "SUB":
+                    position = self._guess_position(row.get_text(" ", strip=True))
 
-        return self._generate_team_players(team_slug, team_data, top_n)
+                age = self._extract_stat_value(row, "age")
+                overall = self._extract_stat_value(row, "oa")
+                potential = self._extract_stat_value(row, "pt") or overall
+                value_eur = self._extract_currency_value(row)
+
+                if overall is None:
+                    text_numbers = [
+                        int(value)
+                        for value in re.findall(r"\b\d{2}\b", row.get_text(" ", strip=True))
+                    ]
+                    overall = max(text_numbers, default=None)
+
+                if age is None:
+                    text_numbers = [
+                        int(value)
+                        for value in re.findall(r"\b\d{2}\b", row.get_text(" ", strip=True))
+                    ]
+                    age_candidates = [value for value in text_numbers if 16 <= value <= 45]
+                    age = age_candidates[0] if age_candidates else None
+
+                if potential is None and overall is not None:
+                    potential = overall
+
+                if overall is None:
+                    continue
+
+                derived = self._derive_player_stats(overall, position)
+                player = PlayerRating(
+                    name=name,
+                    overall=overall,
+                    pace=derived["pace"],
+                    shooting=derived["shooting"],
+                    passing=derived["passing"],
+                    dribbling=derived["dribbling"],
+                    defending=derived["defending"],
+                    physical=derived["physical"],
+                    position=position,
+                    team=team_slug,
+                    potential=potential or overall,
+                    age=age or 26,
+                    height_cm=derived["height_cm"],
+                    weight_kg=derived["weight_kg"],
+                    weak_foot=derived["weak_foot"],
+                    skill_moves=derived["skill_moves"],
+                    work_rate=derived["work_rate"],
+                    preferred_foot=derived["preferred_foot"],
+                    value_eur=value_eur,
+                )
+                players.append(player)
+
+            if not players:
+                return []
+
+            players.sort(key=lambda p: p.overall, reverse=True)
+            return players[:top_n]
+        except Exception as e:
+            logger.warning("fifa_team_parse_failed", url=team_url, error=str(e))
+            return []
+
+    def _extract_stat_value(self, row, key: str) -> Optional[int]:
+        cell = row.find("td", attrs={"data-col": key})
+        if not cell:
+            cell = row.find("td", class_=re.compile(rf"col-{key}"))
+        if not cell:
+            return None
+        return self._parse_int(cell.get_text(" ", strip=True))
+
+    def _extract_currency_value(self, row) -> int:
+        cell = row.find("td", attrs={"data-col": "vl"})
+        if not cell:
+            cell = row.find("td", class_=re.compile(r"col-vl"))
+        if not cell:
+            text = row.get_text(" ", strip=True)
+            return self._parse_value_eur(text)
+        return self._parse_value_eur(cell.get_text(" ", strip=True))
+
+    def _parse_int(self, text: str) -> Optional[int]:
+        match = re.search(r"\b(\d{1,3})\b", text)
+        return int(match.group(1)) if match else None
+
+    def _parse_value_eur(self, text: str) -> int:
+        match = re.search(r"€\s*([\d\.]+)\s*([MK])", text)
+        if not match:
+            return 0
+        value = float(match.group(1))
+        multiplier = 1_000_000 if match.group(2) == "M" else 1_000
+        return int(value * multiplier)
+
+    def _guess_position(self, text: str) -> str:
+        positions = [
+            "GK",
+            "CB",
+            "LB",
+            "RB",
+            "LWB",
+            "RWB",
+            "CDM",
+            "CM",
+            "CAM",
+            "LM",
+            "RM",
+            "LW",
+            "RW",
+            "ST",
+            "CF",
+        ]
+        for pos in positions:
+            if re.search(rf"\b{pos}\b", text):
+                return pos
+        return "SUB"
+
+    def _derive_player_stats(self, overall: int, position: str) -> Dict[str, Any]:
+        base = overall
+        if position in {"ST", "CF", "LW", "RW", "CAM"}:
+            pace = base + 6
+            shooting = base + 8
+            passing = base - 1
+            dribbling = base + 6
+            defending = base - 12
+            physical = base - 1
+            height_cm = 178
+            weight_kg = 74
+            skill_moves = 4 if overall >= 82 else 3
+            weak_foot = 4 if overall >= 84 else 3
+            work_rate = "H/M"
+        elif position in {"CM", "CDM", "LM", "RM"}:
+            pace = base + 1
+            shooting = base - 1
+            passing = base + 6
+            dribbling = base + 3
+            defending = base + 1
+            physical = base + 2
+            height_cm = 180
+            weight_kg = 76
+            skill_moves = 3
+            weak_foot = 3
+            work_rate = "H/H"
+        elif position in {"CB", "LB", "RB", "LWB", "RWB"}:
+            pace = base - 2
+            shooting = base - 12
+            passing = base - 1
+            dribbling = base - 4
+            defending = base + 8
+            physical = base + 6
+            height_cm = 184
+            weight_kg = 80
+            skill_moves = 2
+            weak_foot = 3
+            work_rate = "M/H"
+        elif position == "GK":
+            pace = base - 18
+            shooting = base - 20
+            passing = base - 6
+            dribbling = base - 10
+            defending = base + 8
+            physical = base + 6
+            height_cm = 190
+            weight_kg = 84
+            skill_moves = 1
+            weak_foot = 3
+            work_rate = "M/M"
+        else:
+            pace = base
+            shooting = base
+            passing = base
+            dribbling = base
+            defending = base
+            physical = base
+            height_cm = 180
+            weight_kg = 76
+            skill_moves = 3
+            weak_foot = 3
+            work_rate = "M/M"
+
+        def clamp(value: int) -> int:
+            return max(40, min(99, value))
+
+        return {
+            "pace": clamp(pace),
+            "shooting": clamp(shooting),
+            "passing": clamp(passing),
+            "dribbling": clamp(dribbling),
+            "defending": clamp(defending),
+            "physical": clamp(physical),
+            "height_cm": height_cm,
+            "weight_kg": weight_kg,
+            "skill_moves": skill_moves,
+            "weak_foot": weak_foot,
+            "work_rate": work_rate,
+            "preferred_foot": "Right",
+        }
 
     def _estimate_stat(self, overall: int, stat_type: str) -> int:
         """

@@ -274,6 +274,60 @@ def job_status():
         return {"status": "error", "error": str(e)}
 
 
+@router.post("/sync-live")
+def sync_live_scores():
+    """
+    Sync live fixtures and update scores/status.
+
+    This job:
+    1. Fetches active leagues from DB
+    2. Pulls LIVE fixtures from API-Football
+    3. Upserts live fixture state into the DB
+    """
+    try:
+        leagues = db_service.get_active_leagues()
+        if not leagues:
+            return {
+                "status": "warning",
+                "message": "No active leagues found",
+                "fixtures_updated": 0,
+            }
+
+        client = api_football_client
+        total_fixtures = 0
+        total_live = 0
+
+        for league in leagues:
+            league_id = league["id"]
+            season = league.get("season", 2025)
+
+            try:
+                api_fixtures = client.get_fixtures(
+                    league_id=league_id,
+                    season=season,
+                    status="LIVE",
+                )
+                if not api_fixtures:
+                    continue
+
+                total_live += len(api_fixtures)
+                db_fixtures = [transform_fixture_to_db(f) for f in api_fixtures]
+                total_fixtures += db_service.upsert_fixtures(db_fixtures)
+            except Exception as e:
+                logger.warning("sync_live_failed", league_id=league_id, error=str(e))
+
+        return {
+            "status": "success",
+            "fixtures_updated": total_fixtures,
+            "live_fixtures": total_live,
+            "leagues_processed": len(leagues),
+        }
+
+    except Exception as e:
+        logger.error("sync_live_error", error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.post("/sync-odds")
 def sync_odds(limit: int = 50):
     """

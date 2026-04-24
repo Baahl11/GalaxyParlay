@@ -13,6 +13,7 @@ from slowapi.util import get_remote_address
 
 from app.ml.smart_parlay import smart_parlay_validator
 from app.ml.value_bets import ValueBet, value_detector
+from app.services.apifootball import api_football_client
 from app.services.database import db_service
 
 router = APIRouter(prefix="/api", tags=["galaxy-api"])
@@ -674,11 +675,45 @@ async def get_player_props(
         home_xg = float(home_xg) if home_xg is not None else 1.35
         away_xg = float(away_xg) if away_xg is not None else 1.35
 
+        home_player_ids = None
+        away_player_ids = None
+        players_source = "season_stats"
+
+        try:
+            fixture_players = api_football_client.get_fixture_players(fixture_id)
+            if fixture_players:
+                home_ids = set()
+                away_ids = set()
+                for player in fixture_players:
+                    stats = player.get("statistics", [])
+                    if not stats:
+                        continue
+                    team = stats[0].get("team", {}) if isinstance(stats, list) else {}
+                    team_id = team.get("id")
+                    player_id = player.get("id")
+                    if not player_id:
+                        continue
+                    if team_id == home_team_id:
+                        home_ids.add(player_id)
+                    elif team_id == away_team_id:
+                        away_ids.add(player_id)
+
+                if home_ids:
+                    home_player_ids = home_ids
+                if away_ids:
+                    away_player_ids = away_ids
+                if home_player_ids or away_player_ids:
+                    players_source = "fixture_players"
+        except Exception as e:
+            logger.warning("player_props_fixture_players_failed", error=str(e))
+
         props = multi_market_predictor._safe_predict_player_props(
             home_team_id=home_team_id,
             away_team_id=away_team_id,
             home_xg=home_xg,
             away_xg=away_xg,
+            home_player_ids=home_player_ids,
+            away_player_ids=away_player_ids,
         )
 
         home_players = props.get("home_players", [])[:limit]
@@ -693,6 +728,7 @@ async def get_player_props(
             "away_xg": away_xg,
             "home_players": home_players,
             "away_players": away_players,
+            "players_source": players_source,
             "summary": {
                 "home_top_scorer": home_players[0] if home_players else None,
                 "away_top_scorer": away_players[0] if away_players else None,

@@ -114,7 +114,7 @@ class BacktestRunner:
                 return 1.0 if away_score > home_score else 0.0
 
         # BTTS
-        elif market_key == "btts":
+        elif market_key in {"btts", "both_teams_score"}:
             both_scored = home_score > 0 and away_score > 0
             if outcome == "yes":
                 return 1.0 if both_scored else 0.0
@@ -198,8 +198,8 @@ class BacktestRunner:
                     ("match_winner", "home_win"),
                     ("match_winner", "draw"),
                     ("match_winner", "away_win"),
-                    ("btts", "yes"),
-                    ("btts", "no"),
+                    ("both_teams_score", "yes"),
+                    ("both_teams_score", "no"),
                     ("over_under_2_5", "over"),
                     ("over_under_2_5", "under"),
                     ("over_under_1_5", "over"),

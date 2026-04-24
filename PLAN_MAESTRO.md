@@ -150,11 +150,11 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 
 ### FIFA Integration
 
-- [x] 100+ equipos con 16 stats cada uno
+- [x] Scraping directo de SoFIFA (squads reales por equipo)
 - [x] Integrado en `dixon_coles.py` (match_winner: quality gap + star player adjustment)
 - [x] Integrado en `multi_market_predictor.py` (corners: pace/skill, cards: physical mismatch, shots, offsides)
 - [x] LRU cache para lookups instantáneos
-- ⚠️ Datos son estimados/mock — no API oficial de SoFIFA
+- ⚠️ Stats derivados por posición cuando SoFIFA no expone el detalle por jugador en listado
 
 ### Producción & Mejoras recientes (Abril 2026)
 
@@ -189,7 +189,7 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 
 ### 🔴 Crítico
 
-1. **Git history cleanup** — JWT del proyecto antiguo `REMOVED_JWT` (no activo) sigue en git history. Usar BFG Repo Cleaner o `git filter-repo` para reescribir historia.
+1. **Git history cleanup** — Completado ✅ (historial reescrito y secretos removidos).
 2. **Player Props con datos reales** — El tab "Player Props" existe en frontend pero no tiene datos reales. API-Football Pro incluye player stats; falta implementar el endpoint y componente.
 
 ### 🟡 Importante
@@ -234,10 +234,8 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
         → apps/web/lib/supabase.ts: client-side auth
         → Conectar watchlist a usuario autenticado
 
-[ ] 6. Git history cleanup
-        → Instalar: npm install -g bfg-repo-cleaner o pip install git-filter-repo
-        → Identificar commits con credenciales antiguas
-        → PRECAUCIÓN: operación destructiva — hacer backup primero
+[x] 6. Git history cleanup
+        → Completado ✅ — git filter-repo ejecutado, historial reescrito, force-pushed.
 ```
 
 ---
@@ -336,7 +334,7 @@ Mapa por mercado (data -> tabla -> gap):
 - [ ] Quality gate por mercado (min samples, odds coverage, drift)
 - [ ] Alertas para jobs fallidos y drops de data
 - [ ] Tests unitarios y smoke tests E2E
-- [ ] Git history cleanup por tokens antiguos
+- [x] Git history cleanup por tokens antiguos
 
 ### P2 — Documentacion y release
 
@@ -390,7 +388,7 @@ Definition of done (DoD) por ticket:
 | T20 | Quality gate + alertas          | Reglas + alerting jobs             | M   | T15         |
 | T21 | Docs + runbook                  | Runbook jobs + recovery            | S   | T20         |
 | T22 | Release checklist               | Checklist deploy/rollback          | S   | T21         |
-| T23 | Git history cleanup             | Historia limpia de secretos        | M   | -           |
+| T23 | Git history cleanup             | Historia limpia de secretos        | M ✅| -           |
 
 ---
 
@@ -540,7 +538,7 @@ Core (3):       match_winner, both_teams_score, first_half_over_under_0_5
 - ✅ Railway env vars: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `APIFOOTBALL_API_KEY`
 - ✅ Vercel env vars: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - ✅ `.gitignore` protege `.env`, `.env.local`, `.env.vercel`
-- ⚠️ JWT del proyecto **antiguo** (`REMOVED_JWT`) sigue en git history — ese proyecto ya no es el activo pero debería limpiarse
+- ✅ Git history cleanup completado — secretos removidos del git history
 - ✅ Proyecto activo: `pqswprhhgpsvhvhsxscw` — keys solo en env vars
 
 ### Si necesitas rotar keys del proyecto activo
@@ -571,6 +569,92 @@ API-Football Pro (7,500 req/día)
                          └──────── getValueBets ────┘
                                   (EV real calculado)
 ```
+
+---
+
+## 10. EXTRA — AUDIT COMPETITIVO Y PLAN DE ESCALAMIENTO
+
+### Alcance
+Comparación basada en la lista de competidores y claims públicos proporcionados; sin verificación independiente.
+
+### Competidores directos
+- **ParlayPlug**: análisis con modelos, cuotas, EV.
+- **BetsWall**: claim de alta efectividad (+84% no verificado).
+- **Verse Picks**: rewards y gamificación.
+- **PrizePicks**: escala en USA.
+- **VERSUSbet**: dinero real + cashout.
+
+### Comparación por factores
+
+| Factor | GalaxyParlay hoy | Competidores top |
+| --- | --- | --- |
+| UI/UX | Web MVP, foco data | Apps mobile pulidas + onboarding |
+| Datos | ML + grades; live parcial | Odds live/feeds amplios |
+| Confianza | Nuevo, sin prueba social | Reviews + historial visible |
+| Monetización | No definida | Suscripción + afiliados + rewards |
+| Distribución | Orgánica | Influencers + paid |
+| Compliance | Educativo 18+ | Licencias/operación regulada (varía) |
+
+### Qué tienen ellos que nosotros no
+- Prueba social e historial verificable.
+- Apps nativas + push notifications.
+- Monetización clara y funnels.
+- Gamificación y comunidad.
+- Integración directa con sportsbook/cashout.
+
+### Qué tenemos nosotros (ventaja potencial)
+- Motor multi-mercado + quality grades (35 mercados, 22 ligas).
+- Transparencia de EV y probabilidades (grades A/B/C/D).
+- Smart parlay validator (correlación 45+ pares).
+- Pipeline de datos y backtesting (72.18% accuracy validada).
+- Capacidad de iterar rápido en web.
+
+### Diagnóstico
+- Hoy competimos como MVP: buen core técnico, débil en confianza, UX y negocio.
+- La brecha principal es **comercial y de distribución**, no técnica.
+- Sin prueba social, monetización clara y UX mobile, no podemos entrar al mercado masivo.
+
+### Camino recomendado
+**México-first → LATAM → USA** cuando exista prueba social, compliance y monetización estable.
+
+### Plan por fases
+
+**Fase 0-30 días**
+- Diferenciador claro: "Quality Gate + EV + tracking público".
+- Historial de picks y resultados verificables en la app.
+- Etiquetas de riesgo (Fuerte/Medio/Riesgo).
+- Freemium diario + CTA a PRO (Telegram/Discord).
+- PWA + notificaciones básicas.
+
+**Fase 31-90 días**
+- Monetización v1 (suscripción + afiliados).
+- Onboarding y funnels.
+- Live scores/odds donde sea posible.
+- UI mobile-first y tabla/list view refinada.
+
+**Fase 90-180 días**
+- Gamificación ligera (streaks, badges, leaderboards).
+- Programa de referidos + partnerships.
+- API B2B / data licensing.
+- Expansión de ligas y mercados.
+
+### Monetización recomendada
+- Suscripción mensual con picks PRO (Telegram/Discord premium).
+- Afiliados con casas de apuestas (comisión por registro).
+- Freemium + contenido + marca personal.
+- B2B API cuando haya prueba social consolidada.
+
+### KPIs clave
+- Conversión free→pro, retención 30d, ARPU.
+- Accuracy/Brier por mercado y coverage de fixtures.
+- % picks con tracking y ROI reportado.
+- DAU/MAU y uso de watchlist.
+
+### Riesgos y mitigación
+- **Regulación**: copy educativo 18+, revisión legal antes de lanzar monetización.
+- **Claims**: evitar promesas de ganancia, solo resultados verificables.
+- **Dependencia APIs**: cache + fallback y monitoreo.
+- **Competencia copia UI**: diferenciador en ciencia (Dixon-Coles, referee data) es lento de copiar.
 
 ---
 

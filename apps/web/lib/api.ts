@@ -1086,3 +1086,79 @@ export async function getBacktestResults(): Promise<BacktestData | null> {
     return null;
   }
 }
+
+export interface WatchlistItem {
+  id: string;
+  fixture_id: number;
+  markets_of_interest: string[] | null;
+  notes: string | null;
+  added_at: string;
+  fixture: {
+    home_team_name: string;
+    away_team_name: string;
+    kickoff_time: string;
+    league_id: number;
+    status: string;
+  };
+}
+
+export async function getWatchlist(): Promise<WatchlistItem[]> {
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+  if (userError || !userData.user) return [];
+
+  const { data, error } = await supabase
+    .from("watchlists")
+    .select(
+      "id, fixture_id, markets_of_interest, notes, added_at, fixtures!inner(home_team_name, away_team_name, kickoff_time, league_id, status)",
+    )
+    .eq("user_id", userData.user.id)
+    .order("added_at", { ascending: false });
+
+  if (error || !data) return [];
+
+  return data.map((row) => ({
+    id: row.id as string,
+    fixture_id: row.fixture_id as number,
+    markets_of_interest: (row.markets_of_interest as string[]) ?? null,
+    notes: (row.notes as string) ?? null,
+    added_at: row.added_at as string,
+    fixture: row.fixtures as WatchlistItem["fixture"],
+  }));
+}
+
+export async function addToWatchlist(
+  fixtureId: number,
+  marketsOfInterest: string[] = [],
+): Promise<{ status: "success" | "auth_required" | "error"; message?: string }> {
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+  if (userError || !userData.user) {
+    return { status: "auth_required", message: "Debes iniciar sesion" };
+  }
+
+  const { error } = await supabase
+    .from("watchlists")
+    .upsert(
+      {
+        user_id: userData.user.id,
+        fixture_id: fixtureId,
+        markets_of_interest: marketsOfInterest,
+      },
+      { onConflict: "user_id,fixture_id" },
+    );
+
+  if (error) {
+    return { status: "error", message: error.message };
+  }
+
+  return { status: "success" };
+}
+
+export async function removeWatchlistItem(
+  watchlistId: string,
+): Promise<{ status: "success" | "error"; message?: string }> {
+  const { error } = await supabase.from("watchlists").delete().eq("id", watchlistId);
+  if (error) {
+    return { status: "error", message: error.message };
+  }
+  return { status: "success" };
+}

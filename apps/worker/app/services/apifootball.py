@@ -342,6 +342,38 @@ class APIFootballClient:
 
         return players
 
+    def get_fixture_players(self, fixture_id: int) -> List[Dict[str, Any]]:
+        """
+        Get player statistics for a specific fixture.
+
+        Returns player data including fixture-level stats (goals, shots, cards).
+        """
+        params = {"fixture": fixture_id}
+
+        data = self._request("players", params, cache_ttl=600)
+        response = data.get("response", [])
+        players = []
+
+        for player_data in response:
+            player = player_data.get("player", {})
+            stats = player_data.get("statistics", [])
+
+            players.append(
+                {
+                    "id": player.get("id"),
+                    "name": player.get("name"),
+                    "firstname": player.get("firstname"),
+                    "lastname": player.get("lastname"),
+                    "age": player.get("age"),
+                    "nationality": player.get("nationality"),
+                    "position": player.get("position"),
+                    "photo": player.get("photo"),
+                    "statistics": stats,
+                }
+            )
+
+        return players
+
     def get_fixture_statistics(self, fixture_id: int) -> List[Dict[str, Any]]:
         """
         Get detailed statistics for a finished fixture.

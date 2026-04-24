@@ -74,6 +74,25 @@ def job_sync_results_sync():
         logger.error("job_sync_results_error", error=str(e))
 
 
+def job_sync_live_scores():
+    """
+    Job: Update live fixtures and scores.
+    Frequency: Every 5 minutes
+    """
+    try:
+        logger.info("job_sync_live_started")
+        from app.routes.jobs import sync_live_scores
+
+        result = sync_live_scores()
+        logger.info(
+            "job_sync_live_complete",
+            updated=result.get("fixtures_updated", 0),
+            live_fixtures=result.get("live_fixtures", 0),
+        )
+    except Exception as e:
+        logger.error("job_sync_live_error", error=str(e))
+
+
 def start_scheduler():
     """
     Start the scheduler with production jobs.
@@ -116,6 +135,17 @@ def start_scheduler():
         trigger=IntervalTrigger(hours=3),
         id="sync_results",
         name="Sync Results",
+        replace_existing=True,
+        max_instances=1,
+        coalesce=True,
+    )
+
+    # Job 4: Sync live scores every 5 minutes
+    scheduler.add_job(
+        job_sync_live_scores,
+        trigger=IntervalTrigger(minutes=5),
+        id="sync_live_scores",
+        name="Sync Live Scores",
         replace_existing=True,
         max_instances=1,
         coalesce=True,

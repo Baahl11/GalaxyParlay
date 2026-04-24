@@ -21,7 +21,7 @@ Uses historical team statistics for predictions.
 
 import math
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
 
 import numpy as np
 import structlog
@@ -1329,11 +1329,24 @@ class MultiMarketPredictor:
         return results
 
     def _safe_predict_player_props(
-        self, home_team_id: int, away_team_id: int, home_xg: float, away_xg: float
+        self,
+        home_team_id: int,
+        away_team_id: int,
+        home_xg: float,
+        away_xg: float,
+        home_player_ids: Optional[Set[int]] = None,
+        away_player_ids: Optional[Set[int]] = None,
     ) -> Dict[str, List[Dict[str, Any]]]:
         """Wrapper around _predict_player_props that returns empty dict on any failure."""
         try:
-            return self._predict_player_props(home_team_id, away_team_id, home_xg, away_xg)
+            return self._predict_player_props(
+                home_team_id,
+                away_team_id,
+                home_xg,
+                away_xg,
+                home_player_ids=home_player_ids,
+                away_player_ids=away_player_ids,
+            )
         except Exception:
             return {
                 "home_players": [],
@@ -1346,7 +1359,13 @@ class MultiMarketPredictor:
             }
 
     def _predict_player_props(
-        self, home_team_id: int, away_team_id: int, home_xg: float, away_xg: float
+        self,
+        home_team_id: int,
+        away_team_id: int,
+        home_xg: float,
+        away_xg: float,
+        home_player_ids: Optional[Set[int]] = None,
+        away_player_ids: Optional[Set[int]] = None,
     ) -> Dict[str, List[Dict[str, Any]]]:
         """
         Predict player props (anytime scorer, shots, cards) for probable starters.
@@ -1369,7 +1388,12 @@ class MultiMarketPredictor:
             logger.warning("Database service not available for player props")
             return {"home_players": [], "away_players": []}
 
-        def get_team_player_props(team_id: int, team_xg: float, is_home: bool) -> List[Dict]:
+        def get_team_player_props(
+            team_id: int,
+            team_xg: float,
+            is_home: bool,
+            allowed_player_ids: Optional[Set[int]],
+        ) -> List[Dict]:
             """Get player props for a specific team"""
             try:
                 logger.info(
@@ -1384,26 +1408,34 @@ class MultiMarketPredictor:
                 result = (
                     db_service.client.table("player_statistics")
                     .select(
-                        "player_name, goals, assists, total_shots, shots_on_target, "
+                        "player_id, player_name, goals, assists, total_shots, shots_on_target, "
                         "goals_per_90, shots_per_90, games_played, minutes_played"
                     )
                     .eq("team_id", team_id)
                     .gte("goals", 0)  # Just get all players with data
                     .order("goals", desc=True)
-                    .limit(15)
+                    .limit(30)
                     .execute()
                 )
 
-                players_found = len(result.data) if result.data else 0
+                raw_players = result.data or []
+                if allowed_player_ids:
+                    raw_players = [
+                        player
+                        for player in raw_players
+                        if player.get("player_id") in allowed_player_ids
+                    ]
+
+                players_found = len(raw_players)
                 logger.info(
                     ">>> Query COMPLETED",
                     team_id=team_id,
                     players_found=players_found,
-                    has_data=bool(result.data),
-                    data_type=type(result.data).__name__,
+                    has_data=bool(raw_players),
+                    data_type=type(raw_players).__name__,
                 )
 
-                if not result.data or players_found == 0:
+                if not raw_players or players_found == 0:
                     logger.warning(
                         ">>> NO PLAYERS FOUND",
                         team_id=team_id,
@@ -1415,11 +1447,11 @@ class MultiMarketPredictor:
                 logger.info(
                     ">>> Processing players",
                     team_id=team_id,
-                    player_names=[p.get("player_name") for p in result.data[:3]],
+                    player_names=[p.get("player_name") for p in raw_players[:3]],
                 )
 
                 players = []
-                for idx, player in enumerate(result.data):
+                for idx, player in enumerate(raw_players):
                     goals_per_90 = float(player.get("goals_per_90", 0) or 0)
                     shots_per_90 = float(player.get("shots_per_90", 0) or 0)
                     games = int(player.get("games_played", 1) or 1)
@@ -1459,6 +1491,7 @@ class MultiMarketPredictor:
                     confidence = min(0.95, games / 15)  # Max at 15 games
 
                     player_data = {
+                        "player_id": player.get("player_id"),
                         "player_name": player["player_name"],
                         "anytime_scorer": _r(scorer_prob),
                         "shots_on_target_1plus": _r(sot_prob),
@@ -1499,8 +1532,12 @@ class MultiMarketPredictor:
                 return []
 
         # Get props for both teams
-        home_players = get_team_player_props(home_team_id, home_xg, is_home=True)
-        away_players = get_team_player_props(away_team_id, away_xg, is_home=False)
+        home_players = get_team_player_props(
+            home_team_id, home_xg, is_home=True, allowed_player_ids=home_player_ids
+        )
+        away_players = get_team_player_props(
+            away_team_id, away_xg, is_home=False, allowed_player_ids=away_player_ids
+        )
 
         result = {
             "home_players": home_players,

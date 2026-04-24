@@ -8,6 +8,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 import structlog
+from scipy.stats import poisson
 
 from .elo import EloRatingSystem, elo_system
 from .features import FeatureEngineer, feature_engineer
@@ -396,9 +397,7 @@ class MatchPredictor:
                         import asyncio
 
                         referee_data = asyncio.run(
-                            referee_db.get_referee(
-                                referee_name=referee_name, league_id=league_id
-                            )
+                            referee_db.get_referee(referee_name=referee_name, league_id=league_id)
                         )
 
                     if referee_data:
@@ -703,64 +702,62 @@ class MatchPredictor:
     def _predict_over_under(
         self, elo_pred: Dict[str, float], fixture: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict Over/Under 2.5 goals using historical data"""
+        """Predict Over/Under 2.5 goals using Dixon-Coles + historical stats"""
 
         home_id = fixture["home_team_id"]
         away_id = fixture["away_team_id"]
 
-        # Get historical stats prediction
+        # Historical baseline
         hist_pred = self.stats.predict_over_under(home_id, away_id, line=2.5)
-
-        # Base from historical data (50% weight)
         hist_over = hist_pred["over"]
 
-        # Elo-based adjustments (50% weight)
-        elo_diff = abs(elo_pred["elo_diff"])
-        avg_elo = (elo_pred["home_elo"] + elo_pred["away_elo"]) / 2
+        # Use expected goals from Elo for Dixon-Coles Poisson
+        home_xg = float(elo_pred.get("home_expected_goals", 1.5) or 1.5)
+        away_xg = float(elo_pred.get("away_expected_goals", 1.2) or 1.2)
+        home_xg = max(0.2, min(3.8, home_xg))
+        away_xg = max(0.2, min(3.8, away_xg))
 
-        elo_over = 0.52  # Base
+        rho = -0.15  # Low-score correlation
 
-        # Evenly matched teams tend to have more goals
-        if elo_diff < 50:
-            elo_over += 0.08
-        elif elo_diff < 100:
-            elo_over += 0.04
-        elif elo_diff > 200:
-            elo_over -= 0.05
+        def _dc_tau(home_goals: int, away_goals: int) -> float:
+            if home_goals == 0 and away_goals == 0:
+                return 1 - (home_xg * away_xg * rho)
+            if home_goals == 0 and away_goals == 1:
+                return 1 + (home_xg * rho)
+            if home_goals == 1 and away_goals == 0:
+                return 1 + (away_xg * rho)
+            if home_goals == 1 and away_goals == 1:
+                return 1 - rho
+            return 1.0
 
-        # Higher quality teams score more
-        if avg_elo > 1650:
-            elo_over += 0.06
-        elif avg_elo > 1550:
-            elo_over += 0.03
-        elif avg_elo < 1450:
-            elo_over -= 0.04
+        # Under 2.5 goals = total goals 0, 1, 2
+        under_prob = 0.0
+        for total_goals in range(0, 3):
+            for home_goals in range(0, total_goals + 1):
+                away_goals = total_goals - home_goals
+                p_home = poisson.pmf(home_goals, home_xg)
+                p_away = poisson.pmf(away_goals, away_xg)
+                under_prob += _dc_tau(home_goals, away_goals) * p_home * p_away
 
-        # League adjustments
-        league_over_adj = {
-            78: 0.05,  # Bundesliga (high scoring)
-            135: -0.03,  # Serie A (defensive)
-            61: 0.02,  # Ligue 1
-            39: 0.04,  # Premier League
-        }
-        elo_over += league_over_adj.get(fixture["league_id"], 0)
+        dc_over = max(0.05, min(0.95, 1 - under_prob))
 
-        # Combine historical and Elo (50/50)
-        combined_over = 0.5 * hist_over + 0.5 * elo_over
-
-        over_prob = max(0.25, min(0.80, combined_over))
+        # Blend Dixon-Coles with historical data
+        combined_over = (0.7 * dc_over) + (0.3 * hist_over)
+        over_prob = max(0.22, min(0.85, combined_over))
         under_prob = 1 - over_prob
 
-        # Confidence higher when both methods agree
-        agreement = 1 - abs(hist_over - elo_over)
-        confidence = 0.55 + (0.20 * agreement) + (0.10 * abs(over_prob - 0.5) / 0.30)
+        agreement = 1 - abs(hist_over - dc_over)
+        confidence = 0.56 + (0.22 * agreement) + (0.10 * abs(over_prob - 0.5) / 0.30)
 
         return {
             "probabilities": {"over": round(over_prob, 3), "under": round(under_prob, 3)},
-            "confidence": round(min(0.85, confidence), 2),
+            "confidence": round(min(0.86, confidence), 2),
             "features": {
-                "hist_over": hist_over,
-                "elo_over": round(elo_over, 3),
+                "hist_over": round(hist_over, 3),
+                "dc_over": round(dc_over, 3),
+                "home_xg": round(home_xg, 2),
+                "away_xg": round(away_xg, 2),
+                "rho": rho,
                 "expected_goals": hist_pred.get("expected_total_goals", 2.5),
             },
         }

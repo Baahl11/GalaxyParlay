@@ -4,6 +4,7 @@
 import type { ValueBet } from "@/lib/api";
 import { getModelPicks, getStats, getValueBets } from "@/lib/api";
 import type { StatsResponse } from "@/lib/types";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 const MARKET_LABELS: Record<string, string> = {
@@ -200,6 +201,20 @@ export default function Home() {
                       ? "Mixto"
                       : "Cuota modelo"}
                 </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/watchlist"
+                  className="px-4 py-2 rounded-full border border-cyan-400/40 text-cyan-100 text-xs hover:bg-cyan-500/20"
+                >
+                  Watchlist
+                </Link>
+                <Link
+                  href="/auth/login"
+                  className="px-4 py-2 rounded-full border border-gray-600 text-gray-200 text-xs hover:bg-gray-800/60"
+                >
+                  Login
+                </Link>
               </div>
             </div>
           </div>
@@ -419,6 +434,18 @@ export default function Home() {
                 );
               })}
             </div>
+            {showCount < filteredPicks.length && (
+              <div className="mt-6 flex justify-center">
+                <button
+                  onClick={() =>
+                    setShowCount((prev) => Math.min(prev + 30, filteredPicks.length))
+                  }
+                  className="px-6 py-2 rounded-full bg-cyan-500/20 text-cyan-200 border border-cyan-400/40 hover:bg-cyan-500/30 transition-colors"
+                >
+                  Cargar mas
+                </button>
+              </div>
+            )}
           )}
         </section>
 

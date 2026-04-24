@@ -17,7 +17,7 @@ console.log("🚀 MatchDrawer.tsx LOADED - Version BUILD-002");
 // Type helper for client component callbacks (satisfies Next.js serialization check)
 type ClientFunction<T extends (...args: any[]) => any> = T;
 
-import { getMultiMarketPrediction } from "@/lib/api";
+import { addToWatchlist, getMultiMarketPrediction } from "@/lib/api";
 import type { Fixture, MultiMarketPrediction } from "@/lib/types";
 import { LEAGUE_FLAGS, LEAGUE_NAMES } from "@/lib/types";
 import { useEffect, useState } from "react";
@@ -42,6 +42,14 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [watchlistStatus, setWatchlistStatus] = useState<
+    "idle" | "saving" | "saved" | "auth_required" | "error"
+  >("idle");
+  const [watchlistMessage, setWatchlistMessage] = useState<string | null>(null);
+  const watchlistTone =
+    watchlistStatus === "error" || watchlistStatus === "auth_required"
+      ? "text-red-200"
+      : "text-emerald-200";
 
   // Filter states
   const [selectedCategories, setSelectedCategories] = useState<
@@ -56,10 +64,34 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
       isOpen,
     });
     if (fixture && isOpen) {
+      setWatchlistStatus("idle");
+      setWatchlistMessage(null);
       console.log("[MatchDrawer] 🚀 Calling loadPrediction...");
       loadPrediction();
     }
   }, [fixture?.id, isOpen]);
+
+  const handleAddToWatchlist = async () => {
+    if (!fixture) return;
+    setWatchlistStatus("saving");
+    setWatchlistMessage(null);
+
+    const result = await addToWatchlist(fixture.id);
+    if (result.status === "success") {
+      setWatchlistStatus("saved");
+      setWatchlistMessage("Guardado en watchlist");
+      return;
+    }
+
+    if (result.status === "auth_required") {
+      setWatchlistStatus("auth_required");
+      setWatchlistMessage(result.message ?? "Inicia sesion para guardar");
+      return;
+    }
+
+    setWatchlistStatus("error");
+    setWatchlistMessage(result.message ?? "No se pudo guardar");
+  };
 
   const loadPrediction = async () => {
     if (!fixture) {
@@ -136,24 +168,33 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
                 </span>
               )}
             </div>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-700/50 rounded-full transition-colors"
-            >
-              <svg
-                className="w-5 h-5 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleAddToWatchlist}
+                disabled={watchlistStatus === "saving"}
+                className="px-3 py-1 rounded-full text-xs border border-emerald-500/40 text-emerald-200 hover:bg-emerald-500/20 transition-colors disabled:opacity-60"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+                {watchlistStatus === "saved" ? "Guardado" : "Watchlist"}
+              </button>
+              <button
+                onClick={onClose}
+                className="p-2 hover:bg-gray-700/50 rounded-full transition-colors"
+              >
+                <svg
+                  className="w-5 h-5 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {fixture && (
@@ -166,6 +207,11 @@ export function MatchDrawer({ fixture, isOpen, onClose }: MatchDrawerProps) {
               <div className="text-center text-sm text-gray-500 mt-1">
                 {formatDate(fixture.kickoff_time)}
               </div>
+              {watchlistMessage && (
+                <div className={`mt-2 text-center text-xs ${watchlistTone}`}>
+                  {watchlistMessage}
+                </div>
+              )}
             </div>
           )}
         </div>
