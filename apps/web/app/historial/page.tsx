@@ -90,6 +90,10 @@ export default function HistorialPage() {
           .select(
             `market_key, prediction, confidence_score, quality_grade, fixture_id,
              fixtures!inner(home_team_name, away_team_name, kickoff_time, league_id, status, home_score, away_score)`,
+          )
+          .in("market_key", ["match_winner", "over_under_2_5", "both_teams_score"])
+          .gte("confidence_score", 0.5)
+          .in("quality_grade", ["S", "A", "B", "C"])
           .order("fixture_id", { ascending: false })
           .limit(2000);
 
