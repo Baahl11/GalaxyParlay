@@ -19,6 +19,11 @@ const MARKET_LABELS: Record<string, string> = {
 
 const GRADE_STYLES: Record<string, { bg: string; text: string; bar: string }> =
   {
+    S: {
+      bg: "bg-fuchsia-500/20 border-fuchsia-500/40",
+      text: "text-fuchsia-400",
+      bar: "bg-fuchsia-500",
+    },
     A: {
       bg: "bg-green-500/20 border-green-500/40",
       text: "text-green-400",

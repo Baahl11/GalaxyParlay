@@ -21,6 +21,7 @@ function toAmericanOdds(decimalOdds: number): string {
 
 function scorePick(bet: ValueBet): number {
   const gradeWeight: Record<string, number> = {
+    S: 1.2,
     A: 1,
     B: 0.85,
     C: 0.7,
@@ -53,7 +54,7 @@ export default function Home() {
   const [viewMode, setViewMode] = useState<"quality" | "volume">("volume");
   const [timeScope, setTimeScope] = useState<"today" | "all">("today");
   const [gradeFilter, setGradeFilter] = useState<
-    "all" | "A" | "B" | "C" | "D"
+    "all" | "S" | "A" | "B" | "C" | "D"
   >("all");
   const [showCount, setShowCount] = useState<number>(30);
   const [loading, setLoading] = useState(true);
@@ -75,6 +76,14 @@ export default function Home() {
             min_confidence: 0.45,
             grades: ["A", "B", "C", "D"],
           };
+    if (gradeFilter === "S") {
+      modelParams = {
+        ...modelParams,
+        min_confidence: 0.8,
+        grades: ["S"],
+        marketKeys: timeScope === "all" ? "ALL" : modelParams.marketKeys,
+      };
+    }
     if (gradeFilter === "A") {
       modelParams = {
         ...modelParams,
@@ -284,9 +293,7 @@ export default function Home() {
               <span className="text-cyan-300 uppercase tracking-[0.2em]">
                 Grado
               </span>
-              {(
-                ["all", "A", "B", "C", "D"] as const
-              ).map((grade) => (
+              {(["all", "S", "A", "B", "C", "D"] as const).map((grade) => (
                 <button
                   key={grade}
                   onClick={() => setGradeFilter(grade)}

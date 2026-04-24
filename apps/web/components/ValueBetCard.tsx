@@ -67,6 +67,7 @@ export function ValueBetCard({ valueBet, compact = false }: ValueBetCardProps) {
 
   // Grade colors
   const gradeColors: Record<string, string> = {
+    'S': 'bg-fuchsia-500',
     'A': 'bg-green-500',
     'B': 'bg-blue-500',
     'C': 'bg-yellow-500',

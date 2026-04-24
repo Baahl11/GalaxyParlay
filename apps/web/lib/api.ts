@@ -22,6 +22,29 @@ function parseLineSuffix(suffix: string): number {
   );
 }
 
+function toAmericanOddsNumber(decimalOdds: number): number | null {
+  if (!decimalOdds || decimalOdds <= 1) return null;
+  if (decimalOdds >= 2) return Math.round((decimalOdds - 1) * 100);
+  return -Math.round(100 / (decimalOdds - 1));
+}
+
+function applyGradeS(
+  baseGrade: string,
+  confidence: number,
+  decimalOdds: number,
+  oddsSource?: "bookmaker" | "model",
+): string {
+  if (baseGrade !== "A") return baseGrade;
+  if (oddsSource !== "bookmaker") return baseGrade;
+  if (confidence < 0.8) return baseGrade;
+
+  const americanOdds = toAmericanOddsNumber(decimalOdds);
+  if (americanOdds === null) return baseGrade;
+  if (americanOdds <= -100 && americanOdds >= -250) return "S";
+
+  return baseGrade;
+}
+
 /**
  * Fetch fixtures with optional filters
  */
@@ -719,6 +742,15 @@ export async function getValueBets(params?: {
     const kellyFraction =
       edge > 0 ? Math.min(edge / (bookmakerOdds - 1), 0.1) : 0;
 
+    const confidence =
+      Math.round((row.confidence_score as number) * 1000) / 1000;
+    const grade = applyGradeS(
+      row.quality_grade as string,
+      confidence,
+      bookmakerOdds,
+      "bookmaker",
+    );
+
     if (edge < minEdge || ev < minEv) continue;
 
     bets.push({
@@ -736,8 +768,8 @@ export async function getValueBets(params?: {
       edge: Math.round(edge * 1000) / 1000,
       ev: Math.round(ev * 1000) / 1000,
       kelly_fraction: Math.round(kellyFraction * 1000) / 1000,
-      grade: row.quality_grade as string,
-      confidence: Math.round((row.confidence_score as number) * 1000) / 1000,
+      grade,
+      confidence,
     });
   }
 
@@ -778,13 +810,17 @@ export async function getValueBets(params?: {
 export async function getModelPicks(params?: {
   limit?: number;
   min_confidence?: number;
-  grades?: Array<"A" | "B" | "C" | "D" | "F">;
+  grades?: Array<"S" | "A" | "B" | "C" | "D" | "F">;
   status?: "NS" | "ALL";
   marketKeys?: string[] | "ALL";
 }): Promise<ValueBet[]> {
   const limit = params?.limit ?? 40;
   const minConfidence = params?.min_confidence ?? 0.5;
-  const grades = params?.grades ?? ["A", "B", "C", "D"];
+  const requestedGrades = params?.grades ?? ["A", "B", "C", "D"];
+  const queryGrades = requestedGrades.filter((grade) => grade !== "S");
+  if (requestedGrades.includes("S") && !queryGrades.includes("A")) {
+    queryGrades.push("A");
+  }
   const status = params?.status ?? "NS";
   const marketKeys = params?.marketKeys ?? [
     "match_winner",
@@ -798,7 +834,7 @@ export async function getModelPicks(params?: {
       `market_key, prediction, confidence_score, quality_grade, fixture_id,
        fixtures!inner(home_team_name, away_team_name, kickoff_time, league_id, status)`,
     )
-    .in("quality_grade", grades)
+    .in("quality_grade", queryGrades)
     .gte("confidence_score", minConfidence);
 
   if (marketKeys !== "ALL") {
@@ -811,12 +847,13 @@ export async function getModelPicks(params?: {
 
   if (predError || !preds || preds.length === 0) return [];
 
-  const scopedPreds = status === "ALL"
-    ? preds
-    : preds.filter((p) => {
-        const fx = p.fixtures as unknown as { status: string };
-        return fx.status === "NS";
-      });
+  const scopedPreds =
+    status === "ALL"
+      ? preds
+      : preds.filter((p) => {
+          const fx = p.fixtures as unknown as { status: string };
+          return fx.status === "NS";
+        });
   if (scopedPreds.length === 0) return [];
 
   const byKey: Record<string, (typeof scopedPreds)[number]> = {};
@@ -850,6 +887,14 @@ export async function getModelPicks(params?: {
     if (modelProb <= 0) continue;
 
     const fairOdds = Math.round((1 / modelProb) * 100) / 100;
+    const confidence =
+      Math.round((row.confidence_score as number) * 1000) / 1000;
+    const grade = applyGradeS(
+      row.quality_grade as string,
+      confidence,
+      fairOdds,
+      "model",
+    );
 
     picks.push({
       fixture_id: fixtureId,
@@ -866,13 +911,16 @@ export async function getModelPicks(params?: {
       edge: 0,
       ev: 0,
       kelly_fraction: 0,
-      grade: row.quality_grade as string,
-      confidence: Math.round((row.confidence_score as number) * 1000) / 1000,
+      grade,
+      confidence,
     });
   }
 
-  picks.sort((a, b) => b.confidence - a.confidence);
-  return picks.slice(0, limit);
+  const filteredPicks = picks.filter((bet) =>
+    requestedGrades.includes(bet.grade as "S" | "A" | "B" | "C" | "D" | "F"),
+  );
+  filteredPicks.sort((a, b) => b.confidence - a.confidence);
+  return filteredPicks.slice(0, limit);
 }
 
 function deriveSelection(
