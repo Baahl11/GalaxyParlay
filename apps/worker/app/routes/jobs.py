@@ -10,8 +10,8 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, Request
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
-from app.ml import MatchPredictor, QualityScorer
 from app.config import settings
+from app.ml import MatchPredictor, QualityScorer
 from app.ml.dixon_coles import DixonColesModel, dixon_coles_model
 from app.ml.elo import DEFAULT_RATINGS, TOP_TEAM_BONUSES, EloRatingSystem
 from app.services.apifootball import (
@@ -19,8 +19,8 @@ from app.services.apifootball import (
     transform_fixture_to_db,
     transform_odds_to_db,
 )
-from app.services.referee_scraper import RefereeStatsAPI
 from app.services.database import db_service
+from app.services.referee_scraper import RefereeStatsAPI
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 logger = structlog.get_logger()
@@ -32,19 +32,42 @@ quality_scorer = QualityScorer()
 
 
 @router.post("/sync-fixtures")
-def sync_fixtures():
+def sync_fixtures(
+    league_ids: Optional[str] = Query(None, description="Comma-separated league IDs"),
+    season: int = Query(2025, description="Season override for league_ids"),
+    days_ahead: int = Query(14, description="Days ahead to sync"),
+):
     """
-    Sync upcoming fixtures from API-Football for next 7 days
+    Sync upcoming fixtures from API-Football for upcoming days
 
     This job:
-    1. Fetches active leagues from DB
+    1. Fetches active leagues from DB (or explicit league_ids)
     2. For each league, gets fixtures for next 7 days
     3. Upserts fixtures into database
     4. Fetches and stores odds for each fixture
     """
     try:
-        # Get active leagues
+        # Get active leagues (or override list)
         leagues = db_service.get_active_leagues()
+        if league_ids:
+            ids = [int(l.strip()) for l in league_ids.split(",") if l.strip()]
+            if not ids:
+                return {
+                    "status": "warning",
+                    "message": "No valid league IDs provided",
+                    "fixtures_synced": 0,
+                }
+
+            result = (
+                db_service.client.table("leagues").select("id, name, season").in_("id", ids)
+            ).execute()
+
+            leagues = result.data or []
+            if not leagues:
+                leagues = [
+                    {"id": league_id, "name": f"League {league_id}", "season": season}
+                    for league_id in ids
+                ]
 
         if not leagues:
             return {"status": "warning", "message": "No active leagues found", "fixtures_synced": 0}
@@ -53,9 +76,9 @@ def sync_fixtures():
         total_fixtures = 0
         total_odds = 0
 
-        # Date range: today to 14 days from now
+        # Date range: today to N days from now
         date_from = datetime.utcnow().strftime("%Y-%m-%d")
-        date_to = (datetime.utcnow() + timedelta(days=14)).strftime("%Y-%m-%d")
+        date_to = (datetime.utcnow() + timedelta(days=days_ahead)).strftime("%Y-%m-%d")
 
         logger.info(
             "sync_fixtures_started",
@@ -66,7 +89,7 @@ def sync_fixtures():
 
         for league in leagues:
             league_id = league["id"]
-            season = league.get("season", 2025)
+            season = league.get("season", season)
 
             try:
                 # Fetch fixtures from API
@@ -2339,9 +2362,7 @@ def sync_corner_statistics(
                 "teams_updated": 0,
             }
 
-        fixtures = db_service.get_finished_fixtures(
-            league_id=league_id, season=season, limit=limit
-        )
+        fixtures = db_service.get_finished_fixtures(league_id=league_id, season=season, limit=limit)
 
         if not fixtures:
             return {
@@ -2415,9 +2436,7 @@ def sync_corner_statistics(
                 (away_id, away_corners, home_corners),
             ]:
                 key = (team_id, fixture_league_id, fixture_season)
-                totals = team_totals.setdefault(
-                    key, {"for": 0.0, "against": 0.0, "matches": 0}
-                )
+                totals = team_totals.setdefault(key, {"for": 0.0, "against": 0.0, "matches": 0})
                 totals["for"] += float(corners_for)
                 totals["against"] += float(corners_against)
                 totals["matches"] += 1
