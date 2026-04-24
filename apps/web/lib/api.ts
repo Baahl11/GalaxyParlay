@@ -40,7 +40,7 @@ function applyGradeS(
 
   const americanOdds = toAmericanOddsNumber(decimalOdds);
   if (americanOdds === null) return baseGrade;
-  if (americanOdds <= -100 && americanOdds >= -250) return "S";
+  if (americanOdds <= -100 && americanOdds >= -400) return "S";
 
   return baseGrade;
 }
