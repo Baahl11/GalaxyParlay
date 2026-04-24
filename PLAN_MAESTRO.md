@@ -1,6 +1,6 @@
 # GalaxyParlay — Plan Maestro
 
-**Última actualización:** 22 Abril 2026  
+**Última actualización:** 24 Abril 2026  
 **Estado:** Producción activa ✅
 
 ---
@@ -167,14 +167,18 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 - [x] Rate limit API-Football: 0.08 req/s, burst capacity: 20 (Pro plan)
 - [x] 133 fixtures reales season 2025 | 4,655 predicciones | 4,483 odds snapshots
 - [x] 22 ligas activas (Europa + LATAM + Asia + Oceanía + Copa Europa)
+- [x] `sync_fixtures` robustecido: incluye ligas LATAM prioritarias por defecto (262, 71, 13, 11, 128, 253)
+- [x] Validación en producción (24-04-2026): `run-predictions?days_ahead=3` generó 3,990 predicciones para 114 fixtures
 
-### APScheduler (3 jobs automáticos)
+### APScheduler (5 jobs automáticos)
 
 | Job                  | Frecuencia                  | Función                              |
 | -------------------- | --------------------------- | ------------------------------------ |
 | load_fixtures        | Cada 12h (cron 6AM/6PM UTC) | Sync fixtures desde API-Football     |
 | generate_predictions | Cada 6h                     | Genera predicciones para fixtures NS |
 | sync_results         | Cada 3h                     | Actualiza scores FT de últimas 36h   |
+| sync_live_scores     | Cada 5 min                  | Actualiza marcadores en vivo         |
+| sync_player_stats    | Semanal (dom 3AM UTC)       | Sincroniza stats de jugadores        |
 
 ### Seguridad
 
@@ -190,13 +194,13 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 ### 🔴 Crítico
 
 1. **Git history cleanup** — Completado ✅ (historial reescrito y secretos removidos).
-2. **Player Props con datos reales** — El tab "Player Props" existe en frontend pero no tiene datos reales. API-Football Pro incluye player stats; falta implementar el endpoint y componente.
+2. **Player Props con datos reales (parcial)** — Endpoint `/api/player-props/{fixture_id}` y helper frontend implementados. Falta aumentar coverage en `player_statistics` y enriquecer UI (minutos/explicabilidad).
 
 ### 🟡 Importante
 
 3. **Dixon-Coles extendido a Over/Under** — Actualmente O/U usa Poisson independiente. Extender la correlación bivariate a Over/Under daría +2-4% accuracy. (ver `ANALISIS_PROFUNDO` archivado)
 4. **BTTS en backtest** — El mercado BTTS no está incluido en el backtest de 1,000 fixtures. Bivariate Poisson mejora BTTS significativamente pero no está validado.
-5. **Más fixtures** — 133 fixtures es poco para ligas LATAM. Ampliar: Liga MX (262), Brasileirão (71), Libertadores (13), Sudamericana (11).
+5. **Más fixtures (monitoring continuo)** — `sync_fixtures` ya fuerza ligas LATAM/MLS prioritarias; seguir monitoreando volumen por ventana para mantener cobertura estable.
 
 ### 🟢 Mejoras futuras
 
@@ -211,9 +215,9 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 ## 5. PRÓXIMOS PASOS (en orden de prioridad)
 
 ```
-[ ] 1. Ampliar fixtures LATAM (Liga MX, Brasileirão, Libertadores, Sudamericana)
-        → apps/worker/app/routes/jobs.py: agregar league_ids al sync
-        → apps/web/components/LeagueFilter.tsx: agregar LATAM pills
+[x] 1. Ampliar fixtures LATAM (Liga MX, Brasileirão, Libertadores, Sudamericana)
+  → apps/worker/app/routes/jobs.py: sync robustecido con ligas prioritarias por defecto
+  → apps/web/components/LeagueFilter.tsx: LATAM pills ya incluidas
 
 [ ] 2. Dixon-Coles extendido a Over/Under
         → apps/worker/app/ml/multi_market_predictor.py
@@ -224,12 +228,12 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
         → apps/worker/run_validation_backtest.py (agregar mercado BTTS)
         → Regenerar backtest_results.json con BTTS incluido
 
-[ ] 4. Player Props con datos reales
-        → apps/worker/app/routes/ : nuevo endpoint /player-props/{fixture_id}
-        → apps/web/components/PlayerPropsSection.tsx: conectar a datos reales
-        → API-Football endpoint: /players?fixture={id}
+[ ] 4. Player Props con datos reales (fase 2)
+  → apps/worker/app/routes/galaxy_api.py: endpoint /api/player-props/{fixture_id} ya disponible
+  → apps/web/lib/api.ts: getPlayerPropsForFixture() ya conectado
+  → Pendiente: poblar `player_statistics` de forma sostenida + UI de desglose en PlayerPropsSection
 
-[ ] 5. Autenticación de usuarios (Supabase Auth)
+[x] 5. Autenticación de usuarios (Supabase Auth)
         → apps/web/app/auth/: páginas login/signup
         → apps/web/lib/supabase.ts: client-side auth
         → Conectar watchlist a usuario autenticado
@@ -314,9 +318,9 @@ Mapa por mercado (data -> tabla -> gap):
 ### P1 — Backend y pipeline
 
 - [ ] Extender generate_predictions para nuevos mercados en `multi_market_predictor.py`
-- [ ] Endpoint `/player-props/{fixture_id}` con datos reales
+- [x] Endpoint `/player-props/{fixture_id}` con datos reales
 - [ ] Endpoint `/market-confidence` por mercado y liga
-- [ ] Job de sync de player stats y referee stats
+- [ ] Job de sync de player stats y referee stats (player stats semanal ✅, referee pendiente)
 - [ ] Tabla/registro de versiones de modelo y features usados
 - [ ] Cache y rate limits por endpoint
 
