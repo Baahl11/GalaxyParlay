@@ -129,7 +129,10 @@ def sync_fixtures():
 
 
 @router.post("/run-predictions")
-def run_predictions():
+def run_predictions(
+    days_ahead: int = Query(7, description="Number of days ahead to include"),
+    limit: int = Query(300, description="Max fixtures to process"),
+):
     """
     Run ML predictions for all upcoming fixtures
 
@@ -138,7 +141,16 @@ def run_predictions():
     """
     try:
         # Get upcoming fixtures directly with status filter
-        upcoming = db_service.get_fixtures(status="NS", limit=500)
+        upcoming = db_service.get_fixtures(status="NS", limit=limit)
+
+        if days_ahead > 0:
+            cutoff = (datetime.utcnow() + timedelta(days=days_ahead)).strftime("%Y-%m-%d")
+            upcoming = [
+                f
+                for f in upcoming
+                if not str(f.get("kickoff_time", ""))[:10]
+                or str(f.get("kickoff_time", ""))[:10] <= cutoff
+            ]
 
         if not upcoming:
             return {
