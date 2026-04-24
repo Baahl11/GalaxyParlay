@@ -83,7 +83,7 @@ def job_sync_player_stats():
         logger.info("job_sync_player_stats_started")
         from app.routes.jobs import sync_all_player_statistics
 
-        result = sync_all_player_statistics()
+        result = sync_all_player_statistics(limit=120)
         logger.info(
             "job_sync_player_stats_complete",
             players_synced=result.get("players_synced", 0),

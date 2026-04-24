@@ -2584,7 +2584,7 @@ def sync_corner_statistics(
 
 @router.post("/sync-player-stats")
 def sync_all_player_statistics(
-    limit: int = Query(10, description="Number of teams to sync players for"),
+    limit: int = Query(120, description="Number of teams to sync players for"),
     season: int = Query(2025, description="Season"),
 ):
     """
