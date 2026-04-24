@@ -170,7 +170,7 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 - [x] `sync_fixtures` robustecido: incluye ligas LATAM prioritarias por defecto (262, 71, 13, 11, 128, 253)
 - [x] Validación en producción (24-04-2026): `run-predictions?days_ahead=3` generó 3,990 predicciones para 114 fixtures
 
-### APScheduler (5 jobs automáticos)
+### APScheduler (6 jobs automáticos)
 
 | Job                  | Frecuencia                  | Función                              |
 | -------------------- | --------------------------- | ------------------------------------ |
@@ -179,6 +179,7 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 | sync_results         | Cada 3h                     | Actualiza scores FT de últimas 36h   |
 | sync_live_scores     | Cada 5 min                  | Actualiza marcadores en vivo         |
 | sync_player_stats    | Semanal (dom 3AM UTC)       | Sincroniza stats de jugadores        |
+| sync_referee_stats   | Semanal (dom 4AM UTC)       | Sincroniza stats de árbitros         |
 
 ### Seguridad
 
@@ -204,9 +205,9 @@ NEXT_PUBLIC_API_URL=https://galaxyparlay-production.up.railway.app
 
 ### 🟢 Mejoras futuras
 
-6. **Autenticación de usuarios** — Supabase Auth + watchlist flow completo en frontend (schema ya tiene RLS listo)
+6. **Autenticación avanzada** — Base Auth + watchlist ya implementadas; pendiente hardening UX (sesión persistente/errores) y perfiles.
 7. **Paginación** — Frontend carga todos los fixtures en memoria. Con más ligas necesita infinite scroll o paginación server-side
-8. **Live scores** — APScheduler job para fixtures LIVE (no solo FT)
+8. **Live scores avanzado** — Job LIVE ya implementado; pendiente observabilidad/alertas para degradación y rate-limit.
 9. **Tests automatizados** — Cero tests end-to-end o unitarios actualmente
 10. **FIFA datos reales** — Reemplazar datos mock con API oficial de SoFIFA o FutDB para ratings actualizados
 
@@ -320,7 +321,7 @@ Mapa por mercado (data -> tabla -> gap):
 - [ ] Extender generate_predictions para nuevos mercados en `multi_market_predictor.py`
 - [x] Endpoint `/player-props/{fixture_id}` con datos reales
 - [ ] Endpoint `/market-confidence` por mercado y liga
-- [ ] Job de sync de player stats y referee stats (player stats semanal ✅, referee pendiente)
+- [x] Job de sync de player stats y referee stats (player dom 3AM UTC, referee dom 4AM UTC)
 - [ ] Tabla/registro de versiones de modelo y features usados
 - [ ] Cache y rate limits por endpoint
 

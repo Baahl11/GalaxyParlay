@@ -93,6 +93,25 @@ def job_sync_player_stats():
         logger.error("job_sync_player_stats_error", error=str(e))
 
 
+def job_sync_referee_stats():
+    """
+    Job: Sync referee statistics from upcoming fixtures.
+    Frequency: Weekly (Sunday 4 AM UTC)
+    """
+    try:
+        logger.info("job_sync_referee_stats_started")
+        from app.routes.jobs import sync_referee_statistics
+
+        result = sync_referee_statistics()
+        logger.info(
+            "job_sync_referee_stats_complete",
+            referees_synced=result.get("referees_synced", 0),
+            referees_failed=result.get("referees_failed", 0),
+        )
+    except Exception as e:
+        logger.error("job_sync_referee_stats_error", error=str(e))
+
+
 def job_sync_live_scores():
     """
     Job: Update live fixtures and scores.
@@ -176,6 +195,17 @@ def start_scheduler():
         trigger=CronTrigger(day_of_week="sun", hour="3", minute="0"),
         id="sync_player_stats",
         name="Sync Player Stats",
+        replace_existing=True,
+        max_instances=1,
+        coalesce=True,
+    )
+
+    # Job 6: Sync referee statistics weekly (Sunday 4 AM UTC)
+    scheduler.add_job(
+        job_sync_referee_stats,
+        trigger=CronTrigger(day_of_week="sun", hour="4", minute="0"),
+        id="sync_referee_stats",
+        name="Sync Referee Stats",
         replace_existing=True,
         max_instances=1,
         coalesce=True,
