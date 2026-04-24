@@ -30,6 +30,9 @@ limiter = Limiter(key_func=get_remote_address)
 predictor = MatchPredictor()
 quality_scorer = QualityScorer()
 
+# Priority competitions for LATAM/North America coverage.
+LATAM_PRIORITY_LEAGUE_IDS = [262, 71, 13, 11, 128, 253]
+
 
 @router.post("/sync-fixtures")
 def sync_fixtures(
@@ -68,6 +71,40 @@ def sync_fixtures(
                     {"id": league_id, "name": f"League {league_id}", "season": season}
                     for league_id in ids
                 ]
+        else:
+            # Ensure priority LATAM leagues are always synced even if DB flags are stale.
+            existing_ids = {int(l["id"]) for l in leagues}
+            missing_priority_ids = [
+                league_id
+                for league_id in LATAM_PRIORITY_LEAGUE_IDS
+                if league_id not in existing_ids
+            ]
+
+            if missing_priority_ids:
+                result = (
+                    db_service.client.table("leagues")
+                    .select("id, name, season")
+                    .in_("id", missing_priority_ids)
+                    .execute()
+                )
+                fetched = result.data or []
+                leagues.extend(fetched)
+
+                fetched_ids = {int(l["id"]) for l in fetched}
+                for league_id in missing_priority_ids:
+                    if league_id not in fetched_ids:
+                        leagues.append(
+                            {
+                                "id": league_id,
+                                "name": f"League {league_id}",
+                                "season": season,
+                            }
+                        )
+
+                logger.info(
+                    "sync_fixtures_priority_leagues_added",
+                    added_ids=missing_priority_ids,
+                )
 
         if not leagues:
             return {"status": "warning", "message": "No active leagues found", "fixtures_synced": 0}
@@ -89,13 +126,13 @@ def sync_fixtures(
 
         for league in leagues:
             league_id = league["id"]
-            season = league.get("season", season)
+            league_season = league.get("season", season)
 
             try:
                 # Fetch fixtures from API
                 api_fixtures = client.get_fixtures(
                     league_id=league_id,
-                    season=season,
+                    season=league_season,
                     date_from=date_from,
                     date_to=date_to,
                     status="NS",  # Not Started
